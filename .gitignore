@@ -1,1 +1,4 @@
-win_tools/cert/
+sign_tools/cert
+win_tools/builds
+win_tools/x64
+win_tools/x86
