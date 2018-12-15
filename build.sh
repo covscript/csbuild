@@ -29,8 +29,8 @@ fetch_git covscript-network &
 fetch_git covscript-streams &
 fetch_git covscript-imgui &
 wait
-start covscript "./make.sh"
-start covscript "./install.sh"
+start covscript "./csbuild/make.sh"
+start covscript "./csbuild/install.sh"
 start covscript-regex "./make.sh" &
 start covscript-darwin "./make.sh" &
 start covscript-sqlite "./make.sh" &
