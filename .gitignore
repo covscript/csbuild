@@ -4,6 +4,6 @@ deb_tools/deb-src
 sign_tools/cert
 win_tools/builds
 win_tools/mingw32
-win_tools/mingw54
+win_tools/mingw64
 win_tools/x64
 win_tools/x86
