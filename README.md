@@ -1,5 +1,5 @@
 # Covariant Script Official Build System
-## Supprted Platform
+## Supported Platform
 1. Microsoft Windows(Win32)
 2. Debian Linux and its derivations like Ubuntu Linux(Dpkg)
 ## Win32 Platform
