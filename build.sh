@@ -23,6 +23,7 @@ function fetch_git ()
 fetch_git cspkg &
 fetch_git covscript &
 fetch_git covscript-regex &
+fetch_git covscript-codec &
 fetch_git covscript-darwin &
 fetch_git covscript-sqlite &
 fetch_git covscript-network &
@@ -32,6 +33,7 @@ wait
 start covscript "./csbuild/make.sh"
 start covscript "./csbuild/install.sh"
 start covscript-regex "./make.sh" &
+start covscript-codec "./make.sh" &
 start covscript-darwin "./make.sh" &
 start covscript-sqlite "./make.sh" &
 start covscript-network "./make.sh" &
