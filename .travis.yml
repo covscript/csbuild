@@ -1,0 +1,10 @@
+dist: xenial
+language: cpp
+install:
+- cd deb_tools
+- bash auto-build.sh
+script:
+- sudo dpkg -i deb-src/*.deb
+- cs -v
+- cs_repl -v
+- cspkg --list
