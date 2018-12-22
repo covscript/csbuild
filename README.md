@@ -1,4 +1,5 @@
 # Covariant Script Official Build System
+[![Build Status](https://travis-ci.org/covscript/csbuild.svg?branch=master)](https://travis-ci.org/covscript/csbuild)
 ## Supported Platform
 1. Microsoft Windows (Win32)
 2. Debian Linux and its derivations (like Ubuntu Linux) (Dpkg)

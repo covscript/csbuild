@@ -1,10 +1,11 @@
 dist: xenial
 language: cpp
 install:
+- sudo apt-get install pkg-config libglfw3-dev
 - cd deb_tools
 - bash auto-build.sh
-script:
 - sudo dpkg -i deb-src/*.deb
+script:
 - cs -v
 - cs_repl -v
 - cspkg --list
