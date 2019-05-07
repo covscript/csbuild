@@ -18,7 +18,7 @@ start /D covscript-darwin make.bat
 start /D covscript-sqlite make.bat
 start /D covscript-network make.bat
 start /D covscript-streams make.bat
-start /D covscript-imgui make.bat
+start /D covscript-imgui csbuild\make.bat
 goto:eof
 :git_fetch
 if exist %1% (
