@@ -37,5 +37,5 @@ start covscript-darwin "./make.sh" &
 start covscript-sqlite "./make.sh" &
 start covscript-network "./make.sh" &
 start covscript-streams "./make.sh" &
-start covscript-imgui "./make.sh" &
+start covscript-imgui "./csbuild/make.sh" &
 wait
