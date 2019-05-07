@@ -5,6 +5,7 @@ cd build-cache
 xcopy /Y cspkg\cspkg ..\build\bin\
 xcopy /Y cspkg\cspkg.bat ..\build\bin\
 xcopy /E /Y covscript\build ..\build\
+xcopy /E /Y covscript\csdev ..\build\
 xcopy /E /Y covscript-regex\build ..\build\
 xcopy /E /Y covscript-codec\build ..\build\
 xcopy /E /Y covscript-darwin\build ..\build\

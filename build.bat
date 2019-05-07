@@ -11,7 +11,6 @@ call:git_fetch covscript-network
 call:git_fetch covscript-streams
 call:git_fetch covscript-imgui
 start /WAIT /D covscript csbuild\make.bat
-start /WAIT /D covscript csbuild\install.bat
 set CS_DEV_PATH=%cd%\covscript\csdev
 start /D covscript-regex make.bat
 start /D covscript-codec make.bat
