@@ -1,10 +1,9 @@
 #!/bin/bash
-SHELL_FOLDER=$(dirname $(readlink -f "$0"))
-export CS_DEV_PATH=${SHELL_FOLDER}/build-cache/covscript/csdev
 function start ()
 {
+    SHELL_FOLDER=$(dirname $(readlink -f "$0"))
     cd $1
-    bash $2
+    CS_DEV_PATH=${SHELL_FOLDER}/build-cache/covscript/csdev bash $2
     cd ..
 }
 mkdir -p build-cache
@@ -41,4 +40,3 @@ start covscript-network "./make.sh" &
 start covscript-streams "./make.sh" &
 start covscript-imgui "./csbuild/make.sh" &
 wait
-unset CS_DEV_PATH
