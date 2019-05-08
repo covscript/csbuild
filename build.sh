@@ -1,8 +1,10 @@
 #!/bin/bash
+SHELL_FOLDER=$(dirname $(readlink -f "$0"))
+CS_DEV_PATH=$(SHELL_FOLDER)/build-cache/covscript/csdev
 function start ()
 {
     cd $1
-    CS_DEV_PATH=../../covscript/csdev bash $2
+    bash $2
     cd ..
 }
 mkdir -p build-cache
