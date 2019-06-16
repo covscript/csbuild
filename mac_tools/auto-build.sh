@@ -1,6 +1,6 @@
 #!/bin/bash
-#bash ../build.sh
-#bash ../install.sh
+bash ../build.sh
+bash ../install.sh
 bash ./make-app.sh ./build ./app_icon.png
 bash ./make-dmg.sh ./CovScript.app
 version_prefix=`./build/bin/cs -v | grep "^Version: " | awk '{print $2}'`
