@@ -33,7 +33,7 @@ fetch_git covscript-imgui &
 wait
 start covscript "./csbuild/make.sh"
 start covscript-regex "./make.sh" &
-start covscript-codec "./make.sh" &
+start covscript-codec "./csbuild/make.sh" &
 start covscript-darwin "./make.sh" &
 start covscript-sqlite "./make.sh" &
 start covscript-network "./make.sh" &
