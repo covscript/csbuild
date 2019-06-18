@@ -1,11 +1,24 @@
-dist: xenial
 language: cpp
-install:
-- sudo apt-get install pkg-config libglfw3-dev
-- cd deb_tools
-- bash auto-build.sh
-- sudo dpkg -i deb-src/*.deb
-script:
-- cs -v
-- cs_repl -v
-- cspkg --list
+jobs:
+  include:
+    - os: linux
+      dist: xenial
+      compiler: gcc
+      script:
+        - sudo apt-get install pkg-config libglfw3-dev
+        - cd deb_tools
+        - bash auto-build.sh
+    - os: linux
+      dist: xenial
+      compiler: clang
+      script:
+        - sudo apt-get install pkg-config libglfw3-dev
+        - cd deb_tools
+        - bash auto-build.sh
+    - os: osx
+      osx_image: xcode10.2
+      script:
+        - brew install bash git coreutils glfw3 sqlite3
+        - export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+        - cd mac_tools
+        - bash auto-build.sh
