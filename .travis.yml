@@ -18,7 +18,6 @@ jobs:
     - os: osx
       osx_image: xcode10.2
       script:
-        - brew install bash git coreutils glfw3 sqlite3
-        - export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+        - brew install glfw3
         - cd mac_tools
         - bash auto-build.sh
