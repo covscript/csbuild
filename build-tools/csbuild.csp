@@ -1,18 +1,27 @@
 package csbuild
 
-import csbuild_native
+class target
+    var name = new string
+    var source = new list
+    var libs = new list
+end
 
 class config
     var name = new string
     var author = new string
     var version = new string
+    var version_code = 0
     var targets = new hash_map
 
     function target(name, source)
-        var target = new csbuild_native.target
+        var target = new target
         target.name = name
         target.source = source
         targets.insert(name, target)
+    end
+
+    function link(name, lib)
+        targets[name].libs.push_back(lib)
     end
 end
 
