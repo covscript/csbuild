@@ -8,6 +8,15 @@ constant File = system.file
 constant Path = system.path
 constant IOStream = iostream
 
+constant CONFIG_FILE_NAME = "csbuild.config"
+constant configFilePath = [](path) -> path + Path.separator + CONFIG_FILE_NAME
+constant isPathValid = [](path) -> File.exists(configFilePath(path))
+@begin
+constant fatalPathInvalid = [](path) -> (
+    echo("fatal error: " + path + " is not an extension source directory"),
+    echo("note: did you forget to run `csbuild init' first?"))
+@end
+
 @begin
 constant print = [](...msg) -> 
     msg.size() > 1 ? 
@@ -89,7 +98,7 @@ function csbuild_help()
         "    help        Show this text\n" + 
         "    version     Display CSBuild version\n" +
         "\n" + 
-        "for detailed help of a command, type 'csbuild <command> help'\n");
+        "for detailed help of a command, type `csbuild <command> help'\n");
     @end
     return 0
 end
@@ -113,7 +122,7 @@ function csbuild_init(args)
         end
     end
 
-    var configFile = path + Path.separator + "csbuild.config"
+    var configFile = configFilePath(path)
 
     if !force && File.exists(configFile)
         echo("fatal error: " + path + " has been initialized as extension source directory")
@@ -130,8 +139,24 @@ function csbuild_init(args)
 end
 
 function csbuild_check(args)
-    echo(":: Checking extension configuration")
-    var pkg = context.source_import("csbuild.config")
+    var path = "."
+
+    foreach it in args
+        var arg = it
+        args.pop_front()
+        switch arg
+            case "help"; echo("No help currently :)"); return 0; end
+            default; path = arg; end
+        end
+    end
+
+    if !isPathValid(path)
+        fatalPathInvalid(path)
+        return 1
+    end
+
+    var configFile = configFilePath(path)
+    var pkg = context.source_import(configFile)
     var cfg = new pkg.config
 
     echo("  > Extension Name:      " + cfg.name)
@@ -178,12 +203,29 @@ function csbuild_generate_target(stream, target)
 end
 
 function csbuild_generate(args)
+    var path = "."
+
+    foreach it in args
+        var arg = it
+        args.pop_front()
+        switch arg
+            case "help"; echo("No help currently :)"); return 0; end
+            default; path = arg; end
+        end
+    end
+
+    if !isPathValid(path)
+        fatalPathInvalid(path)
+        return 1
+    end
+
+    var configFile = configFilePath(path)
+    var pkg = context.source_import(configFile)
+    var cfg = new pkg.config
+
     system.run("mkdir -p gen")
     var stream = IOStream.fstream("gen" + Path.separator + "CMakeLists.txt", IOStream.openmode.out)
     stream.println(TEMPLATE_CMAKE_HEAD)
-
-    var pkg = context.source_import("csbuild.config")
-    var cfg = new pkg.config
 
     foreach item in cfg.targets
         var target = item.second()
