@@ -29,18 +29,16 @@ constant print = [](...msg) ->
 
 @begin
 constant TEMPLATE_CONFIG = 
-"package <extension-name>\n" + 
-"\n" + 
 "import csbuild\n" + 
 "\n" + 
-"class config extends csbuild.config\n" + 
-"    function initialize() override\n" + 
-"        this.name = \"<extension-name>\"\n" + 
-"        this.author = \"<extension-author>\"\n" + 
-"        this.version = \"<extension-version>\"\n" + 
-"        this.version_code = 1\n" + 
-"        this.target(\"<extension-target>\", {\"main.cpp\"})\n" +
-"    end\n" + 
+"function csbuild_main(config)\n" + 
+"    config.name = \"<extension-name>\"\n" +
+"    config.author = \"<extension-author>\"\n" +
+"    config.version = \"<extension-version>\"\n" +
+"    config.version_code = 1\n" +
+"    @begin\n" +
+"    config.target(\"<target-name>\", {\"main.cpp\"})\n" + 
+"    @end\n" +
 "end\n"
 @end
 
