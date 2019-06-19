@@ -32,11 +32,11 @@ fetch_git covscript-streams &
 fetch_git covscript-imgui &
 wait
 start covscript "./csbuild/make.sh"
-start covscript-regex "./make.sh" &
+start covscript-regex "./csbuild/make.sh" &
 start covscript-codec "./csbuild/make.sh" &
-start covscript-darwin "./make.sh" &
-start covscript-sqlite "./make.sh" &
-start covscript-network "./make.sh" &
-start covscript-streams "./make.sh" &
+start covscript-darwin "./csbuild/make.sh" &
+start covscript-sqlite "./csbuild/make.sh" &
+start covscript-network "./csbuild/make.sh" &
+start covscript-streams "./csbuild/make.sh" &
 start covscript-imgui "./csbuild/make.sh" &
 wait
