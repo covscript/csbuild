@@ -12,3 +12,4 @@ win_tools/x64
 win_tools/x86
 .DS_Store
 *.dmg
+.vscode/
