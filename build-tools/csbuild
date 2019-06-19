@@ -178,6 +178,7 @@ function csbuild_generate_target(stream, target)
 end
 
 function csbuild_generate(args)
+    system.run("mkdir -p gen")
     var stream = IOStream.fstream("gen" + Path.separator + "CMakeLists.txt", IOStream.openmode.out)
     stream.println(TEMPLATE_CMAKE_HEAD)
 
