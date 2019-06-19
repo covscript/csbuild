@@ -1,0 +1,29 @@
+#!/usr/bin/env cs
+
+function echo(msg)
+    system.out.println(msg)
+end
+
+function csbuild_help()
+@begin
+    echo("CSBuild: The CovScript build system.\n" + 
+        "Usage: csbuild <command> [args...]\n" + 
+        "  where commands are:\n" + 
+        "    init        Initialize CovScript Extension directory\n" + 
+        "    check       Check build files but don't build any extension\n" + 
+        "    generate    Generate build files accroding to csbuild.config\n" + 
+        "    make        Build extension\n" + 
+        "    run         Build and run extension in CovScript REPL\n" +
+        "    push        Publish extension to public server\n" +
+        "    help        Show this text\n" + 
+        "    version     Display CSBuild version\n" +
+        "\n" + 
+        "for detailed help of a command, type 'csbuild <command> help'\n");
+@end
+end
+
+function main(args)
+    
+end
+
+main(runtime.cmd_args(context))

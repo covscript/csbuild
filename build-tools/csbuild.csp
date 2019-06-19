@@ -1,0 +1,18 @@
+package csbuild
+
+import csbuild_native
+
+class config
+    var name = new string
+    var author = new string
+    var version = new string
+    var targets = new hash_map
+
+    function target(name, source)
+        var target = new csbuild_native.target
+        target.name = name
+        target.source = source
+        targets.insert(name, target)
+    end
+end
+
