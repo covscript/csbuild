@@ -12,12 +12,12 @@ call:git_fetch covscript-streams
 call:git_fetch covscript-imgui
 start /WAIT /D covscript csbuild\make.bat
 set CS_DEV_PATH=%cd%\covscript\csdev
-start /D covscript-regex make.bat
+start /D covscript-regex csbuild\make.bat
 start /D covscript-codec csbuild\make.bat
-start /D covscript-darwin make.bat
-start /D covscript-sqlite make.bat
-start /D covscript-network make.bat
-start /D covscript-streams make.bat
+start /D covscript-darwin csbuild\make.bat
+start /D covscript-sqlite csbuild\make.bat
+start /D covscript-network csbuild\make.bat
+start /D covscript-streams csbuild\make.bat
 start /D covscript-imgui csbuild\make.bat
 goto:eof
 :git_fetch
