@@ -1,11 +1,17 @@
 #!/usr/bin/env cs
 
+constant VERSION = "1.0"
+
 function echo(msg)
     system.out.println(msg)
 end
 
+function echon(msg)
+    system.out.print(msg)
+end
+
 function csbuild_help()
-@begin
+    @begin
     echo("CSBuild: The CovScript build system.\n" + 
         "Usage: csbuild <command> [args...]\n" + 
         "  where commands are:\n" + 
@@ -19,11 +25,80 @@ function csbuild_help()
         "    version     Display CSBuild version\n" +
         "\n" + 
         "for detailed help of a command, type 'csbuild <command> help'\n");
-@end
+    @end
+    return 0
 end
+
+function csbuild_version()
+    echo("csbuild v" + VERSION)
+    return 0
+end
+
+
+
+function csbuild_init(args)
+    return 0
+end
+
+function csbuild_check(args)
+    echo(":: Checking extension configuration")
+    var pkg = runtime.source_import(context, "csbuild.config")
+    var cfg = new pkg.config
+
+    echo("  > Extension Name:      " + cfg.name)
+    echo("  > Extension Author:    " + cfg.author)
+    echo("  > Extension Version:   " + cfg.version)
+    echo("  > Extension Targets:   ")
+    foreach target in cfg.targets
+        echon("    " + target.first() + " <- ")
+        foreach item in target.second().source
+            echon(item + " ")
+        end
+        echo("")
+    end
+    return 0
+end
+
+function csbuild_generate(args)
+    return 0
+end
+
+function csbuild_make(args)
+    return 0
+end
+
+function csbuild_run(args)
+    return 0
+end
+
+function csbuild_push(args)
+    return 0
+end
+
 
 function main(args)
-    
+    args.pop_front()
+    foreach it in args
+        var arg = it
+        args.pop_front()
+        switch arg
+            case "init"; return csbuild_init(args); end
+            case "check"; return csbuild_check(args); end
+            case "generate"; return csbuild_generate(args); end
+            case "make"; return csbuild_make(args); end
+            case "run"; return csbuild_run(args); end
+            case "push"; return csbuild_push(args); end
+            case "version"; return csbuild_version(); end
+            case "help"; return csbuild_help(); end
+            default
+                echo("csbuild: Unrecognized command: " + arg)
+                echo("Type 'csbuild help' for help")
+                return 1
+            end
+        end
+    end
+    csbuild_help()
+    return 1
 end
 
-main(runtime.cmd_args(context))
+system.exit(main(clone(runtime.cmd_args(context))))
