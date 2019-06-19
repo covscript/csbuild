@@ -160,9 +160,10 @@ function csbuild_generate_target(stream, target)
     var cmakeCode = "# Extension Target: " + libName + "\n"
     cmakeCode += "add_library(" + libName + " SHARED "
     foreach item in target.source
-        cmakeCode += item + " ";
+        cmakeCode += ".." + Path.separator + item + " ";
     end
     cmakeCode += ")\n"
+    cmakeCode += "target_link_libraries(" + libName + " covscript)\n"
     cmakeCode += "target_link_libraries(" + libName + " "
     foreach item in target.libs
         cmakeCode += item + " ";
@@ -177,7 +178,7 @@ function csbuild_generate_target(stream, target)
 end
 
 function csbuild_generate(args)
-    var stream = IOStream.fstream("gen/CMakeLists.txt", IOStream.openmode.out)
+    var stream = IOStream.fstream("gen" + Path.separator + "CMakeLists.txt", IOStream.openmode.out)
     stream.println(TEMPLATE_CMAKE_HEAD)
 
     var pkg = context.source_import("csbuild.config")
