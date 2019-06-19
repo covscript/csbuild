@@ -1,9 +1,84 @@
 package csbuild
 
+function is_platform_darwin()
+    return true
+end
+
+function is_platform_linux()
+    return false
+end
+
+function is_platform_windows()
+    return false
+end
+
 class target
     var name = new string
     var source = new list
     var libs = new list
+    var options = new string
+
+    function add_source(files)
+        foreach file in files
+            source.push_back(file)
+        end
+        return this
+    end
+
+    function link(lib)
+        libs.push_back(lib)
+        return this
+    end
+
+    function compile_options(opt)
+        options += " " + opt
+        return this
+    end
+
+    function windows(callback)
+        if is_platform_windows()
+            callback(this)
+        end
+        return this
+    end
+
+    function linux(callback)
+        if is_platform_linux()
+            callback(this)
+        end
+        return this
+    end
+
+    function darwin(callback)
+        if is_platform_darwin()
+            callback(this)
+        end
+        return this
+    end
+
+    function link_windows(lib)
+        return this.windows([](t) -> t.link(lib))
+    end
+
+    function link_linux(lib)
+        return this.linux([](t) -> t.link(lib))
+    end
+
+    function link_darwin(lib)
+        return this.darwin([](t) -> t.link(lib))
+    end
+
+    function compile_options_windows(opt)
+        return this.windows([](t) -> t.compile_options(opt))
+    end
+
+    function compile_options_linux(opt)
+        return this.linux([](t) -> t.compile_options(opt))
+    end
+
+    function compile_options_darwin(opt)
+        return this.darwin([](t) -> t.compile_options(opt))
+    end
 end
 
 class config
@@ -14,14 +89,11 @@ class config
     var targets = new hash_map
 
     function target(name, source)
-        var target = new target
-        target.name = name
-        target.source = source
-        targets.insert(name, target)
-    end
-
-    function link(name, lib)
-        targets[name].libs.push_back(lib)
+        var target = gcnew target
+        target->name = name
+        target->source = source
+        this.targets.insert(target->name, target)
+        return *target
     end
 end
 

@@ -1,5 +1,7 @@
 #!/usr/bin/env cs
 
+import csbuild
+
 constant VERSION = "1.0"
 
 constant echo = system.out.println
@@ -11,6 +13,7 @@ constant IOStream = iostream
 constant CONFIG_FILE_NAME = "csbuild.config"
 constant configFilePath = [](path) -> path + Path.separator + CONFIG_FILE_NAME
 constant isPathValid = [](path) -> File.exists(configFilePath(path))
+
 @begin
 constant fatalPathInvalid = [](path) -> (
     echo("fatal error: " + path + " is not an extension source directory"),
@@ -84,6 +87,13 @@ constant TEMPLATE_CMAKE_HEAD =
 "# Extension Configuration\n"
 @end
 
+function loadConfig(file)
+    var config = new csbuild.config
+    var ns = context.source_import(configFile)
+    ns.csbuild_main(config)
+    return config
+end
+
 function csbuild_help()
     @begin
     echo("CSBuild: The CovScript build system.\n" + 
@@ -156,8 +166,7 @@ function csbuild_check(args)
     end
 
     var configFile = configFilePath(path)
-    var pkg = context.source_import(configFile)
-    var cfg = new pkg.config
+    var cfg = loadConfig(configFile)
 
     echo("  > Extension Name:      " + cfg.name)
     echo("  > Extension Author:    " + cfg.author)
@@ -165,32 +174,33 @@ function csbuild_check(args)
     echo("  > Extension Targets:   ")
     foreach item in cfg.targets
         var target = item.second()
-        echo("    > " + target.name)
+        echo("    > " + target->name)
         echon("        source: ")
-        foreach item in target.source
+        foreach item in target->source
             echon(item + " ")
         end
         echo("")
         echon("        libs: ")
-        foreach item in target.libs
+        foreach item in target->libs
             echon(item + " ")
         end
         echo("")
+        echo("        compile options: " + target->options)
     end
     return 0
 end
 
 function csbuild_generate_target(stream, target)
-    var libName = target.name
+    var libName = target->name
     var cmakeCode = "# Extension Target: " + libName + "\n"
     cmakeCode += "add_library(" + libName + " SHARED "
-    foreach item in target.source
+    foreach item in target->source
         cmakeCode += ".." + Path.separator + item + " ";
     end
     cmakeCode += ")\n"
     cmakeCode += "target_link_libraries(" + libName + " covscript)\n"
     cmakeCode += "target_link_libraries(" + libName + " "
-    foreach item in target.libs
+    foreach item in target->libs
         cmakeCode += item + " ";
     end
     cmakeCode += ")\n"
@@ -220,8 +230,7 @@ function csbuild_generate(args)
     end
 
     var configFile = configFilePath(path)
-    var pkg = context.source_import(configFile)
-    var cfg = new pkg.config
+    var cfg = loadConfig(configFile)
 
     system.run("mkdir -p gen")
     var stream = IOStream.fstream("gen" + Path.separator + "CMakeLists.txt", IOStream.openmode.out)
