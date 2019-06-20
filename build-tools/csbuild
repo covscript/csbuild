@@ -183,25 +183,30 @@ function csbuild_check(args)
             echon(item + " ")
         end
         echo("")
-        echo("        compile options: " + target->options)
+        echo("        compile options: " + target->coptions)
     end
     return 0
 end
 
-function csbuild_generate_target(stream, target)
+function csbuild_generate_target(stream, path, target)
     var libName = target->name
+
     var cmakeCode = "# Extension Target: " + libName + "\n"
+
     cmakeCode += "add_library(" + libName + " SHARED "
     foreach item in target->source
-        cmakeCode += ".." + Path.separator + item + " ";
+        cmakeCode += path + Path.separator + item + " ";
     end
     cmakeCode += ")\n"
+
     cmakeCode += "target_link_libraries(" + libName + " covscript)\n"
     cmakeCode += "target_link_libraries(" + libName + " "
     foreach item in target->libs
         cmakeCode += item + " ";
     end
     cmakeCode += ")\n"
+
+    cmakeCode += "target_compile_options(" + libName + " PUBLIC " + target->coptions + ")\n"
 
     cmakeCode += "set_target_properties(" + libName + " PROPERTIES OUTPUT_NAME " + libName + ")\n"
     cmakeCode += "set_target_properties(" + libName + " PROPERTIES PREFIX \"\")\n"
@@ -230,13 +235,25 @@ function csbuild_generate(args)
     var configFile = configFilePath(path)
     var cfg = loadConfig(configFile)
 
-    system.run("mkdir -p gen")
-    var stream = IOStream.fstream("gen" + Path.separator + "CMakeLists.txt", IOStream.openmode.out)
+    # if path is not an absolute path
+    if path.substr(0, 1) != Path.separator
+        if path == "."
+            path = runtime.getcwd()
+        else
+            path = runtime.getcwd() + Path.separator + path
+        end
+    end
+
+    var genDir = path + Path.separator + "gen"
+    var cmakeFile = genDir + Path.separator + "CMakeLists.txt"
+
+    File.mkdir(genDir)
+    var stream = IOStream.fstream(cmakeFile, IOStream.openmode.out)
     stream.println(TEMPLATE_CMAKE_HEAD)
 
     foreach item in cfg.targets
         var target = item.second()
-        csbuild_generate_target(stream, target)
+        csbuild_generate_target(stream, path, target)
     end
     return 0
 end
