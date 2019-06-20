@@ -238,9 +238,9 @@ function csbuild_generate(args)
     # if path is not an absolute path
     if path.substr(0, 1) != Path.separator
         if path == "."
-            path = runtime.getcwd()
+            path = runtime.get_current_dir()
         else
-            path = runtime.getcwd() + Path.separator + path
+            path = runtime.get_current_dir() + Path.separator + path
         end
     end
 
