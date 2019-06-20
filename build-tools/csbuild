@@ -330,7 +330,7 @@ function csbuild_make(path, cfg, args)
     return 0
 end
 
-function csbuild_run(path, cfg, args)
+function csbuild_clean(path, cfg, args)
     return 0
 end
 
@@ -348,7 +348,7 @@ function main(args)
             case "check"; return csbuild_command_gate(arg, args); end
             case "generate"; return csbuild_command_gate(arg, args); end
             case "make"; return csbuild_command_gate(arg, args); end
-            case "run"; return csbuild_command_gate(arg, args); end
+            case "clean"; return csbuild_command_gate(arg, args); end
             case "push"; return csbuild_command_gate(arg, args); end
             case "version"; return csbuild_version(); end
             case "help"; return csbuild_help(); end
