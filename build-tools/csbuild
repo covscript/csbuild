@@ -13,6 +13,7 @@ constant IOStream = iostream
 constant CONFIG_FILE_NAME = "csbuild.config"
 constant configFilePath = [](path) -> path + Path.separator + CONFIG_FILE_NAME
 constant isPathValid = [](path) -> File.exists(configFilePath(path))
+constant invoke = [](name, args) -> context.solve(context.build(name))(args...)
 
 @begin
 constant fatalPathInvalid = [](path) -> (
@@ -92,6 +93,54 @@ function loadConfig(file)
     return config
 end
 
+function fixPath(path)
+    # path is not an absolute path
+    if path[0] != Path.separator
+        if path == "."
+            return runtime.get_current_dir()
+        else
+            return runtime.get_current_dir() + Path.separator + path
+        end
+    end
+    return path
+end
+
+function selectPath(path)
+    path = fixPath(path)
+    var configFile = configFilePath(path)
+    var cfg = loadConfig(configFile)
+    return {path, cfg}
+end
+
+function csbuild_command_gate(command, args)
+    # common options come here
+    var parsing = args.size() > 0 ? true : false
+    while parsing
+        switch args.front()
+            # what if the source directory is named "help"?
+            # we need this '--' options
+            case "--"; args.pop_front(); parsing = false; end
+            case "help"; echo("No help for command `" + command + "' currently :)"); return 0; end
+            default; parsing = false; end
+        end
+    end
+
+    var path = args.size() > 0 ? args.front() : "."
+    if (args.size() > 0); args.pop_front(); end
+
+    path = fixPath(path)
+
+    if !isPathValid(path)
+        fatalPathInvalid(path)
+        return 1
+    end
+
+    var cfg = null
+    (path, cfg) = selectPath(path)
+
+    return invoke("csbuild_" + command, {path, cfg, args})
+end
+
 function csbuild_help()
     @begin
     echo("CSBuild: The CovScript build system.\n" + 
@@ -130,6 +179,7 @@ function csbuild_init(args)
         end
     end
 
+    path = fixPath(path)
     var configFile = configFilePath(path)
 
     if !force && File.exists(configFile)
@@ -146,26 +196,7 @@ function csbuild_init(args)
     return 0
 end
 
-function csbuild_check(args)
-    var path = "."
-
-    foreach it in args
-        var arg = it
-        args.pop_front()
-        switch arg
-            case "help"; echo("No help currently :)"); return 0; end
-            default; path = arg; end
-        end
-    end
-
-    if !isPathValid(path)
-        fatalPathInvalid(path)
-        return 1
-    end
-
-    var configFile = configFilePath(path)
-    var cfg = loadConfig(configFile)
-
+function csbuild_check(path, cfg, args)
     echo("  > Extension Name:      " + cfg.name)
     echo("  > Extension Author:    " + cfg.author)
     echo("  > Extension Version:   " + cfg.version)
@@ -215,35 +246,7 @@ function csbuild_generate_target(stream, path, target)
     stream.println(cmakeCode)
 end
 
-function csbuild_generate(args)
-    var path = "."
-
-    foreach it in args
-        var arg = it
-        args.pop_front()
-        switch arg
-            case "help"; echo("No help currently :)"); return 0; end
-            default; path = arg; end
-        end
-    end
-
-    if !isPathValid(path)
-        fatalPathInvalid(path)
-        return 1
-    end
-
-    var configFile = configFilePath(path)
-    var cfg = loadConfig(configFile)
-
-    # if path is not an absolute path
-    if path.substr(0, 1) != Path.separator
-        if path == "."
-            path = runtime.get_current_dir()
-        else
-            path = runtime.get_current_dir() + Path.separator + path
-        end
-    end
-
+function csbuild_generate(path, cfg, args)
     var genDir = path + Path.separator + "gen"
     var cmakeFile = genDir + Path.separator + "CMakeLists.txt"
 
@@ -255,18 +258,83 @@ function csbuild_generate(args)
         var target = item.second()
         csbuild_generate_target(stream, path, target)
     end
+
+    echo(":: Build files have been written to " + path)
     return 0
 end
 
-function csbuild_make(args)
+function csbuild_make_check_binaries()
+    var pathArray = system.getenv("PATH").split({Path.delimiter})
+    var cmakeFound = false
+    var makeFound = false
+    var cmakeName = system.is_platform_windows() ? "cmake.exe" : "cmake"
+    var makeName = system.is_platform_windows() ? "make.exe" : "make"
+
+    foreach entry in pathArray
+        var cmake = entry + Path.separator + cmakeName
+        var make = entry + Path.separator + makeName
+        if !cmakeFound && File.can_execute(cmake)
+            cmakeFound = true
+        end
+        if !makeFound && File.can_execute(make)
+            makeFound = true
+        end
+        if cmakeFound && makeFound
+            break
+        end
+    end
+    return cmakeFound && makeFound
+end
+
+function csbuild_make(path, cfg, args)
+    if !csbuild_make_check_binaries()
+        echo("It seems that your system lacks cmake or make. Please install them before make.")
+        echo("note: did you forget to set these binaries executable?")
+        return 1
+    end
+
+    var genDir = path + Path.separator + "gen"
+    var buildDir = genDir + Path.separator + "build"
+    var cmakeFile = genDir + Path.separator + "CMakeLists.txt"
+    
+    if !File.exists(cmakeFile)
+        echo(":: Build files not found. Generating now.")
+        if csbuild_generate(path, cfg, {}) != 0
+            echo("\n:: Failed: csbuild generate")
+            return 1
+        end
+    end
+
+    if !File.mkdir(buildDir)
+        echo("Cannot create directory" + buildDir)
+        echo("\n:: Failed: mkdir")
+        return 1
+    end
+
+    echo(":: Building in " + buildDir)
+
+    var cmakeCommand = "cmake -H" +  genDir + " -B" + buildDir
+    echo(":: Running command: " + cmakeCommand)
+    if system.run(cmakeCommand) != 0
+        echo("\n:: Failed: cmake")
+        return 1
+    end
+
+    var makeCommand = "make -C " + buildDir
+    echo(":: Running command: " + makeCommand)
+    if system.run(makeCommand) != 0
+        echo("\n:: Faild: make")
+    end
+
+    echo("\n\n:: Build successful")
     return 0
 end
 
-function csbuild_run(args)
+function csbuild_run(path, cfg, args)
     return 0
 end
 
-function csbuild_push(args)
+function csbuild_push(path, cfg, args)
     return 0
 end
 
@@ -277,11 +345,11 @@ function main(args)
         args.pop_front()
         switch arg
             case "init"; return csbuild_init(args); end
-            case "check"; return csbuild_check(args); end
-            case "generate"; return csbuild_generate(args); end
-            case "make"; return csbuild_make(args); end
-            case "run"; return csbuild_run(args); end
-            case "push"; return csbuild_push(args); end
+            case "check"; return csbuild_command_gate(arg, args); end
+            case "generate"; return csbuild_command_gate(arg, args); end
+            case "make"; return csbuild_command_gate(arg, args); end
+            case "run"; return csbuild_command_gate(arg, args); end
+            case "push"; return csbuild_command_gate(arg, args); end
             case "version"; return csbuild_version(); end
             case "help"; return csbuild_help(); end
             default
