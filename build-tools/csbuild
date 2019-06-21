@@ -86,6 +86,26 @@ constant TEMPLATE_CMAKE_HEAD =
 "# Extension Configuration\n"
 @end
 
+function removeRecursive(path)
+    foreach i in Path.scan(path)
+        var name = i.name()
+        if name == "." || name == ".."
+            continue
+        end
+
+        if i.type() == Path.type.dir
+            if !removeRecursive(path + Path.separator + name)
+                return false
+            end
+        else
+            if !File.remove(path + Path.separator + name)
+                return false
+            end
+        end
+    end
+    return File.remove(path)
+end
+
 function loadConfig(file)
     var config = new csbuild.config
     var ns = context.source_import(configFile)
@@ -331,6 +351,10 @@ function csbuild_make(path, cfg, args)
 end
 
 function csbuild_clean(path, cfg, args)
+    var genDir = path + Path.separator + "gen"
+    if File.exists(genDir)
+        return removeRecursive(genDir) ? 0 : 1
+    end
     return 0
 end
 
