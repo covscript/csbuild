@@ -155,10 +155,9 @@ function csbuild_command_gate(command, args)
         return 1
     end
 
-    var cfg = null
-    (path, cfg) = selectPath(path)
+    var (newPath, cfg) = selectPath(path)
 
-    return invoke("csbuild_" + command, {path, cfg, args})
+    return invoke("csbuild_" + command, {newPath, cfg, args})
 end
 
 function csbuild_help()
