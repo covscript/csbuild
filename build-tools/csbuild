@@ -199,6 +199,15 @@ function csbuild_init(args)
     end
 
     path = fixPath(path)
+
+    if !File.exists(path)
+        if !File.mkdir(path)
+            echo("fatal error: " + path + " does not exist and we failed to create one")
+            echo("note: checking permission will usually help")
+            return 1
+        end
+    end
+
     var configFile = configFilePath(path)
 
     if !force && File.exists(configFile)
@@ -284,31 +293,37 @@ end
 
 function csbuild_make_check_binaries()
     var pathArray = system.getenv("PATH").split({Path.delimiter})
-    var cmakeFound = false
-    var makeFound = false
     var cmakeName = system.is_platform_windows() ? "cmake.exe" : "cmake"
-    var makeName = system.is_platform_windows() ? "make.exe" : "make"
 
     foreach entry in pathArray
         var cmake = entry + Path.separator + cmakeName
-        var make = entry + Path.separator + makeName
-        if !cmakeFound && File.can_execute(cmake)
-            cmakeFound = true
-        end
-        if !makeFound && File.can_execute(make)
-            makeFound = true
-        end
-        if cmakeFound && makeFound
-            break
+        if File.can_execute(cmake)
+            return true
         end
     end
-    return cmakeFound && makeFound
+    return false
+end
+
+function csbuild_make_check_envs()
+    try
+        system.getenv("CS_DEV_PATH")
+        return true
+    catch ignore
+        return false
+    end
 end
 
 function csbuild_make(path, cfg, args)
     if !csbuild_make_check_binaries()
         echo("It seems that your system lacks cmake or make. Please install them before make.")
         echo("note: did you forget to set these binaries executable?")
+        return 1
+    end
+
+    if !csbuild_make_check_envs()
+        echo("It seems that you have environment variable CS_DEV_PATH unset")
+        echo("CovScript Extension requires that to build.")
+        echo("note: set CS_DEV_PATH to /path/to/covscript-source/csdev after building CovScript")
         return 1
     end
 
@@ -319,14 +334,14 @@ function csbuild_make(path, cfg, args)
     if !File.exists(cmakeFile)
         echo(":: Build files not found. Generating now.")
         if csbuild_generate(path, cfg, {}) != 0
-            echo("\n:: Failed: csbuild generate")
+            echo("\n\n:: Failed: csbuild generate")
             return 1
         end
     end
 
     if !File.mkdir(buildDir)
         echo("Cannot create directory" + buildDir)
-        echo("\n:: Failed: mkdir")
+        echo("\n\n:: Failed: mkdir")
         return 1
     end
 
@@ -335,14 +350,15 @@ function csbuild_make(path, cfg, args)
     var cmakeCommand = "cmake -H" +  genDir + " -B" + buildDir
     echo(":: Running command: " + cmakeCommand)
     if system.run(cmakeCommand) != 0
-        echo("\n:: Failed: cmake")
+        echo("\n\n:: Failed: cmake")
         return 1
     end
 
-    var makeCommand = "make -C " + buildDir
+    var makeCommand = "cmake --build " + buildDir
     echo(":: Running command: " + makeCommand)
     if system.run(makeCommand) != 0
-        echo("\n:: Faild: make")
+        echo("\n\n:: Faild: make (also cmake --build)")
+        return 1
     end
 
     echo("\n\n:: Build successful")
