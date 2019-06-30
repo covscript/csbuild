@@ -114,14 +114,22 @@ function loadConfig(file)
 end
 
 function fixPath(path)
-    # path is not an absolute path
-    if path[0] != Path.separator
-        if path == "."
-            return runtime.get_current_dir()
-        else
+    if path == "."
+        return runtime.get_current_dir()
+    end
+
+    if system.is_platform_windows()
+        # path is not an absolute path
+        if path[0] != Path.separator && (path.size() < 3 || (path[1] != ':' || path[2] != '\\'))
+            return runtime.get_current_dir() + Path.separator + path 
+        end
+    else
+        # path is not an absolute path
+        if path[0] != Path.separator
             return runtime.get_current_dir() + Path.separator + path
         end
     end
+
     return path
 end
 
