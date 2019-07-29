@@ -13,3 +13,4 @@ win_tools/x86
 .DS_Store
 *.dmg
 .vscode/
+build-tools/test/gen
