@@ -8,7 +8,7 @@ Travis CI Status: [![Build Status](https://travis-ci.org/covscript/csbuild.svg?b
 ## Tested Platform
 OS|Kernel|Architecture|Compiler|Target|Build Tool
 :---:|:---:|:---:|:---:|:---:|:---:
-Apple macOS Mojave 10.14.6|Apple Darwin 18.7.0|x86_64|Clang 10.0.1|x86_64-apple-darwin18.7.0|mac_tools
+Apple macOS Mojave 10.14.6|Apple Darwin 18.7.0|x86_64|Apple Clang 10.0.1|x86_64-apple-darwin18.7.0|mac_tools
 Microsoft Windows 10 Professional 1809|Windows NT 10.0.17763.615|x86_64|GCC 8.1.0 (i686-posix-sjlj-rev0)|i686-w64-mingw32|win_tools
 Microsoft Windows 10 Professional 1809|Windows NT 10.0.17763.615|x86_64|GCC 8.1.0 (x86_64-posix-seh-rev0)|x86_64-w64-mingw32|win_tools
 Deepin Linux 15.11 Desktop|GNU/Linux 4.15.0-29deepin-generic|x86_64|GCC 7.3.0|x86_64-linux-gnu|deb_tools
