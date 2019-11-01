@@ -169,7 +169,7 @@ source "\${selfDir}/config"
 export PATH="\${PATH}:\${covscriptDir}/bin"
 export LD_LIBRARY_PATH="\${LD_LIBRARY_PATH}:\${covscriptDir}/lib"
 
-csReplBin="\${covscriptDir}/bin/cs_repl"
+csReplBin="\${covscriptDir}/bin/cs"
 csUserImportPath="\$HOME/Library/Application Support/org.covscript.env/\${csABIVersion}/imports"
 
 if [[ "\$HOME"x != ""x ]];then
