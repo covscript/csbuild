@@ -1,5 +1,6 @@
 rm -rf ./build
 mkdir -p build/bin
+cp ../build-tools/csbuild ../build/bin/
 cd build-cache
 cp cspkg/cspkg ../build/bin/
 cp -rf covscript/build ..

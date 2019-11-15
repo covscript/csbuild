@@ -1,6 +1,8 @@
 @echo off
 rd /S /Q .\build
 mkdir build
+xcopy /Y ..\..\build-tools\csbuild build\bin\
+xcopy /Y ..\..\build-tools\csbuild.bat build\bin\
 cd build-cache
 xcopy /Y cspkg\cspkg ..\build\bin\
 xcopy /Y cspkg\cspkg.bat ..\build\bin\
