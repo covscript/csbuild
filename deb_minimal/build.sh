@@ -12,7 +12,7 @@ git_repo=https://github.com/covscript
 function fetch_git ()
 {
     if [ ! -d "$1" ]; then
-        git clone $git_repo/$1 --depth=1 -b sandbox
+        git clone $git_repo/$1 --depth=1 -b $2
     else
         cd $1
         git fetch
@@ -21,11 +21,11 @@ function fetch_git ()
         cd ..
     fi
 }
-fetch_git covscript &
-fetch_git covscript-regex &
-fetch_git covscript-codec &
-fetch_git covscript-network &
-fetch_git covscript-streams &
+fetch_git covscript sandbox &
+fetch_git covscript-regex master &
+fetch_git covscript-codec master &
+fetch_git covscript-network master &
+fetch_git covscript-streams master &
 wait
 start covscript "./csbuild/make.sh"
 start covscript-regex "./csbuild/make.sh" &
