@@ -193,6 +193,7 @@ chmod 755 "$contentDir/MacOS/launcher"
 echo ":: Copying binaries and libraries"
 cp -r "$buildDir" "$contentDir/MacOS/covscript"
 chmod 755 "$contentDir/MacOS/covscript/bin/cspkg"
+chmod 755 "$contentDir/MacOS/covscript/bin/csbuild"
 
 echo ":: Done"
 rm -rf "CovScript.app"
