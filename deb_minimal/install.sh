@@ -8,4 +8,3 @@ cp -rf covscript-network/build ..
 cp -rf covscript-streams/build ..
 cd ..
 rm build/bin/cs_dbg
-mv build/bin/cs build/bin/cs_safe
