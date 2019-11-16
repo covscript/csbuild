@@ -27,6 +27,9 @@ fetch_git covscript-codec &
 fetch_git covscript-network &
 fetch_git covscript-streams &
 wait
+cd covscript
+git checkout sandbox
+cd ..
 start covscript "./csbuild/make.sh"
 start covscript-regex "./csbuild/make.sh" &
 start covscript-codec "./csbuild/make.sh" &
