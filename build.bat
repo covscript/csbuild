@@ -28,6 +28,6 @@ if exist %1% (
     git clean -dfx
     cd ..
 ) else (
-    git clone https://github.com/covscript/%1%
+    git clone https://github.com/covscript/%1% --depth=1
 )
 goto:eof

@@ -12,7 +12,7 @@ git_repo=https://github.com/covscript
 function fetch_git ()
 {
     if [ ! -d "$1" ]; then
-        git clone $git_repo/$1
+        git clone $git_repo/$1 --depth=1
     else
         cd $1
         git fetch
