@@ -1,5 +1,8 @@
 # Covariant Script Official Build System
-Travis CI Status: [![Build Status](https://travis-ci.org/covscript/csbuild.svg?branch=master)](https://travis-ci.org/covscript/csbuild)
+|Platform|Condition|Status|
+|----|----|----|
+|Travis CI|Push and Pull Request|[![Build Status](https://travis-ci.org/covscript/csbuild.svg?branch=master)](https://travis-ci.org/covscript/csbuild)|
+|GitHub Action|Push, Pull Request and Schedule|[![Action Status](https://github.com/covscript/csbuild/workflows/schedule/badge.svg)](https://github.com/covscript/csbuild/actions)|
 ## Supported Platform
 1. Apple macOS (Xcode)
 2. Debian-like Linux (Dpkg)
