@@ -15,7 +15,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, macOS-latest]
 
     steps:
       - uses: actions/checkout@v1
@@ -23,12 +23,30 @@ jobs:
       - name: build-ubuntu
         if: matrix.os == 'ubuntu-latest'
         run: |
+          sudo apt update
           sudo apt install libglfw3-dev
+          mkdir build
           cd deb_tools
           bash auto-build.sh
+          cp deb-src/*.deb ../build
+
+      - name: build-macOS
+        if: matrix.os == 'macOS-latest'
+        run: |
+          brew install bash binutils coreutils glfw
+          mkdir build
+          cd mac_tools
+          bash auto-build.sh
+          cp *.dmg ../build
 
       - uses: actions/upload-artifact@master
         if: matrix.os == 'ubuntu-latest'
         with:
           name: covscript-ubuntu
-          path: deb_tools/deb-src
+          path: build
+      
+      - uses: actions/upload-artifact@master
+        if: matrix.os == 'macOS-latest'
+        with:
+          name: covscript-macOS
+          path: build
