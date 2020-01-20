@@ -18,9 +18,10 @@ jobs:
         os: [ubuntu-latest]
 
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
 
-      - name: build-ubuntu
+      - name: Build on Ubuntu
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt update
@@ -30,7 +31,7 @@ jobs:
           bash auto-build.sh
           cp deb-src/*.deb ../build
       
-      - name: test-ubuntu
+      - name: Run tests on Ubuntu
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo dpkg -i build/*.deb
@@ -40,6 +41,18 @@ jobs:
           cd deb_tools/build-cache/covscript/examples
           cs benchmark.csc
           cs http_request.csc
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: CSBuild Auto Release ${{ github.ref }}
+          body: |
+            Created by GitHub Action
+          draft: false
+          prerelease: false
 
       - uses: actions/upload-artifact@master
         if: matrix.os == 'ubuntu-latest'
