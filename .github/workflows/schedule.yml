@@ -29,11 +29,6 @@ jobs:
           mkdir build
           cd deb_tools
           bash auto-build.sh
-          cp deb-src/*.deb ../build
-          cd ..
-          zip -q -r covscript-ubuntu.zip build
-          git tag -d auto-release
-          git push origin :auto-release
       
       - name: Run tests on Ubuntu
         if: matrix.os == 'ubuntu-latest'
@@ -46,27 +41,14 @@ jobs:
           cs benchmark.csc
           cs http_request.csc
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Automatic Releases
+        uses: marvinpinto/action-automatic-releases@master
         with:
-          tag_name: auto-release
-          release_name: CSBuild Auto Release
-          draft: false
-          prerelease: false
-
-      - name: Upload Release Asset
-        id: upload-release-asset 
-        uses: actions/upload-release-asset@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: covscript-ubuntu.zip
-          asset_name: covscript-ubuntu.zip
-          asset_content_type: application/zip
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "schedule"
+          title: "Schedule Build"
+          files: |
+            deb-src/*.deb
 
       - name: Upload Artifact
         uses: actions/upload-artifact@master
