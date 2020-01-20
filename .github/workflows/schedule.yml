@@ -33,7 +33,7 @@ jobs:
       - name: Run tests on Ubuntu
         if: matrix.os == 'ubuntu-latest'
         run: |
-          sudo dpkg -i build/*.deb
+          sudo dpkg -i deb_tools/deb-src/*.deb
           cs -v
           cs_dbg -v
           cspkg --list
@@ -48,11 +48,4 @@ jobs:
           automatic_release_tag: "schedule"
           title: "Schedule Build"
           files: |
-            deb-src/*.deb
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@master
-        if: matrix.os == 'ubuntu-latest'
-        with:
-          name: covscript-ubuntu
-          path: build
+            deb_tools/deb-src/*.deb
