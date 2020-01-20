@@ -32,6 +32,8 @@ jobs:
           cp deb-src/*.deb ../build
           cd ..
           zip -q -r covscript-ubuntu.zip build
+          git tag -d auto-release
+          git push origin :auto-release
       
       - name: Run tests on Ubuntu
         if: matrix.os == 'ubuntu-latest'
