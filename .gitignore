@@ -1,6 +1,9 @@
 deb_tools/build
 deb_tools/build-cache
 deb_tools/deb-src
+deb_minimal/build
+deb_minimal/build-cache
+deb_minimal/deb-src
 mac_tools/build
 mac_tools/build-cache
 mac_tools/CovScript.app
@@ -14,3 +17,5 @@ win_tools/x86
 *.dmg
 .vscode/
 build-tools/test/gen
+build/
+build-cache/
