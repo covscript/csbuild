@@ -12,3 +12,4 @@ cp -rf covscript-sqlite/build ..
 cp -rf covscript-network/build ..
 cp -rf covscript-streams/build ..
 cp -rf covscript-imgui/build ..
+cp -rf covscript-process/build ..

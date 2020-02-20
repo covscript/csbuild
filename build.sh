@@ -30,6 +30,7 @@ fetch_git covscript-sqlite &
 fetch_git covscript-network &
 fetch_git covscript-streams &
 fetch_git covscript-imgui &
+fetch_git covscript-process &
 wait
 start covscript "./csbuild/make.sh"
 start covscript-regex "./csbuild/make.sh" &
@@ -39,4 +40,5 @@ start covscript-sqlite "./csbuild/make.sh" &
 start covscript-network "./csbuild/make.sh" &
 start covscript-streams "./csbuild/make.sh" &
 start covscript-imgui "./csbuild/make.sh" &
+start covscript-process "./csbuild/make.sh" &
 wait
