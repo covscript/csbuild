@@ -31,6 +31,7 @@ fetch_git covscript-network &
 fetch_git covscript-streams &
 fetch_git covscript-imgui &
 fetch_git covscript-process &
+fetch_git covscript-curl &
 wait
 start covscript "./csbuild/make.sh"
 start covscript-regex "./csbuild/make.sh" &
@@ -41,4 +42,5 @@ start covscript-network "./csbuild/make.sh" &
 start covscript-streams "./csbuild/make.sh" &
 start covscript-imgui "./csbuild/make.sh" &
 start covscript-process "./csbuild/make.sh" &
+start covscript-curl "./csbuild/make.sh" &
 wait
