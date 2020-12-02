@@ -4,9 +4,13 @@
 |Travis CI|Push and Pull Request|[![Build Status](https://travis-ci.org/covscript/csbuild.svg?branch=master)](https://travis-ci.org/covscript/csbuild)|
 |GitHub Action|Push, Pull Request and Schedule|[![Action Status](https://github.com/covscript/csbuild/workflows/schedule/badge.svg)](https://github.com/covscript/csbuild/actions)|
 ## Supported Platform
-1. Apple macOS (Xcode)
-2. Debian-like Linux (Dpkg)
-3. Microsoft Windows (MinGW-w64)
+1. Apple macOS (Apple Clang) -> mac_tools
+2. Debian-like Linux (GCC & LLVM Clang) -> deb_tools
+3. Microsoft Windows (MinGW-w64 GCC) -> win_tools & sign_tools
+
+## Special Build
+1. Raspberry Pi OS (same as Debian, but including `covscript.iot` libraries) -> rpi_tools
+2. Covariant Script Sandbox Environment (system libraries like `covscript.process` are not included) -> deb_minimal
 
 ## Tested Platform
 OS|Kernel|Architecture|Compiler|Target|Build Tool
@@ -14,6 +18,7 @@ OS|Kernel|Architecture|Compiler|Target|Build Tool
 Apple macOS Mojave 10.14.6|Apple Darwin 18.7.0|x86_64|Apple Clang 10.0.1|x86_64-apple-darwin18.7.0|mac_tools
 Microsoft Windows 10 Professional 1809|Windows NT 10.0.17763.615|x86_64|GCC 8.1.0 (i686-posix-sjlj-rev0)|i686-w64-mingw32|win_tools
 Microsoft Windows 10 Professional 1809|Windows NT 10.0.17763.615|x86_64|GCC 8.1.0 (x86_64-posix-seh-rev0)|x86_64-w64-mingw32|win_tools
+Microsoft Windows 10 Professional 20H2|Windows NT 10.0.19042.630|x86_64|GCC 10.2.0 (x86_64-posix-seh)|x86_64-w64-mingw32|win_tools
 Deepin Linux 15.11 Desktop|GNU/Linux 4.15.0-29deepin-generic|x86_64|GCC 7.3.0|x86_64-linux-gnu|deb_tools
 Deepin Linux 15.11 Desktop|GNU/Linux 4.15.0-29deepin-generic|x86_64|Clang 7.0.1|x86_64-linux-gnu|deb_tools
 Deepin Linux 15.5 SP2 Professional|GNU/Linux 4.4.32-deepin-loongson-3-generic|mips64|GCC 6.3.0|mips64el-linux-gnuabi64|deb_tools
@@ -39,7 +44,7 @@ The first step will be very time-consuming. You will get the `.dmg` file under `
 > Although we support all platforms theoretically, we only guarantee it can work with the platform we tested.
 
 ### Dependencies
-Install `cmake`, `pkg-config`, `build-essential`, `git` and `libglfw3-dev` via `apt-get`.
+Install `cmake`, `pkg-config`, `build-essential`, `git` , `libcurl4-openssl-dev` and `libglfw3-dev` via `apt-get`.
 ### Prepare
 1. Ensure your computer's **performance** is good enough -- at least 2 cores CPU and 4 gigabytes RAM.
 2. Recheck your **internet access**, which is required to fetch the source code from github.
