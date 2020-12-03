@@ -33,6 +33,7 @@ fetch_git covscript-imgui &
 fetch_git covscript-process &
 fetch_git covscript-wiringpi &
 fetch_git covscript-curl &
+fetch_git covscript-zip &
 wait
 start covscript "./csbuild/make.sh"
 start covscript-regex "./csbuild/make.sh" &
@@ -45,4 +46,5 @@ start covscript-imgui "./csbuild/make.sh" &
 start covscript-process "./csbuild/make.sh" &
 start covscript-wiringpi "./csbuild/make.sh" &
 start covscript-curl "./csbuild/make.sh" &
+start covscript-zip "./csbuild/make.sh" &
 wait

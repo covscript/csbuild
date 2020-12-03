@@ -15,3 +15,4 @@ cp -rf covscript-imgui/build ..
 cp -rf covscript-process/build ..
 cp -rf covscript-wiringpi/build ..
 cp -rf covscript-curl/build ..
+cp -rf covscript-zip/build ..
