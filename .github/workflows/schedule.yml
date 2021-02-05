@@ -40,7 +40,6 @@ jobs:
           cspkg --list
           cd deb_tools/build-cache/covscript/examples
           cs benchmark.csc
-          cs http_request.csc
 
       - name: Automatic Releases
         uses: marvinpinto/action-automatic-releases@master
