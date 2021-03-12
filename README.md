@@ -44,7 +44,7 @@ The first step will be very time-consuming. You will get the `.dmg` file under `
 > Although we support all platforms theoretically, we only guarantee it can work with the platform we tested.
 
 ### Dependencies
-Install `cmake`, `pkg-config`, `build-essential`, `git` , `libcurl4-openssl-dev` and `libglfw3-dev` via `apt-get`.
+Install `cmake`, `pkg-config`, `build-essential`, `git` , `libcurl4-openssl-dev` , `unixodbc-dev` and `libglfw3-dev` via `apt-get`.
 ### Prepare
 1. Ensure your computer's **performance** is good enough -- at least 2 cores CPU and 4 gigabytes RAM.
 2. Recheck your **internet access**, which is required to fetch the source code from github.

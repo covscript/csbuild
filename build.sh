@@ -8,7 +8,7 @@ function start ()
 }
 mkdir -p build-cache
 cd build-cache
-git_repo=https://github.com/covscript
+git_repo=https://hub.fastgit.org/covscript
 function fetch_git ()
 {
     if [ ! -d "$1" ]; then
@@ -33,6 +33,7 @@ fetch_git covscript-imgui &
 fetch_git covscript-process &
 fetch_git covscript-curl &
 fetch_git covscript-zip &
+fetch_git covscript-database &
 wait
 start covscript "./csbuild/make.sh"
 start covscript-regex "./csbuild/make.sh" &
@@ -45,4 +46,5 @@ start covscript-imgui "./csbuild/make.sh" &
 start covscript-process "./csbuild/make.sh" &
 start covscript-curl "./csbuild/make.sh" &
 start covscript-zip "./csbuild/make.sh" &
+start covscript-database "./csbuild/make.sh" &
 wait

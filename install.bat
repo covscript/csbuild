@@ -18,3 +18,4 @@ xcopy /E /Y covscript-imgui\build ..\build\
 xcopy /E /Y covscript-process\build ..\build\
 xcopy /E /Y covscript-curl\build ..\build\
 xcopy /E /Y covscript-zip\build ..\build\
+xcopy /E /Y covscript-database\build ..\build\
