@@ -8,7 +8,6 @@ call:git_fetch covscript-codec
 call:git_fetch covscript-darwin
 call:git_fetch covscript-sqlite
 call:git_fetch covscript-network
-call:git_fetch covscript-streams
 call:git_fetch covscript-imgui
 call:git_fetch covscript-process
 call:git_fetch covscript-curl
@@ -21,7 +20,6 @@ start /D covscript-codec csbuild\make.bat
 start /D covscript-darwin csbuild\make.bat
 start /D covscript-sqlite csbuild\make.bat
 start /D covscript-network csbuild\make.bat
-start /D covscript-streams csbuild\make.bat
 start /D covscript-imgui csbuild\make.bat
 start /D covscript-process csbuild\make.bat
 start /D covscript-curl csbuild\make.bat

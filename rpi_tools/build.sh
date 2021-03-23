@@ -28,7 +28,6 @@ fetch_git covscript-codec &
 fetch_git covscript-darwin &
 fetch_git covscript-sqlite &
 fetch_git covscript-network &
-fetch_git covscript-streams &
 fetch_git covscript-imgui &
 fetch_git covscript-process &
 fetch_git covscript-wiringpi &
@@ -42,7 +41,6 @@ start covscript-codec "./csbuild/make.sh" &
 start covscript-darwin "./csbuild/make.sh" &
 start covscript-sqlite "./csbuild/make.sh" &
 start covscript-network "./csbuild/make.sh" &
-start covscript-streams "./csbuild/make.sh" &
 start covscript-imgui "./csbuild/make.sh" &
 start covscript-process "./csbuild/make.sh" &
 start covscript-wiringpi "./csbuild/make.sh" &
