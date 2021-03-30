@@ -2,7 +2,7 @@
 mkdir build-cache
 cd %~dp0\build-cache
 
-set GIT_REPO="https://github.com/covscript"
+set GIT_REPO="https://github.com/covscript/"
 
 call:git_fetch cspkg
 call:git_fetch covscript
@@ -30,8 +30,11 @@ xcopy /E /Y covscript-codec\build ..\build\
 xcopy /E /Y covscript-process\build ..\build\
 
 cd ..
-.\build\bin\cs -i .\build\imports win32_executor.csc %1%
-.\build\bin\cs -i .\build\imports csbuild.csc %1%
+
+start /WAIT /D .\misc\bin sign.bat ..\cert\covscript ..\..\build\bin\*.exe
+
+.\build\bin\cs -i .\build\imports .\misc\win32_build.csc .\misc\win32_config.json
+.\build\bin\cs -i .\build\imports .\misc\cspkg_build.csc .\misc\cspkg_config.json
 
 goto:eof
 :call_bat

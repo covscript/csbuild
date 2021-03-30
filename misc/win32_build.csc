@@ -2,6 +2,13 @@ import codec.json as json
 import process
 import regex
 
+namespace utils
+    function open_json(path)
+        var ifs = iostream.ifstream(path)
+        return json.to_var(json.from_stream(ifs))
+    end
+end
+
 function call_parallel(arg_list)
     var plist = new list
     foreach it in arg_list
@@ -14,15 +21,6 @@ function call_parallel(arg_list)
     loop
         for it = plist.begin, it != plist.end, null
             if it.data.has_exited()
-                link os = it.data.out()
-                loop
-                    var c = os.get()
-                    if !os.eof()
-                        system.out.put(c)
-                    else
-                        break
-                    end
-                end
                 it = plist.erase(it)
             else
                 it.next()
@@ -43,7 +41,6 @@ if context.cmd_args.size != 2 || !is_json_file(context.cmd_args[1])
 end
 
 var target = utils.open_json(context.cmd_args[1])
-
 var vlist = new array
 
 foreach it in target.repos
@@ -55,18 +52,9 @@ foreach it in target.repos
     end
 end
 
-system.file.mkdir("build-cache")
 system.out.println("csbuild: fetching git repository...")
 call_parallel(vlist)
 vlist.clear()
-
-foreach it in target.build
-    if system.is_platform_windows()
-        vlist.push_back({"build-cache" + system.path.separator + it, "conhost.exe", {".\\csbuild\\make.bat"}})
-    else
-        vlist.push_back({"build-cache" + system.path.separator + it, "bash", {"./csbuild/make.sh"}})
-    end
-end
-
+foreach it in target.build do vlist.push_back({"build-cache" + system.path.separator + it, "conhost.exe", {".\\csbuild\\make.bat"}})
 system.out.println("csbuild: building packages...")
 call_parallel(vlist)

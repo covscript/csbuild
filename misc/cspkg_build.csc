@@ -118,11 +118,9 @@ if context.cmd_args.size != 2 || !is_json_file(context.cmd_args[1])
 end
 
 var target = utils.open_json(context.cmd_args[1])
+
 if target.remote_base[-1] != '/'
     target.remote_base += '/'
-end
-if target.git_repo[-1] != '/'
-    target.git_repo += '/'
 end
 
 system.out.println("csbuild: installing packages...")
