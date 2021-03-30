@@ -1,14 +1,19 @@
 #!/bin/bash
+SHELL_FOLDER=$(dirname $(readlink -f "$0"))
+
 function start ()
 {
-    SHELL_FOLDER=$(dirname $(readlink -f "$0"))
     cd $1
     CS_DEV_PATH=${SHELL_FOLDER}/build-cache/covscript/csdev bash $2
     cd ..
 }
+
+cd $SHELL_FOLDER
 mkdir -p build-cache
 cd build-cache
-git_repo=https://hub.fastgit.org/covscript
+
+git_repo="https://github.com/covscript"
+
 function fetch_git ()
 {
     if [ ! -d "$1" ]; then
@@ -21,28 +26,29 @@ function fetch_git ()
         cd ..
     fi
 }
+
 fetch_git cspkg &
 fetch_git covscript &
 fetch_git covscript-regex &
 fetch_git covscript-codec &
-fetch_git covscript-darwin &
-fetch_git covscript-sqlite &
-fetch_git covscript-network &
-fetch_git covscript-imgui &
 fetch_git covscript-process &
-fetch_git covscript-curl &
-fetch_git covscript-zip &
-fetch_git covscript-database &
 wait
+
+start cspkg "./csbuild/make.sh" &
 start covscript "./csbuild/make.sh"
 start covscript-regex "./csbuild/make.sh" &
 start covscript-codec "./csbuild/make.sh" &
-start covscript-darwin "./csbuild/make.sh" &
-start covscript-sqlite "./csbuild/make.sh" &
-start covscript-network "./csbuild/make.sh" &
-start covscript-imgui "./csbuild/make.sh" &
 start covscript-process "./csbuild/make.sh" &
-start covscript-curl "./csbuild/make.sh" &
-start covscript-zip "./csbuild/make.sh" &
-start covscript-database "./csbuild/make.sh" &
 wait
+
+cd ..
+rm -rf ./build
+mkdir -p build/bin
+cd build-cache
+
+cp -rf cspkg/build ..
+cp -rf covscript/build ..
+cp -rf covscript/csdev/* ../build/
+cp -rf covscript-regex/build ..
+cp -rf covscript-codec/build ..
+cp -rf covscript-process/build ..

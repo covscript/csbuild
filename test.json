@@ -1,0 +1,15 @@
+{
+    "remote_base" : "http://mirrors.covariant.cn/cspkg",
+    "git_repo": "https://github.com/covscript",
+    "repos": [
+        "csdbc",
+        "covscript-database"
+    ],
+    "build": [
+        "covscript-database"
+    ],
+    "install": [
+        "csdbc",
+        "covscript-database"
+    ]
+}

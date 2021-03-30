@@ -1,0 +1,46 @@
+{
+    "git_repo": "https://github.com/covscript/",
+    "repos": [
+        "cspkg",
+        "csdbc",
+        "covscript-database",
+        "covscript-regex",
+        "covscript-darwin",
+        "covscript-sqlite",
+        "covscript-network",
+        "covscript-imgui",
+        "covscript-process",
+        "covscript-curl",
+        "covscript-zip",
+        "covscript-wiringpi"
+    ],
+    "build": [
+        "covscript-database",
+        "covscript-regex",
+        "covscript-darwin",
+        "covscript-sqlite",
+        "covscript-network",
+        "covscript-imgui",
+        "covscript-process",
+        "covscript-curl",
+        "covscript-zip",
+        "covscript-wiringpi"
+    ],
+    "install": [
+        "covscript",
+        "cspkg",
+        "csdbc",
+        "covscript-process",
+        "covscript-database",
+        "covscript-regex",
+        "covscript-codec",
+        "covscript-darwin",
+        "covscript-sqlite",
+        "covscript-network",
+        "covscript-imgui",
+        "covscript-process",
+        "covscript-curl",
+        "covscript-zip",
+        "covscript-wiringpi"
+    ]
+}

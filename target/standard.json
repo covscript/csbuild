@@ -1,0 +1,37 @@
+{
+    "remote_base" : "http://mirrors.covariant.cn/cspkg/",
+    "git_repo": "https://github.com/covscript/",
+    "repos": [
+        "csdbc",
+        "covscript-database",
+        "covscript-darwin",
+        "covscript-sqlite",
+        "covscript-network",
+        "covscript-imgui",
+        "covscript-curl",
+        "covscript-zip"
+    ],
+    "build": [
+        "covscript-database",
+        "covscript-darwin",
+        "covscript-sqlite",
+        "covscript-network",
+        "covscript-imgui",
+        "covscript-curl",
+        "covscript-zip"
+    ],
+    "install": [
+        "csdbc",
+        "covscript-process",
+        "covscript-database",
+        "covscript-regex",
+        "covscript-codec",
+        "covscript-darwin",
+        "covscript-sqlite",
+        "covscript-network",
+        "covscript-imgui",
+        "covscript-process",
+        "covscript-curl",
+        "covscript-zip"
+    ]
+}
