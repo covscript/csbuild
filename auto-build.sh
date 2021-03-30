@@ -4,7 +4,7 @@ SHELL_FOLDER=$(dirname $(readlink -f "$0"))
 function start ()
 {
     cd $1
-    CS_DEV_PATH=${SHELL_FOLDER}/build-cache/covscript/csdev bash $2
+    bash $2
     cd ..
 }
 
@@ -36,6 +36,7 @@ wait
 
 start cspkg "./csbuild/make.sh" &
 start covscript "./csbuild/make.sh"
+export CS_DEV_PATH=${SHELL_FOLDER}/build-cache/covscript/csdev
 start covscript-regex "./csbuild/make.sh" &
 start covscript-codec "./csbuild/make.sh" &
 start covscript-process "./csbuild/make.sh" &
@@ -52,3 +53,6 @@ cp -rf covscript/csdev/* ../build/
 cp -rf covscript-regex/build ..
 cp -rf covscript-codec/build ..
 cp -rf covscript-process/build ..
+
+cd ..
+./build/bin/cs -i ./build/imports csbuild.csc $1

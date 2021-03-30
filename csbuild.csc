@@ -113,11 +113,22 @@ function call_parallel(arg_list)
         b.dir(it[0])
         b.cmd(it[1])
         b.arg(it[2])
+        #b.env("CS_DEV_PATH", runtime.get_current_dir() + "/build-cache/covscript/csdev")
+        b.merge_output(true)
         plist.push_back(b.start())
     end
     loop
         for it = plist.begin, it != plist.end, null
             if it.data.has_exited()
+                link os = it.data.out()
+                loop
+                    var c = os.get()
+                    if !os.eof()
+                        system.out.put(c)
+                    else
+                        break
+                    end
+                end
                 it = plist.erase(it)
             else
                 it.next()
@@ -149,6 +160,7 @@ var vlist = new array
 
 foreach it in target.repos
     if system.file.is_directory("build-cache" + system.path.separator + it)
+        call_parallel({{"build-cache" + system.path.separator + it, "git", {"clean", "-dfx"}}})
         vlist.push_back({"build-cache" + system.path.separator + it, "git", {"pull"}})
     else
         vlist.push_back({"build-cache", "git", {"clone", target.git_repo + it, "--depth=1"}})
@@ -205,19 +217,19 @@ foreach it in target.install
                 system.out.println("csbuild: building package " + info.Name + "(" + info.Version + ")...")
                 var file_reg = regex.build("^.*?(\\w+\\.(cse|csp))$")
                 var file_name = file_reg.match(info.Target)
-                if file_name.empty() || !system.file.exists(info.Target)
+                if file_name.empty() || !system.file.exists(path + system.path.separator + info.Target)
                     system.out.println("csbuild: invalid target in module \'" + it + "\'")
                     continue
                 end
                 if info.Type == "Extension"
-                    system.file.copy(path + info.Target, pkg_os_path + system.path.separator + file_name.str(1))
-                    info.Target = target.remote_base + "/" + env.platform() + "/" + env.arch() + "/" + file_name.str(1)
+                    system.file.copy(path + system.path.separator + info.Target, pkg_os_path + system.path.separator + file_name.str(1))
+                    info.Target = target.remote_base + env.platform() + "/" + env.arch() + "/" + file_name.str(1)
                     info.erase("Type")
                     utils.save_json(info, idx_os_path + system.path.separator + info.Name + ".json")
                     continue
                 end
                 if info.Type == "Package"
-                    system.file.copy(path + info.Target, pkg_path + system.path.separator + file_name.str(1))
+                    system.file.copy(path + system.path.separator + info.Target, pkg_path + system.path.separator + file_name.str(1))
                     info.Target = target.remote_base + "universal/" + file_name.str(1)
                     info.erase("Type")
                     utils.save_json(info, idx_path + system.path.separator + info.Name + ".json")
