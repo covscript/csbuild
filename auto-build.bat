@@ -30,6 +30,7 @@ xcopy /E /Y covscript-codec\build ..\build\
 xcopy /E /Y covscript-process\build ..\build\
 
 cd ..
+.\build\bin\cs -i .\build\imports win32_executor.csc %1%
 .\build\bin\cs -i .\build\imports csbuild.csc %1%
 
 goto:eof

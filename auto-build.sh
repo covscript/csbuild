@@ -27,19 +27,19 @@ function fetch_git ()
     fi
 }
 
-fetch_git cspkg &
-fetch_git covscript &
-fetch_git covscript-regex &
-fetch_git covscript-codec &
-fetch_git covscript-process &
+#fetch_git cspkg &
+#fetch_git covscript &
+#fetch_git covscript-regex &
+#fetch_git covscript-codec &
+#fetch_git covscript-process &
 wait
 
-start cspkg "./csbuild/make.sh" &
-start covscript "./csbuild/make.sh"
+#start cspkg "./csbuild/make.sh" &
+#start covscript "./csbuild/make.sh"
 export CS_DEV_PATH=${SHELL_FOLDER}/build-cache/covscript/csdev
-start covscript-regex "./csbuild/make.sh" &
-start covscript-codec "./csbuild/make.sh" &
-start covscript-process "./csbuild/make.sh" &
+#start covscript-regex "./csbuild/make.sh" &
+#start covscript-codec "./csbuild/make.sh" &
+#start covscript-process "./csbuild/make.sh" &
 wait
 
 cd ..

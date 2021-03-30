@@ -7,12 +7,7 @@ deb_minimal/deb-src
 mac_tools/build
 mac_tools/build-cache
 mac_tools/CovScript.app
-sign_tools/cert
-win_tools/builds
-win_tools/mingw32
-win_tools/mingw64
-win_tools/x64
-win_tools/x86
+win_tools/cert
 .DS_Store
 *.dmg
 .vscode/

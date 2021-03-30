@@ -106,37 +106,6 @@ namespace env
     end
 end
 
-function call_parallel(arg_list)
-    var plist = new list
-    foreach it in arg_list
-        var b = new process.builder
-        b.dir(it[0])
-        b.cmd(it[1])
-        b.arg(it[2])
-        #b.env("CS_DEV_PATH", runtime.get_current_dir() + "/build-cache/covscript/csdev")
-        b.merge_output(true)
-        plist.push_back(b.start())
-    end
-    loop
-        for it = plist.begin, it != plist.end, null
-            if it.data.has_exited()
-                link os = it.data.out()
-                loop
-                    var c = os.get()
-                    if !os.eof()
-                        system.out.put(c)
-                    else
-                        break
-                    end
-                end
-                it = plist.erase(it)
-            else
-                it.next()
-            end
-        end
-    until plist.empty()
-end
-
 var json_reg = regex.build("^(.*)\\.json$")
 
 function is_json_file(name)
@@ -155,33 +124,6 @@ end
 if target.git_repo[-1] != '/'
     target.git_repo += '/'
 end
-
-var vlist = new array
-
-foreach it in target.repos
-    if system.file.is_directory("build-cache" + system.path.separator + it)
-        call_parallel({{"build-cache" + system.path.separator + it, "git", {"clean", "-dfx"}}})
-        vlist.push_back({"build-cache" + system.path.separator + it, "git", {"pull"}})
-    else
-        vlist.push_back({"build-cache", "git", {"clone", target.git_repo + it, "--depth=1"}})
-    end
-end
-
-system.file.mkdir("build-cache")
-system.out.println("csbuild: fetching git repository...")
-call_parallel(vlist)
-vlist.clear()
-
-foreach it in target.build
-    if system.is_platform_windows()
-        vlist.push_back({"build-cache" + system.path.separator + it, "conhost.exe", {".\\csbuild\\make.bat"}})
-    else
-        vlist.push_back({"build-cache" + system.path.separator + it, "bash", {"./csbuild/make.sh"}})
-    end
-end
-
-system.out.println("csbuild: building packages...")
-call_parallel(vlist)
 
 system.out.println("csbuild: installing packages...")
 system.file.mkdir("cspkg-repo")
