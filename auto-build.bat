@@ -36,7 +36,9 @@ start /WAIT /D .\misc\bin sign.bat ..\cert\covscript ..\..\build\bin\*.exe
 .\build\bin\cs -i .\build\imports .\misc\win32_build.csc .\misc\win32_config.json
 .\build\bin\cs -i .\build\imports .\misc\cspkg_build.csc .\misc\cspkg_config.json
 
+cd build-cache
 xcopy /E /Y covscript-curl\build ..\build\
+cd ..
 
 goto:eof
 :call_bat
