@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Product Id="{4060C245-4CB4-407A-B544-52F59BF98577}" Name="PRODUCT_NAME" Language="1033" Version="PRODUCT_VERSION" Manufacturer="Covariant Script Organization" UpgradeCode="197e3fe6-b2f4-4f7c-b94f-050ca0dd9a7d">
-        <Package Id="{353C54E1-24FF-464F-8518-C379F28A1536}" Keywords="CovScript" Description="Covariant Script Runtime" Platform="PRODUCT_ARCH" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+        <Package Id="*" Keywords="CovScript" Description="Covariant Script Runtime" Platform="PRODUCT_ARCH" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
         <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
         <Media Id="1" Cabinet="Cab1.cab" EmbedCab="yes" />
@@ -179,7 +179,7 @@
                 <Environment Id="CS_IMPORT_PATH" Name="CS_IMPORT_PATH" Value="[INSTALLDIR]imports" Permanent="no" Part="last" Action="set" System="yes" />
                 <Environment Id="CS_DEV_PATH" Name="CS_DEV_PATH" Value="[INSTALLDIR]" Permanent="no" Part="last" Action="set" System="yes" />
                 <Environment Id="PATH" Name="PATH" Value="[INSTALLDIR]bin" Permanent="no" Part="last" Action="set" System="yes" />
-                <Shortcut Id="ApplicationStartMenuShortcut" Name="Covariant Script REPL" Description="Covariant Script Runtime" Arguments="-w -i &quot;[INSTALLDIR]imports&quot;" Target="[#fil6F2B2165818E97D673E89D6FEA3821F8]" WorkingDirectory="INSTALLDIR" />
+                <Shortcut Id="ApplicationStartMenuShortcut" Name="Covariant Script REPL" Description="Covariant Script Runtime" Arguments="-w -i &quot;[INSTALLDIR]imports&quot;" Target="[INSTALLDIR]bin\cs.exe" WorkingDirectory="INSTALLDIR" />
                 <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
                 <RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]" Name="installed" Type="integer" Value="1" KeyPath="yes" />
             </Component>
