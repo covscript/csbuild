@@ -40,6 +40,7 @@ jobs:
           file: gcc-10.2.0-mingw-w64-8.0.0-r8-covscript.org.zip
           
       - name: Append MinGW-w64 to Path
+        if: matrix.os == 'windows-latest'
         uses: myci-actions/append-to-path-windows@2
         with:
           path: C:\mingw-w64\bin
@@ -54,6 +55,7 @@ jobs:
           file: wix311-binaries.zip
           
       - name: Append Wix Toolset to Path
+        if: matrix.os == 'windows-latest'
         uses: myci-actions/append-to-path-windows@2
         with:
           path: C:\Wix
@@ -63,8 +65,8 @@ jobs:
         run: |
           7z x gcc-10.2.0-mingw-w64-8.0.0-r8-covscript.org.zip -oC:\
           7z x wix311-binaries.zip -oC:\Wix
-          auto-build.bat
-          package_tools/wix/make.bat
+          ./auto-build.bat
+          ./package_tools/wix/make.bat
           cp *.msi covscript-amd64.msi
           
       - name: Run tests on Ubuntu
