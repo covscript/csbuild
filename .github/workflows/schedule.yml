@@ -53,7 +53,9 @@ jobs:
         run: |
           7z x gcc-10.2.0-mingw-w64-8.0.0-r8-covscript.org.zip -oC:\
           7z x wix311-binaries.zip -oC:\Wix
-          setx /M Path "C:\mingw-w64\bin;C:\Wix"
+          cat $GITHUB_ENV > ./Old_Env.txt
+          echo "C:\mingw-w64\bin;C:\Wix;" > $GITHUB_ENV
+          cat ./Old_Env.txt > $GITHUB_ENV
           
       - name: Build on Windows
         if: matrix.os == 'windows-latest'
@@ -78,8 +80,8 @@ jobs:
         uses: marvinpinto/action-automatic-releases@master
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "schedule"
-          title: "Schedule Build"
+          automatic_release_tag: "windows-schedule"
+          title: "Windows Schedule Build"
           prerelease: false
           files: |
             *.msi
@@ -89,8 +91,8 @@ jobs:
         uses: marvinpinto/action-automatic-releases@master
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "schedule"
-          title: "Schedule Build"
+          automatic_release_tag: "ubuntu-schedule"
+          title: "Ubuntu Schedule Build"
           prerelease: false
           files: |
             *.deb
