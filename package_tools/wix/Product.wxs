@@ -1,76 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="Covariant Script Core Runtime" Language="1033" Version="3.3.5.7" Manufacturer="Covariant Script Organization" UpgradeCode="197e3fe6-b2f4-4f7c-b94f-050ca0dd9a7d">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+	<Product Id="*" Name="Covariant Script 3.3.5 Manis pentadactyla(Unstable) Build 7" Language="1033" Version="3.3.5.7" Manufacturer="Covariant Script Organization" UpgradeCode="197e3fe6-b2f4-4f7c-b94f-050ca0dd9a7d">
+		<Package Id="*" Keywords="Installer" Description="Covariant Script Runtime"
+		InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<Media Id="1" Cabinet="Cab1.cab" EmbedCab="yes" />
 
-		<Feature Id="ProductFeature" Title="Covariant Script Core Runtime" Level="1">
-			<ComponentRef Id='MainExecutable' />
-	        <ComponentRef Id='ProgramMenuDir' />
-	        <ComponentGroupRef Id="Package" />
+		<Feature Id="ProductFeature" Title="Covariant Script" Level="1">
+            <ComponentRef Id="ApplicationShortcut" />
+			<ComponentGroupRef Id="Package" />
 		</Feature>
+
+		<Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
     	<UIRef Id="WixUI_InstallDir" />
-		<Icon Id="CovScriptLogo" SourceFile="SourceDir\bin\cs.exe" />
+		<WixVariable Id="WixUILicenseRtf" Value="SourceDir\License.rtf" />
+
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLDIR" Name="CovScript" />
+			</Directory>
+      		<Directory Id="ProgramMenuFolder" Name="Programs">
+        		<Directory Id="ApplicationProgramsFolder" Name="Covariant Script" />
+      		</Directory>
+		</Directory>
 	</Product>
 
 	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="covscript">
-					<Component Id="MainExecutable" Guid="{1BDEED99-E5C9-41B5-AC6B-CB01BD2E14C8}">
-                        <File Id="fil6F2B2165818E97D673E89D6FEA3821F8" KeyPath="yes" Source="SourceDir\bin\cs.exe">
-							<Shortcut Id="CovScriptREPL" Directory="ProgramMenuDir" Name="Covariant Script REPL" WorkingDirectory='INSTALLDIR' Icon="CovScriptLogo" IconIndex="0" Advertise="yes" />
-						</File>
-					</Component>
-				</Directory>
-			</Directory>
-
-      		<Directory Id="ProgramMenuFolder" Name="Programs">
-        		<Directory Id="ProgramMenuDir" Name="Covariant Script REPL">
-				<Component Id="ProgramMenuDir" Guid="{1BDEED99-E5C9-41B5-AC6B-CB01BD2E14C9}">
-		    		<RemoveFolder Id='ProgramMenuDir' On='uninstall' />
-		    	</Component>
-				</Directory>
-      		</Directory>
-		</Directory>
-	</Fragment>
-
-	<Fragment>
-        <DirectoryRef Id="TARGETDIR">
-            <Directory Id="dir8A29DF0A7B95D0B0CAE2C47D1FEEBA3D" Name="build">
-                <Directory Id="dir03D70DE45D2AC78BF34AB918B2D1DBEA" Name="bin">
-                    <Component Id="cmp802ECBB3D5A542900D4AB0E49FE7F126" Guid="{DCC2CE7C-2DD3-45C8-9465-792366EECED1}">
-                        <File Id="fil232B4B0BF6B587BE176FE67E8269365B" KeyPath="yes" Source="SourceDir\bin\cspkg" />
-                    </Component>
-                    <Component Id="cmpCD52B7C70176CFE8B2BB6AFE60F125D4" Guid="{EF44552C-0356-456B-81C9-CC9956A2D51E}">
-                        <File Id="fil9290242ED191254918CE5511AA2A1456" KeyPath="yes" Source="SourceDir\bin\cspkg.bat" />
-                    </Component>
-                    <Component Id="cmpC357076F88D4067CCC23470FBD0A15E8" Guid="{FE48CF61-1885-4867-B076-F6BB0D2A0AA5}">
-                        <File Id="filC73006886FD2DA74BDE151F624A156D7" KeyPath="yes" Source="SourceDir\bin\cs_dbg.exe" />
-                    </Component>
-                </Directory>
-                <Directory Id="dir025855D6DAD50F5AAA378208F469CF18" Name="imports">
-                    <Component Id="cmp181E75EF6B9D2B86D16FA6287D426B62" Guid="{C146FA96-8512-4F0E-AD7E-FD4E2BFD6261}">
-                        <File Id="filF0FFCAA3033F4C2ACD84C9D85F054F0B" KeyPath="yes" Source="SourceDir\imports\codec.cse" />
-                    </Component>
-                    <Component Id="cmp01918FE7CCA619B444F6C7F97257ABC8" Guid="{02F2D1F6-325E-4CA4-8399-5A704E1AA76E}">
-                        <File Id="fil9C585E275B4FD18EAB9C23068CCAD522" KeyPath="yes" Source="SourceDir\imports\curl.cse" />
-                    </Component>
-                    <Component Id="cmp6E7DCDE339D2A94D71E9CE9EFDECB469" Guid="{9E08972B-AD8F-438A-816C-418563E7B5BA}">
-                        <File Id="fil6585C50B68B1609FD8A68FF2873A91B0" KeyPath="yes" Source="SourceDir\imports\process.cse" />
-                    </Component>
-                    <Component Id="cmpF0F3FE4DCAD76AF3A553D3C96672A83B" Guid="{EFC1234C-0616-4F90-9739-17EAA49B3275}">
-                        <File Id="filC9618A22832B33C3A14DAC5B00687931" KeyPath="yes" Source="SourceDir\imports\regex.cse" />
-                    </Component>
-                </Directory>
+        <DirectoryRef Id="INSTALLDIR">
+            <Directory Id="dir03D70DE45D2AC78BF34AB918B2D1DBEA" Name="bin">
+                <Component Id="cmpDC88EB415BE80B6C5004DD59CA5177D4" Guid="{E3EDFE83-E030-42C1-BD51-9A259D3ED977}">
+                    <File Id="fil6F2B2165818E97D673E89D6FEA3821F8" KeyPath="yes" Source="SourceDir\bin\cs.exe" />
+                </Component>
+                <Component Id="cmp802ECBB3D5A542900D4AB0E49FE7F126" Guid="{2ABE5905-02AD-464E-9AF3-47B194A4CE9C}">
+                    <File Id="fil232B4B0BF6B587BE176FE67E8269365B" KeyPath="yes" Source="SourceDir\bin\cspkg" />
+                </Component>
+                <Component Id="cmpCD52B7C70176CFE8B2BB6AFE60F125D4" Guid="{353B0E2E-023C-4805-A972-30372E186D23}">
+                    <File Id="fil9290242ED191254918CE5511AA2A1456" KeyPath="yes" Source="SourceDir\bin\cspkg.bat" />
+                </Component>
+                <Component Id="cmpC357076F88D4067CCC23470FBD0A15E8" Guid="{DC74CC9E-860F-432A-A663-B52ACEA6D177}">
+                    <File Id="filC73006886FD2DA74BDE151F624A156D7" KeyPath="yes" Source="SourceDir\bin\cs_dbg.exe" />
+                </Component>
             </Directory>
+            <Directory Id="dir025855D6DAD50F5AAA378208F469CF18" Name="imports">
+                <Component Id="cmp181E75EF6B9D2B86D16FA6287D426B62" Guid="{E49924CE-6156-4E54-A25C-E06DD63D51DD}">
+                    <File Id="filF0FFCAA3033F4C2ACD84C9D85F054F0B" KeyPath="yes" Source="SourceDir\imports\codec.cse" />
+                </Component>
+                <Component Id="cmp01918FE7CCA619B444F6C7F97257ABC8" Guid="{BB1FC463-9515-4CC0-ABE1-D47EE9D57899}">
+                    <File Id="fil9C585E275B4FD18EAB9C23068CCAD522" KeyPath="yes" Source="SourceDir\imports\curl.cse" />
+                </Component>
+                <Component Id="cmp6E7DCDE339D2A94D71E9CE9EFDECB469" Guid="{B0F156E7-5C93-4ADA-9081-EBB42B4C97AE}">
+                    <File Id="fil6585C50B68B1609FD8A68FF2873A91B0" KeyPath="yes" Source="SourceDir\imports\process.cse" />
+                </Component>
+                <Component Id="cmpF0F3FE4DCAD76AF3A553D3C96672A83B" Guid="{DC76EC23-40ED-4F67-BBE1-B7BFD6164F25}">
+                    <File Id="filC9618A22832B33C3A14DAC5B00687931" KeyPath="yes" Source="SourceDir\imports\regex.cse" />
+                </Component>
+            </Directory>
+        </DirectoryRef>
+        <DirectoryRef Id="ApplicationProgramsFolder">
+            <Component Id="ApplicationShortcut" Guid="{1BDEED99-E5C9-41B5-AC6B-CB01BD2E14C9}">
+                <Shortcut Id="ApplicationStartMenuShortcut" Name="Covariant Script REPL" Description="Covariant Script Runtime"
+                    Target="[#fil6F2B2165818E97D673E89D6FEA3821F8]" WorkingDirectory="INSTALLDIR"/>
+                <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+                <RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+           </Component>
         </DirectoryRef>
     </Fragment>
 
     <Fragment>
         <ComponentGroup Id="Package">
+            <ComponentRef Id="cmpDC88EB415BE80B6C5004DD59CA5177D4" />
             <ComponentRef Id="cmp802ECBB3D5A542900D4AB0E49FE7F126" />
             <ComponentRef Id="cmpCD52B7C70176CFE8B2BB6AFE60F125D4" />
             <ComponentRef Id="cmpC357076F88D4067CCC23470FBD0A15E8" />

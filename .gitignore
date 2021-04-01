@@ -16,3 +16,4 @@ build/
 build-cache/
 cspkg-repo/
 *.wixobj
+*.msi
