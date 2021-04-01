@@ -15,7 +15,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
 
     steps:
       - name: Checkout
@@ -29,6 +29,46 @@ jobs:
           bash auto-build.sh
           bash package_tools/deb/make.sh
           cp *.deb covscript-amd64.deb
+      
+      - name: Download MinGW-w64
+        if: matrix.os == 'windows-latest'
+        uses: i3h/download-release-asset@v1.2.0
+        with:
+          owner: covscript-archives
+          repo: mingw-w64
+          tag: gcc-10.2.0-mingw-w64-8.0.0-r8
+          file: gcc-10.2.0-mingw-w64-8.0.0-r8-covscript.org.zip
+          
+      - name: Download Wix Toolset
+        if: matrix.os == 'windows-latest'
+        uses: i3h/download-release-asset@v1.2.0
+        with:
+          owner: wixtoolset
+          repo: wix3
+          tag: wix3112rtm
+          file: wix311-binaries.zip
+          
+      - name: Build on Windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          7z x gcc-10.2.0-mingw-w64-8.0.0-r8-covscript.org.zip
+          7z x wix311-binaries.zip
+          CURRENT_FOLDER=$(dirname $(readlink -f "$0"))
+          export PATH="$PATH:$CURRENT_FOLDER/wix311-binaries:$CURRENT_FOLDER/gcc-10.2.0-mingw-w64-8.0.0-r8-covscript.org/bin"
+          gcc -v
+          candle -?
+          auto-build.bat
+          package_tools/dmg/make.bat
+          cp *.msi covscript-amd64.msi
+          
+      - name: Build on macOS
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew update
+          brew install binutils coreutils glfw libiodbc
+          bash auto-build.sh
+          bash package_tools/dmg/make.sh --no-gui
+          cp *.dmg covscript-macos.dmg
       
       - name: Run tests on Ubuntu
         if: matrix.os == 'ubuntu-latest'
@@ -49,4 +89,6 @@ jobs:
           title: "Schedule Build"
           prerelease: false
           files: |
+            *.msi
             *.deb
+            *.dmg
