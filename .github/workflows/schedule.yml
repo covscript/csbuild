@@ -74,7 +74,8 @@ jobs:
           automatic_release_tag: "schedule"
           title: "Schedule Build"
           prerelease: false
-          files: *.msi
+          files: |
+            *.msi
       
       - name: Automatic Release DEB
         if: matrix.os == 'ubuntu-latest'
@@ -84,4 +85,5 @@ jobs:
           automatic_release_tag: "schedule"
           title: "Schedule Build"
           prerelease: false
-          files: *.deb
+          files: |
+            *.deb
