@@ -55,14 +55,13 @@ jobs:
           rm C:/ProgramData/chocolatey/bin/g++.exe -force
           rm C:/Strawberry/c/bin/gcc.exe -force
           rm C:/Strawberry/c/bin/g++.exe -force
-          echo "C:\mingw-w64\bin" >> $GITHUB_PATH
-          echo "C:\Wix" >> $GITHUB_PATH
           7z x gcc-10.2.0-mingw-w64-8.0.0-r8-covscript.org.zip -oC:\
           7z x wix311-binaries.zip -oC:\Wix
           
       - name: Build on Windows
         if: matrix.os == 'windows-latest'
         run: |
+          $env:PATH="C:\mingw-w64\bin;C:\Wix;$env:PATH"
           ./auto-build.bat
           ./package_tools/wix/make.bat
           cp *.msi covscript-amd64.msi
