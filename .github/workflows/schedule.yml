@@ -39,12 +39,6 @@ jobs:
           tag: gcc-10.2.0-mingw-w64-8.0.0-r8
           file: gcc-10.2.0-mingw-w64-8.0.0-r8-covscript.org.zip
           
-      - name: Append MinGW-w64 to Path
-        if: matrix.os == 'windows-latest'
-        uses: myci-actions/append-to-path-windows@2
-        with:
-          path: C:\mingw-w64\bin
-          
       - name: Download Wix Toolset
         if: matrix.os == 'windows-latest'
         uses: i3h/download-release-asset@v1.2.0
@@ -54,17 +48,16 @@ jobs:
           tag: wix3112rtm
           file: wix311-binaries.zip
           
-      - name: Append Wix Toolset to Path
-        if: matrix.os == 'windows-latest'
-        uses: myci-actions/append-to-path-windows@2
-        with:
-          path: C:\Wix
-          
-      - name: Build on Windows
+      - name: Install Toolset in Windows
         if: matrix.os == 'windows-latest'
         run: |
           7z x gcc-10.2.0-mingw-w64-8.0.0-r8-covscript.org.zip -oC:\
           7z x wix311-binaries.zip -oC:\Wix
+          setx /M Path C:\mingw-w64\bin;C:\Wix
+          
+      - name: Build on Windows
+        if: matrix.os == 'windows-latest'
+        run: |
           ./auto-build.bat
           ./package_tools/wix/make.bat
           cp *.msi covscript-amd64.msi
