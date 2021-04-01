@@ -53,9 +53,8 @@ jobs:
         run: |
           7z x gcc-10.2.0-mingw-w64-8.0.0-r8-covscript.org.zip -oC:\
           7z x wix311-binaries.zip -oC:\Wix
-          cat $GITHUB_ENV > ./Old_Env.txt
-          echo "C:\mingw-w64\bin;C:\Wix;" > $GITHUB_ENV
-          cat ./Old_Env.txt >> $GITHUB_ENV
+          echo "Path=\"C:\\mingw-w64\\bin;C:\\Wix;$PATH\"" >> $GITHUB_ENV
+          cat $GITHUB_ENV
           
       - name: Build on Windows
         if: matrix.os == 'windows-latest'
