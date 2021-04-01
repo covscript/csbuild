@@ -61,9 +61,7 @@ jobs:
       - name: Build on Windows
         if: matrix.os == 'windows-latest'
         run: |
-          $env:PATH="C:\mingw-w64\bin;C:\Wix;$env:PATH"
-          ./auto-build.bat
-          ./package_tools/wix/make.bat
+          .github/workflows/build.bat
           cp *.msi covscript-amd64.msi
           
       - name: Run tests on Ubuntu
