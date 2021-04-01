@@ -55,6 +55,6 @@ end
 system.out.println("csbuild: fetching git repository...")
 call_parallel(vlist)
 vlist.clear()
-foreach it in target.build do vlist.push_back({"build-cache" + system.path.separator + it, "conhost.exe", {".\\csbuild\\make.bat"}})
+foreach it in target.build do vlist.push_back({"build-cache" + system.path.separator + it, ".\\build\\bin\\cs.exe", {"..\\..\\misc\\cmd_call.csc"}})
 system.out.println("csbuild: building packages...")
 call_parallel(vlist)
