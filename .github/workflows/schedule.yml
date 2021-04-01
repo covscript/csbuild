@@ -15,7 +15,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ ubuntu-latest, windows-latest ]
 
     steps:
       - name: Checkout
@@ -52,17 +52,9 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           .github/workflows/build.bat
+          package_tools/wix/make.bat
           cp *.msi covscript-amd64.msi
           
-      - name: Build on macOS
-        if: matrix.os == 'macos-latest'
-        run: |
-          brew update
-          brew install binutils coreutils glfw libiodbc
-          bash auto-build.sh
-          bash package_tools/dmg/make.sh --no-gui
-          cp *.dmg covscript-macos.dmg
-      
       - name: Run tests on Ubuntu
         if: matrix.os == 'ubuntu-latest'
         run: |
@@ -74,14 +66,22 @@ jobs:
           cd build-cache/covscript/examples
           cs benchmark.csc
 
-      - name: Automatic Releases
+      - name: Automatic Release MSI
+        if: matrix.os == 'windows-latest'
         uses: marvinpinto/action-automatic-releases@master
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "schedule"
           title: "Schedule Build"
           prerelease: false
-          files: |
-            *.msi
-            *.deb
-            *.dmg
+          files: *.msi
+      
+      - name: Automatic Release DEB
+        if: matrix.os == 'ubuntu-latest'
+        uses: marvinpinto/action-automatic-releases@master
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "schedule"
+          title: "Schedule Build"
+          prerelease: false
+          files: *.deb
