@@ -53,7 +53,7 @@ jobs:
         run: |
           7z x gcc-10.2.0-mingw-w64-8.0.0-r8-covscript.org.zip -oC:\
           7z x wix311-binaries.zip -oC:\Wix
-          echo "Path=`"C:\mingw-w64\bin;C:\Wix;$env:Path`"" >> $GITHUB_ENV
+          echo "PATH=`"C:\mingw-w64\bin;C:\Wix;$env:PATH`"" >> $GITHUB_ENV
           cat $GITHUB_ENV
           
       - name: Build on Windows
