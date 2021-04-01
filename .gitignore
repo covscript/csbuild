@@ -15,5 +15,6 @@ build-tools/test/gen
 build/
 build-cache/
 cspkg-repo/
+temp.wxs
 *.wixobj
 *.msi
