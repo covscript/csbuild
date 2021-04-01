@@ -51,14 +51,7 @@ jobs:
       - name: Build on Windows
         if: matrix.os == 'windows-latest'
         run: |
-          7z x gcc-10.2.0-mingw-w64-8.0.0-r8-covscript.org.zip
-          7z x wix311-binaries.zip
-          CURRENT_FOLDER=$(dirname $(readlink -f "$0"))
-          export PATH="${CURRENT_FOLDER}/wix311-binaries;${CURRENT_FOLDER}/gcc-10.2.0-mingw-w64-8.0.0-r8-covscript.org/bin;${PATH}"
-          gcc -v
-          candle -?
-          auto-build.bat
-          package_tools/dmg/make.bat
+          .github/workflows/build.bat
           cp *.msi covscript-amd64.msi
           
       - name: Build on macOS
