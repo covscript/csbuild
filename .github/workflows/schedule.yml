@@ -53,7 +53,7 @@ jobs:
         run: |
           7z x gcc-10.2.0-mingw-w64-8.0.0-r8-covscript.org.zip -oC:\
           7z x wix311-binaries.zip -oC:\Wix
-          setx /M Path C:\mingw-w64\bin;C:\Wix
+          setx /M Path "C:\mingw-w64\bin;C:\Wix"
           
       - name: Build on Windows
         if: matrix.os == 'windows-latest'
