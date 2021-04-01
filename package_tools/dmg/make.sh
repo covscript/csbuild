@@ -1,9 +1,6 @@
 #!/bin/bash
-bash ../build.sh
-bash ../install.sh
-cp ./build-cache/covscript/examples/*.csp ./build/imports
-bash ./make-app.sh ./build ./app_icon.png
-bash ./make-dmg.sh ./CovScript.app ./app_bg.png
+bash ./package_tools/dmg/make-app.sh ./build ./package_tools/dmg/app_icon.png
+bash ./package_tools/dmg/make-dmg.sh ./CovScript.app ./package_tools/dmg/app_bg.png "$1"
 version_prefix=`./build/bin/cs -v | grep "^Version: " | awk '{print $2}'`
 version_suffix=`./build/bin/cs -v | grep "^Version: " | awk '{print $NF}'`
 mv covscript.dmg covscript-${version_prefix}"."${version_suffix}.dmg

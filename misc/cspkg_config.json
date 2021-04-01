@@ -1,0 +1,17 @@
+{
+    "remote_base" : "http://mirrors.covariant.cn/cspkg/",
+    "install": [
+        "csdbc",
+        "covscript-process",
+        "covscript-database",
+        "covscript-regex",
+        "covscript-codec",
+        "covscript-darwin",
+        "covscript-sqlite",
+        "covscript-network",
+        "covscript-imgui",
+        "covscript-process",
+        "covscript-curl",
+        "covscript-zip"
+    ]
+}

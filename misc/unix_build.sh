@@ -1,14 +1,13 @@
 #!/bin/bash
 function start ()
 {
-    SHELL_FOLDER=$(dirname $(readlink -f "$0"))
     cd $1
-    CS_DEV_PATH=${SHELL_FOLDER}/build-cache/covscript/csdev bash $2
+    bash $2
     cd ..
 }
 mkdir -p build-cache
 cd build-cache
-git_repo=https://hub.fastgit.org/covscript
+git_repo="https://github.com/covscript/"
 function fetch_git ()
 {
     if [ ! -d "$1" ]; then
@@ -22,6 +21,7 @@ function fetch_git ()
     fi
 }
 fetch_git cspkg &
+fetch_git csdbc &
 fetch_git covscript &
 fetch_git covscript-regex &
 fetch_git covscript-codec &
@@ -34,6 +34,7 @@ fetch_git covscript-curl &
 fetch_git covscript-zip &
 fetch_git covscript-database &
 wait
+start cspkg "./csbuild/make.sh"
 start covscript "./csbuild/make.sh"
 start covscript-regex "./csbuild/make.sh" &
 start covscript-codec "./csbuild/make.sh" &

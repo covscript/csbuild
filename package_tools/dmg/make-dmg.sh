@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-if [[ "$#" != 2 ]];then
-    echo "Usage: $(basename $0) <app-file> <background-png>"
+if [[ "$#" != 2 && "$#" != 3 ]];then
+    echo "Usage: $(basename $0) <app-file> <background-png> [--no-gui]"
     exit 1
 fi
 
@@ -25,6 +25,8 @@ cp "$backgroundFile" "$dmgBuildDir/.hidden"
 chflags hidden "$dmgBuildDir/.hidden"
 
 hdiutil create -volname "$volName" -srcfolder "$PWD/$dmgBuildDir" -ov -format UDRW -fs HFS+ "$rwDmg"
+
+if [[ "$3" != "--no-gui" ]];then
 
 echo ":: [Stage 2] Mounting precursor dmg"
 hdiutil mount "$rwDmg" 1>/dev/null
@@ -75,6 +77,8 @@ hdiutil mount "$rwDmg" 1>/dev/null
 bless --folder "/Volumes/$volName" --openfolder "/Volumes/$volName"
 diskutil eject "/Volumes/$volName" 1>/dev/null
 sleep 3
+
+fi
 
 echo ":: [Stage 2] Creating the final read only dmg"
 hdiutil convert "$rwDmg" -format UDZO -ov -o "${volName}.dmg"

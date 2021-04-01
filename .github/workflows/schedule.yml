@@ -25,20 +25,20 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt update
-          sudo apt install libcurl4-openssl-dev libglfw3-dev
-          mkdir build
-          cd deb_tools
+          sudo apt install unixodbc unixodbc-dev libcurl4-openssl-dev libglfw3-dev
           bash auto-build.sh
-          cp deb-src/*.deb deb-src/covscript-amd64.deb
+          bash package_tools/deb/make.sh
+          cp *.deb covscript-amd64.deb
       
       - name: Run tests on Ubuntu
         if: matrix.os == 'ubuntu-latest'
         run: |
-          sudo dpkg -i deb_tools/deb-src/covscript-amd64.deb
+          sudo dpkg -i covscript-amd64.deb
           cs -v
           cs_dbg -v
-          cspkg --list
-          cd deb_tools/build-cache/covscript/examples
+          cspkg install --import
+          cspkg list
+          cd build-cache/covscript/examples
           cs benchmark.csc
 
       - name: Automatic Releases
@@ -49,4 +49,4 @@ jobs:
           title: "Schedule Build"
           prerelease: false
           files: |
-            deb_tools/deb-src/*.deb
+            *.deb
