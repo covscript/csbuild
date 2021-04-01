@@ -59,7 +59,7 @@
         <DirectoryRef Id="ApplicationProgramsFolder">
             <Component Id="ApplicationShortcut" Guid="{1BDEED99-E5C9-41B5-AC6B-CB01BD2E14C9}">
                 <Shortcut Id="ApplicationStartMenuShortcut" Name="Covariant Script REPL" Description="Covariant Script Runtime"
-                    Target="[#fil6F2B2165818E97D673E89D6FEA3821F8]" WorkingDirectory="INSTALLDIR" />
+                    Arguments="-w -i &quot;[INSTALLDIR]imports&quot;" Target="[#fil6F2B2165818E97D673E89D6FEA3821F8]" WorkingDirectory="INSTALLDIR" />
                 <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
                 <RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]" Name="installed" Type="integer" Value="1" KeyPath="yes" />
            </Component>
