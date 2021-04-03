@@ -40,6 +40,8 @@ cd build-cache
 xcopy /E /Y covscript-curl\build ..\build\
 cd ..
 
+.\package_tools\wix\make.bat
+
 goto:eof
 :call_bat
 cd %1%
