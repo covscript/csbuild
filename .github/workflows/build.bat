@@ -1,6 +1,6 @@
 @echo off
 cd %~dp0
-set PATH="C:\wix;C:\mingw-w64\bin;%PATH%"
+set PATH=C:\Wix;C:\mingw64\bin;%PATH%
 echo %PATH%
 cd ..\..\
 .\auto-build.bat
