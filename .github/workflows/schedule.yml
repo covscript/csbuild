@@ -76,10 +76,9 @@ jobs:
           cs benchmark.csc
           
       - name: Zip Release
-        uses: TheDoctor0/zip-release@0.4.1
+        uses: montudor/action-zip@v0.1.1
         with:
-          filename: cspkg-repo.zip
-          path: cspkg-repo
+          args: zip -qq -r cspkg-repo.zip cspkg-repo
 
       - name: Automatic Release MSI
         if: matrix.os == 'windows-latest'
