@@ -4,4 +4,6 @@ set PATH=C:\Wix;C:\mingw64\bin;%PATH%
 echo %PATH%
 cd ..\..\
 .\auto-build.bat
+dir
 .\package_tools\wix\make.bat
+dir
