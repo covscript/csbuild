@@ -83,7 +83,7 @@ jobs:
           
       - name: Package CSPKG Repo on Windows
         if: matrix.os == 'windows-latest'
-        run: 7z a -mmt4 -mx9 cspkg-repo.zip cspkg-repo
+        run: 7z a -mmt4 -mx9 cspkg-repo.7z cspkg-repo
 
       - name: Automatic Release MSI
         if: matrix.os == 'windows-latest'
@@ -95,7 +95,7 @@ jobs:
           prerelease: false
           files: |
             *.msi
-            *.zip
+            *.7z
       
       - name: Automatic Release DEB
         if: matrix.os == 'ubuntu-latest'
