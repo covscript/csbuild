@@ -75,10 +75,15 @@ jobs:
           cd build-cache/covscript/examples
           cs benchmark.csc
           
-      - name: Zip Release
+      - name: Package CSPKG Repo on Ubuntu
+        if: matrix.os == 'ubuntu-latest'
         uses: montudor/action-zip@v0.1.1
         with:
           args: zip -qq -r cspkg-repo.zip cspkg-repo
+          
+      - name: Package CSPKG Repo on Windows
+        if: matrix.os == 'windows-latest'
+        run: 7z a -mmt4 -mx9 cspkg-repo.zip cspkg-repo
 
       - name: Automatic Release MSI
         if: matrix.os == 'windows-latest'
