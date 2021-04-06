@@ -7,7 +7,7 @@ function start ()
 }
 mkdir -p build-cache
 cd build-cache
-git_repo="https://github.com/covscript/"
+git_repo="https://github.com/"
 function fetch_git ()
 {
     if [ ! -d "$1" ]; then
@@ -20,19 +20,19 @@ function fetch_git ()
         cd ..
     fi
 }
-fetch_git cspkg &
-fetch_git csdbc &
-fetch_git covscript &
-fetch_git covscript-regex &
-fetch_git covscript-codec &
-fetch_git covscript-darwin &
-fetch_git covscript-sqlite &
-fetch_git covscript-network &
-fetch_git covscript-imgui &
-fetch_git covscript-process &
-fetch_git covscript-curl &
-fetch_git covscript-zip &
-fetch_git covscript-database &
+fetch_git covscript/cspkg &
+fetch_git covscript/csdbc &
+fetch_git covscript/covscript &
+fetch_git covscript/covscript-regex &
+fetch_git covscript/covscript-codec &
+fetch_git covscript/covscript-darwin &
+fetch_git covscript/covscript-sqlite &
+fetch_git covscript/covscript-network &
+fetch_git covscript/covscript-imgui &
+fetch_git covscript/covscript-process &
+fetch_git covscript/covscript-curl &
+fetch_git covscript/covscript-zip &
+fetch_git covscript/covscript-database &
 wait
 start cspkg "./csbuild/make.sh"
 start covscript "./csbuild/make.sh"

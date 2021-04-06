@@ -1,84 +1,137 @@
-# Covariant Script Official Build System
-|Platform|Condition|Status|
-|----|----|----|
-|Travis CI|Push and Pull Request|[![Build Status](https://travis-ci.org/covscript/csbuild.svg?branch=master)](https://travis-ci.org/covscript/csbuild)|
-|GitHub Action|Push, Pull Request and Schedule|[![Action Status](https://github.com/covscript/csbuild/workflows/schedule/badge.svg)](https://github.com/covscript/csbuild/actions)|
-## Supported Platform
-1. Apple macOS (Apple Clang) -> mac_tools
-2. Debian-like Linux (GCC & LLVM Clang) -> deb_tools
-3. Microsoft Windows (MinGW-w64 GCC) -> win_tools & sign_tools
+# Covariant Script Build System
+[![Action Status](https://github.com/covscript/csbuild/workflows/schedule/badge.svg)](https://github.com/covscript/csbuild/actions)  
+CSBuild is a system used for parallel building, automatic releasing and continues integration of official maintained packages.
+## Supported Platforms
+|Platform|Architectural|Toolchain|Installer|Build Tool|Package Tool|
+|----|----|----|----|----|----|
+|Microsoft Windows|x86, x86_64|MinGW-w64|Microsoft Installer|auto-build.bat|package_tools/wix/make.bat|
+|Canonical Ubuntu|x86, x86_64, ARM, MIPS64EL|GCC, LLVM Clang|Debian Packager|auto-build.sh|package_tools/deb/make.sh
+|Apple macOS|x86_64|Apple Clang|Apple Disk Image|auto-build.sh|package_tools/dmg/make.sh [--no-gui]
+## Build your package with CSBuild
+### Step 1: Write your Package Description File
+#### Package Description File Template:
+```json
+{
+    "Type": "Package",
+    "Name": "test",
+    "Info": "Test Package",
+    "Author": "Anonymous",
+    "Version": "1.0.0",
+    "Target": "Path to your package",
+    "Dependencies": []
+}
 
-## Special Build
-1. Raspberry Pi OS (same as Debian, but including `covscript.iot` libraries) -> rpi_tools
-2. Covariant Script Sandbox Environment (system libraries like `covscript.process` are not included) -> deb_minimal
-
-## Tested Platform
-OS|Kernel|Architecture|Compiler|Target|Build Tool
-:---:|:---:|:---:|:---:|:---:|:---:
-Apple macOS Mojave 10.14.6|Apple Darwin 18.7.0|x86_64|Apple Clang 10.0.1|x86_64-apple-darwin18.7.0|mac_tools
-Microsoft Windows 10 Professional 1809|Windows NT 10.0.17763.615|x86_64|GCC 8.1.0 (i686-posix-sjlj-rev0)|i686-w64-mingw32|win_tools
-Microsoft Windows 10 Professional 1809|Windows NT 10.0.17763.615|x86_64|GCC 8.1.0 (x86_64-posix-seh-rev0)|x86_64-w64-mingw32|win_tools
-Microsoft Windows 10 Professional 20H2|Windows NT 10.0.19042.630|x86_64|GCC 10.2.0 (x86_64-posix-seh)|x86_64-w64-mingw32|win_tools
-Deepin Linux 15.11 Desktop|GNU/Linux 4.15.0-29deepin-generic|x86_64|GCC 7.3.0|x86_64-linux-gnu|deb_tools
-Deepin Linux 15.11 Desktop|GNU/Linux 4.15.0-29deepin-generic|x86_64|Clang 7.0.1|x86_64-linux-gnu|deb_tools
-Deepin Linux 15.5 SP2 Professional|GNU/Linux 4.4.32-deepin-loongson-3-generic|mips64|GCC 6.3.0|mips64el-linux-gnuabi64|deb_tools
-Deepin Linux 15.5 SP2 Professional|GNU/Linux 4.4.32-deepin-loongson-3-generic|mips64|Clang 6.0.0|mips64el-unknown-linux-gnu|deb_tools
-## Xcode Platform
-### Dependencies
-1. Install Xcode Command Line Tools using command `xcode-select --install`
-2. Install [Brew Package Manager](https://brew.sh/) with its official guide.
-3. Install `bash`, `binutils`, `coreutils`, `cmake`, `git` and `glfw` via `brew` and attach them to `PATH` environment.
-### Prepare
-1. Ensure your computer's **performance** is good enough -- at least 2 cores CPU and 4 gigabytes RAM.
-2. Recheck your **internet access**, which is required to fetch the source code from github.
-3. Keep the local clone of this repository is **up to date**.
-4. Ensure you have no image mounted in Finder. If you have, unmount them all.
-### Compile
-Enter the `mac_tools` folder and run
-```sh
-bash ./auto-build.sh
 ```
-The first step will be very time-consuming. You will get the `.dmg` file under `mac_tools` which contains the specialized build version which depends on your machine.
++ `Type` is the type of your package, can be `Package`(\*.csp) or `Extension`(\*.cse)
++ `Name` is the unique identifier of the package and cannot be repeated.
++ `Info` is the description of your package, should be short in one sentence.
++ `Author` is the name of the package author.
++ `Version` is the version of your package, which will be sorted in lexicographical order.
++ `Target` is the path to your package file(base to the repository directory).
++ `Dependencies` is an array of package names you depend on.
 
-## Dpkg Platform
-> Although we support all platforms theoretically, we only guarantee it can work with the platform we tested.
-
-### Dependencies
-Install `cmake`, `pkg-config`, `build-essential`, `git` , `libcurl4-openssl-dev` , `unixodbc-dev` and `libglfw3-dev` via `apt-get`.
-### Prepare
-1. Ensure your computer's **performance** is good enough -- at least 2 cores CPU and 4 gigabytes RAM.
-2. Recheck your **internet access**, which is required to fetch the source code from github.
-3. Keep the local clone of this repository is **up to date**.
-### Compile
-Enter the `deb_tools` folder and run
-```sh
-bash ./auto-build.sh
+#### Example:
+```json
+{
+    "Type": "Package",
+    "Name": "csdbc_mysql",
+    "Info": "CSDBC MySQL Driver",
+    "Author": "CovScript Organization",
+    "Version": "1.0.1",
+    "Target": "csdbc_mysql.csp",
+    "Dependencies": [
+        "database",
+        "codec",
+        "csdbc",
+        "regex"
+    ]
+}
 ```
-The first step will be very time-consuming. You will get the `.deb` file under `deb_tools/deb-src` which contains the specialized build version which depends on your machine.
+### Step 2: Put your json file into the `csbuild` folder of your repository
+An legal `csbuild` folder should contains following files:
++ JSON files: Package Description File, can be multiple.
++ make.bat: Build script on Windows(Extensions only)
++ make.sh: Build script on Unix(Extensions only)
+### Step 3: Write your build script(for Extensions)
+Build scripts are variable between different projects, but at least you should follow these basic rules:
++ No extra effect on system.
++ Can be executed paralleled.
++ Will not occupy unreasonable time.
 
-## MinGW-w64 Platform
-### Dependencies
-1. 32bit and 64bit version of [MinGW-w64](https://sourceforge.net/projects/mingw-w64/)(i686-posix-sjlj and x86_64-posix-seh)
-2. 32bit and 64bit version of [GLFW3](https://www.glfw.org/download.html)(Windows pre-compiled binaries)
-3. [Git on Windows](https://git-scm.com/)
-4. [7-Zip](https://www.7-zip.org/)
-5. [CMake](https://cmake.org/)
-6. [Windows SDK](./sign_tools), provided but no guarantee
-### Prepare
-> It is very complex due to Microsoft Windows' lack of package managers, please be patient. Why we're not using the MSVC compiler? It was not supported before. Now it's supported but too slow (slower than MinGW-w64) to be used.
+Based on basic rules, a good build script should follow these rules additionally:
++ Use building tools, such as CMake
++ Output the files into standard path structural:
+    + Binaries -> build/bin
+    + Packages -> build/imports
++ Providing same experience in different platforms
+#### Example of CMakeLists.txt for CovScript Extension
+```
+cmake_minimum_required(VERSION 3.4)
 
-1. Ensure your computer's **performance** is good enough -- at least 2 cores CPU and 4 gigabytes RAM.
-2. Recheck your **internet access**, which is required to fetch the source code from github.
-3. Keep the local clone of this repository is **up to date**.
-4. Enter the `sign_tools` folder, execute `gen.bat` to generate the certificates manually. **Do not set the password, leave it blank.**
-5. **Set the `PATH` environment variable correctly**, the executables of `7-Zip`, `CMake` and `Git-SCM` should be included.
-6. Unzip the two versions of MinGW-w64 you have downloaded into two folders, rename the 32bit version to `mingw32` and the 64bit version to `mingw64`, put them into the `win_tools` folder.
-7. Unzip the two versions of GLFW3 you have downloaded into two folders and install them into two versions of MinGW-w64 separately:
-    - MinGW-w64 data folder position:
-        - For 32bit version, it is `mingw32/i686-w64-mingw32` folder
-        - For 64bit version, it is `mingw64/x86_64-w64-mingw32` folder
-    - Apply these two steps to both 32bit and 64bit versions separately:
-        1) Copy the contents of `include` folder of GLFW3 into `include` folder of MinGW-w64 data folder
-        2) Copy the contents of `lib-mingw-w64` folder  of GLFW3 into `lib` folder of MinGW-w64 data folder
-### Compile
-Just follow the files' name under the `win_tools` folder. The first step will be very time-consuming. You will get the 32bit and 64bit executables under `win_tools/builds`.
+project(covscript-regex)
+
+if(DEFINED ENV{CS_DEV_PATH})
+    include_directories($ENV{CS_DEV_PATH}/include)
+    link_directories($ENV{CS_DEV_PATH}/lib)
+endif()
+
+if(DEFINED ENV{CS_DEV_OUTPUT})
+    set(LIBRARY_OUTPUT_PATH $ENV{CS_DEV_OUTPUT})
+    set(EXECUTABLE_OUTPUT_PATH $ENV{CS_DEV_OUTPUT})
+endif()
+
+# Compiler Options
+set(CMAKE_CXX_STANDARD 14)
+
+if (MSVC)
+    set(CMAKE_CXX_FLAGS "/O2 /EHsc /utf-8 /w")
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+elseif (CMAKE_COMPILER_IS_GNUCXX)
+    if (WIN32)
+        set(CMAKE_C_FLAGS "--static -fPIC -s -O3")
+        set(CMAKE_CXX_FLAGS "--static -fPIC -s -O3")
+    else ()
+        set(CMAKE_C_FLAGS "-fPIC -s -O3")
+        set(CMAKE_CXX_FLAGS "-fPIC -s -O3")
+    endif ()
+else ()
+    set(CMAKE_C_FLAGS "-fPIC -O3")
+    set(CMAKE_CXX_FLAGS "-fPIC -O3")
+endif ()
+
+add_library(regex SHARED regex.cpp)
+
+target_link_libraries(regex covscript)
+
+set_target_properties(regex PROPERTIES OUTPUT_NAME regex)
+set_target_properties(regex PROPERTIES PREFIX "")
+set_target_properties(regex PROPERTIES SUFFIX ".cse")
+```
+We usually locate the development files via `CS_DEV_PATH` environment variable. If you are using Windows or Linux, the `CS_DEV_PATH` should be placed correctly with official CovScript Runtime Installer.
+### Step 4: Configure CSBuild
+CSBuild have 3 phases: Fetch -> Build -> Install
+#### 1. Add your package to each phase of CSBuild
++ Fetch
+    + Windows -> misc/win32_config.json -> append a record in `repos` field:
+        + `<User>/<Repository Name>`
+    + Unix -> misc/unix_build.sh -> append a record after `fetch_git` commands:
+        + `fetch_git <User>/<Repository Name> &`
++ Build
+    + Windows -> misc/win32_config.json -> append a record in `build` field:
+        + `<Repository Name>`
+    + Unix -> misc/unix_build.sh -> append a record after `start` commands:
+        + `start <Repository Name> "./csbuild/make.sh" &`
++ Install
+    + All -> misc/cspkg_config.json -> append a record in `install` field:
+        + `<Repository Name>`
+#### 2. Test CSBuild script
+Run `auto-build.bat` in Windows or `auto-build.sh` in Unix, wait for final output.
+
+If CSBuild was configured correctly, you can see these output without error report.
+```
+...
+csbuild: building package csdbc(1.0.1)...
+...
+```
+### Step 5: Submit to official CSBuild repository(Optional)
+If your test runs smoothly and you want Official release including your package, you can submit your package to our official CSBuild repository via Pull Request.

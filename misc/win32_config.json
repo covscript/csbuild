@@ -1,14 +1,14 @@
 {
-    "git_repo": "https://github.com/covscript/",
+    "git_repo": "https://github.com/",
     "repos": [
-        "csdbc",
-        "covscript-database",
-        "covscript-darwin",
-        "covscript-sqlite",
-        "covscript-network",
-        "covscript-imgui",
-        "covscript-curl",
-        "covscript-zip"
+        "covscript/csdbc",
+        "covscript/covscript-database",
+        "covscript/covscript-darwin",
+        "covscript/covscript-sqlite",
+        "covscript/covscript-network",
+        "covscript/covscript-imgui",
+        "covscript/covscript-curl",
+        "covscript/covscript-zip"
     ],
     "build": [
         "covscript-database",
