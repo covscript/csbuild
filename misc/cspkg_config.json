@@ -2,6 +2,7 @@
     "remote_base" : "http://mirrors.covariant.cn/cspkg/",
     "install": [
         "csdbc",
+        "stdutils",
         "covscript-process",
         "covscript-database",
         "covscript-regex",
