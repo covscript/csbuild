@@ -6,13 +6,13 @@
         <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
         <Media Id="1" Cabinet="Cab1.cab" EmbedCab="yes" />
 
-        <Feature Id="ProductFeature" Title="Covariant Script" Level="1">
+        <Feature Id="CovScript" Title="Covariant Script" Level="1">
             <ComponentRef Id="ApplicationShortcut" />
             <ComponentGroupRef Id="Package" />
         </Feature>
 
         <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
-        <UIRef Id="WixUI_InstallDir" />
+        <UIRef Id="WixUI_FeatureTree" />
         <WixVariable Id="WixUILicenseRtf" Value="SourceDir\License.rtf" />
 
         <Directory Id="TARGETDIR" Name="SourceDir">
