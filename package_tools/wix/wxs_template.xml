@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-    <Product Id="{4060C245-4CB4-407A-B544-52F59BF98577}" Name="PRODUCT_NAME" Language="1033" Version="PRODUCT_VERSION" Manufacturer="Covariant Script Organization" UpgradeCode="197e3fe6-b2f4-4f7c-b94f-050ca0dd9a7d">
+    <Product Id="*" Name="PRODUCT_NAME" Language="1033" Version="PRODUCT_VERSION" Manufacturer="Covariant Script Organization" UpgradeCode="197e3fe6-b2f4-4f7c-b94f-050ca0dd9a7d">
         <Package Id="*" Keywords="CovScript" Description="Covariant Script Runtime" Platform="PRODUCT_ARCH" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
-        <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+        <MajorUpgrade
+            AllowSameVersionUpgrades="yes"
+            DowngradeErrorMessage="A newer version of [ProductName] is already installed."
+        />
+
         <Media Id="1" Cabinet="Cab1.cab" EmbedCab="yes" />
 
         <Feature Id="CovScript" Title="Covariant Script" Level="1">
