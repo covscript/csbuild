@@ -81,9 +81,17 @@ jobs:
         with:
           args: zip -qq -r cspkg-repo.zip cspkg-repo
           
-      - name: Package CSPKG Repo on Windows
+      - name: Package Build files on Ubuntu
+        if: matrix.os == 'ubuntu-latest'
+        uses: montudor/action-zip@v0.1.1
+        with:
+          args: zip -qq -r covscript-linux.zip build
+          
+      - name: Package CSPKG Repo and Build files on Windows
         if: matrix.os == 'windows-latest'
-        run: 7z a -mmt4 -mx9 cspkg-repo.7z cspkg-repo
+        run: |
+          7z a -mmt4 -mx9 cspkg-repo.7z cspkg-repo
+          7z a -mmt4 -mx9 covscript-win32.7z build
 
       - name: Automatic Release MSI
         if: matrix.os == 'windows-latest'
