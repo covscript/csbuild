@@ -13,7 +13,7 @@ function fetch_git ()
     if [ ! -d "$1" ]; then
         git clone $git_repo/$1 --depth=1
     else
-        cd $1
+        cd ${1#*/}
         git fetch
         git pull
         git clean -dfx
