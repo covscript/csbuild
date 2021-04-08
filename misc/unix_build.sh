@@ -10,7 +10,7 @@ cd build-cache
 git_repo="https://github.com/"
 function fetch_git ()
 {
-    if [ ! -d "$1" ]; then
+    if [ ! -d "${1#*/}" ]; then
         git clone $git_repo/$1 --depth=1
     else
         cd ${1#*/}
