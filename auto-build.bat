@@ -30,7 +30,7 @@ xcopy /E /Y covscript-codec\build ..\build\
 xcopy /E /Y covscript-process\build ..\build\
 
 cd ..\misc\bin
-call sign.bat ..\cert\covscript ..\..\*.msi
+call sign.bat ..\cert\covscript ..\..\build\bin\*.exe
 cd ..\..
 
 .\build\bin\cs -i .\build\imports .\misc\win32_build.csc .\misc\win32_config.json
