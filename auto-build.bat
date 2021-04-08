@@ -42,6 +42,8 @@ cd ..
 
 .\package_tools\wix\make.bat
 
+start /WAIT /D .\misc\bin sign.bat ..\cert\covscript ..\..\*.msi
+
 goto:eof
 :call_bat
 cd %1%
