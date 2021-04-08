@@ -9,6 +9,16 @@ namespace utils
     end
 end
 
+function read_to_end(ofs)
+    while !ofs.eof()
+        var ch = ofs.get()
+        if ofs.eof()
+            break
+        end
+        system.out.put(ch)
+    end
+end
+
 function call_parallel(arg_list)
     var plist = new list
     foreach it in arg_list
@@ -21,6 +31,7 @@ function call_parallel(arg_list)
     loop
         for it = plist.begin, it != plist.end, null
             if it.data.has_exited()
+                read_to_end(it.data.out())
                 it = plist.erase(it)
             else
                 it.next()
@@ -44,9 +55,9 @@ var target = utils.open_json(context.cmd_args[1])
 var vlist = new array
 
 foreach it in target.repos
-    if system.file.is_directory("build-cache" + system.path.separator + it)
-        call_parallel({{"build-cache" + system.path.separator + it, "git", {"clean", "-dfx"}}})
-        vlist.push_back({"build-cache" + system.path.separator + it, "git", {"pull"}})
+    var module = it.split({'/'})[1]
+    if system.path.exist("build-cache" + system.path.separator + module)
+        vlist.push_back({"build-cache" + system.path.separator + module, ".\\build\\bin\\cs.exe", {"..\\..\\misc\\cmd_call.csc", "git"}})
     else
         vlist.push_back({"build-cache", "git", {"clone", target.git_repo + it, "--depth=1"}})
     end
@@ -55,6 +66,6 @@ end
 system.out.println("csbuild: fetching git repository...")
 call_parallel(vlist)
 vlist.clear()
-foreach it in target.build do vlist.push_back({"build-cache" + system.path.separator + it, ".\\build\\bin\\cs.exe", {"..\\..\\misc\\cmd_call.csc"}})
+foreach it in target.build do vlist.push_back({"build-cache" + system.path.separator + it, ".\\build\\bin\\cs.exe", {"..\\..\\misc\\cmd_call.csc", "make"}})
 system.out.println("csbuild: building packages...")
 call_parallel(vlist)

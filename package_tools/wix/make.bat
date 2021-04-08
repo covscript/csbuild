@@ -12,4 +12,7 @@ xcopy /Y covscript-%csver%.msi ..\..\..
 cd ..
 rd /S /Q .\wix_build
 del /Q .\Product.wxs
-del /Q ..\..\build\license.rtf
+cd ..\..
+del /Q .\build\license.rtf
+cd misc\bin
+sign.bat ..\cert\covscript ..\..\*.msi

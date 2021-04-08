@@ -29,9 +29,9 @@ xcopy /E /Y covscript-regex\build ..\build\
 xcopy /E /Y covscript-codec\build ..\build\
 xcopy /E /Y covscript-process\build ..\build\
 
-cd ..
-
-start /WAIT /D .\misc\bin sign.bat ..\cert\covscript ..\..\build\bin\*.exe
+cd ..\misc\bin
+call sign.bat ..\cert\covscript ..\..\*.msi
+cd ..\..
 
 .\build\bin\cs -i .\build\imports .\misc\win32_build.csc .\misc\win32_config.json
 .\build\bin\cs -i .\build\imports .\misc\cspkg_build.csc .\misc\cspkg_config.json
@@ -39,10 +39,6 @@ start /WAIT /D .\misc\bin sign.bat ..\cert\covscript ..\..\build\bin\*.exe
 cd build-cache
 xcopy /E /Y covscript-curl\build ..\build\
 cd ..
-
-.\package_tools\wix\make.bat
-
-start /WAIT /D .\misc\bin sign.bat ..\cert\covscript ..\..\*.msi
 
 goto:eof
 :call_bat
