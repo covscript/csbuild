@@ -124,25 +124,20 @@ if target.remote_base[-1] != '/'
 end
 
 system.out.println("csbuild: installing packages...")
-system.file.mkdir("cspkg-repo")
-system.file.mkdir("cspkg-repo" + system.path.separator + "index_files")
-system.file.mkdir("cspkg-repo" + system.path.separator + "index_files" + system.path.separator + "packages")
-system.file.mkdir("cspkg-repo" + system.path.separator + "index_files" + system.path.separator + "packages" + system.path.separator + "universal")
-system.file.mkdir("cspkg-repo" + system.path.separator + "index_files" + system.path.separator + "packages" + system.path.separator + env.platform())
-system.file.mkdir("cspkg-repo" + system.path.separator + "index_files" + system.path.separator + "packages" + system.path.separator + env.platform() + system.path.separator + env.arch())
-
-system.file.mkdir("cspkg-repo" + system.path.separator + "universal")
-system.file.mkdir("cspkg-repo" + system.path.separator + env.platform())
-system.file.mkdir("cspkg-repo" + system.path.separator + env.platform() + system.path.separator + env.arch())
 
 var idx_path = "cspkg-repo" + system.path.separator + "index_files" + system.path.separator + "packages" + system.path.separator + "universal"
 var pkg_path = "cspkg-repo" + system.path.separator + "universal"
 var idx_os_path = "cspkg-repo" + system.path.separator + "index_files" + system.path.separator + "packages" + system.path.separator + env.platform() + system.path.separator + env.arch()
 var pkg_os_path = "cspkg-repo" + system.path.separator + env.platform() + system.path.separator + env.arch()
 
+system.path.mkdir_p(idx_path)
+system.path.mkdir_p(pkg_path)
+system.path.mkdir_p(idx_os_path)
+system.path.mkdir_p(pkg_os_path)
+
 foreach it in target.install
     var path = "build-cache" + system.path.separator + it
-    if !system.file.is_directory(path + system.path.separator + "csbuild")
+    if !system.path.exist(path + system.path.separator + "csbuild")
         system.out.println("csbuild: configure directory not found in module \'" + it + "\'")
         continue
     end
@@ -157,7 +152,7 @@ foreach it in target.install
                 system.out.println("csbuild: building package " + info.Name + "(" + info.Version + ")...")
                 var file_reg = regex.build("^.*?(\\w+\\.(cse|csp))$")
                 var file_name = file_reg.match(info.Target)
-                if file_name.empty() || !system.file.exists(path + system.path.separator + info.Target)
+                if file_name.empty() || !system.file.exist(path + system.path.separator + info.Target)
                     system.out.println("csbuild: invalid target in module \'" + it + "\'")
                     continue
                 end
