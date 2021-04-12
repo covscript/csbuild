@@ -15,6 +15,9 @@
             <ComponentGroupRef Id="Package" />
         </Feature>
 
+        <Icon Id="icon.ico" SourceFile="SourceDir\icon.ico"/>
+        <Property Id="ARPPRODUCTICON" Value="icon.ico" />
+
         <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
         <UIRef Id="WixUI_FeatureTree" />
         <WixVariable Id="WixUILicenseRtf" Value="SourceDir\License.rtf" />

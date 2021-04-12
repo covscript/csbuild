@@ -1,5 +1,6 @@
 @echo off
 cd %~dp0
+xcopy /Y icon.ico ..\..\build
 xcopy /Y license.rtf ..\..\build
 for /F %%i in ('..\..\build\bin\cs -i ..\..\build\imports .\get_csver.csc') do (set csver=%%i)
 echo CovScript Runtime Version: %csver%
@@ -13,6 +14,7 @@ cd ..
 rd /S /Q .\wix_build
 del /Q .\Product.wxs
 cd ..\..
+del /Q .\build\icon.ico
 del /Q .\build\license.rtf
 cd misc\bin
 sign.bat ..\cert\covscript ..\..\*.msi
