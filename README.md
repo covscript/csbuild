@@ -1,7 +1,7 @@
 # Covariant Script Build System
 [![Action Status](https://github.com/covscript/csbuild/workflows/schedule/badge.svg)](https://github.com/covscript/csbuild/actions)  
 CSBuild is a system used for parallel building, automatic releasing and continues integration of official maintained packages.
-## Supported Platforms
+## Supported Operating System
 |Platform|Architectural|Toolchain|Installer|Build Tool|Package Tool|
 |----|----|----|----|----|----|
 |Microsoft Windows|x86, x86_64|MinGW-w64|Microsoft Installer|auto-build.bat|package_tools/wix/make.bat|
