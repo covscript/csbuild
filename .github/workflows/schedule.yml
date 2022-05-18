@@ -55,7 +55,7 @@ jobs:
           rm C:/ProgramData/chocolatey/bin/g++.exe -force
           rm C:/Strawberry/c/bin/gcc.exe -force
           rm C:/Strawberry/c/bin/g++.exe -force
-          7z x gcc-10.2.0-mingw-w64-8.0.0-r8-covscript.org.zip -oC:\
+          7z x gcc-11.3.0-mingw-w64-10.0.0-r3-covscript.org.zip -oC:\
           7z x wix311-binaries.zip -oC:\Wix
           
       - name: Build on Windows
