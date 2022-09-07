@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Copyright (C) 2017-2021 Michael Lee(李登淳)
+# Copyright (C) 2017-2022 Michael Lee(李登淳)
 #
-# Email:   lee@covariant.cn, mikecovlee@163.com
+# Email:   lee@unicov.cn, mikecovlee@163.com
 # Github:  https://github.com/mikecovlee
 # Website: http://covscript.org.cn
 
@@ -45,6 +45,7 @@ namespace utils
 end
 
 namespace env
+    var win_ucrt = true
     function user_home()
         if system.is_platform_windows()
             return system.getenv("USERPROFILE")
@@ -68,7 +69,11 @@ namespace env
     end
     function platform()
         if system.is_platform_windows()
-            return "windows"
+            if env.win_ucrt
+                return "winucrt"
+            else
+                return "windows"
+            end
         end
         if system.is_platform_linux()
             return "linux"
@@ -102,7 +107,11 @@ namespace env
         var p = process.exec("./build/bin/cs", {"-v"})
         var r = null, line = null
         loop; until !(r = abi_reg.search(line = p.out().getline())).empty()
-        return r.str(1)
+        if env.win_ucrt && system.is_platform_windows()
+            return r.str(1) + "_UCRT"
+        else
+            return r.str(1)
+        end
     end
 end
 
