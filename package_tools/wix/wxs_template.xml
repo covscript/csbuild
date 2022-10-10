@@ -182,7 +182,6 @@
         </DirectoryRef>
         <DirectoryRef Id="ApplicationProgramsFolder">
             <Component Id="ApplicationShortcut" Guid="{1BDEED99-E5C9-41B5-AC6B-CB01BD2E14C9}">
-                <Environment Id="COVSCRIPT_HOME" Name="COVSCRIPT_HOME" Value="[INSTALLDIR]" Permanent="no" Part="last" Action="set" System="yes" />
                 <Environment Id="CS_IMPORT_PATH" Name="CS_IMPORT_PATH" Value="[INSTALLDIR]imports" Permanent="no" Part="last" Action="set" System="yes" />
                 <Environment Id="CS_DEV_PATH" Name="CS_DEV_PATH" Value="[INSTALLDIR]" Permanent="no" Part="last" Action="set" System="yes" />
                 <Environment Id="PATH" Name="PATH" Value="[INSTALLDIR]bin" Permanent="no" Part="last" Action="set" System="yes" />
