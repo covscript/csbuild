@@ -72,8 +72,7 @@ jobs:
           cs_dbg -v
           cspkg install --import
           cspkg list
-          cd build-cache/covscript/examples
-          cs benchmark.csc
+          cs build-cache/covscript/.github/workflows/benchmark.csc
           
       - name: Package CSPKG Repo on Ubuntu
         if: matrix.os == 'ubuntu-latest'
