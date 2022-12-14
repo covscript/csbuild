@@ -38,7 +38,7 @@ cd ..\..
 
 cd build-cache
 xcopy /E /Y covscript-curl\build ..\build\
-xcopy /E /Y ecs\bin ..\build\
+xcopy /E /Y ecs\build\ ..\build\
 cd ..
 
 goto:eof

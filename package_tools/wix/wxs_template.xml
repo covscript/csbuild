@@ -44,6 +44,12 @@
                 <Component Id="cmpCD52B7C70176CFE8B2BB6AFE60F125D4" Guid="{456D26F0-5986-44F4-A41B-91C65F50EF31}">
                     <File Id="fil9290242ED191254918CE5511AA2A1456" KeyPath="yes" Source="SourceDir\bin\cspkg.bat" />
                 </Component>
+                <Component Id="cmpB4FFD1BB7CD8AC154FC373A13D47AA8A" Guid="{4D6D907D-F4A2-4E55-B169-F325D76B9418}">
+                    <File Id="fil503417FDED5ED7A7817C11BF96165DCF" KeyPath="yes" Source="SourceDir\bin\ecs" />
+                </Component>
+                <Component Id="cmpF0213B6DC1F50615A620363429AEE87D" Guid="{0BF329EA-5A87-4CA6-8DE3-D531BDC06EAA}">
+                    <File Id="filB86D7B19E7CCEFB24A5B73BCB205D657" KeyPath="yes" Source="SourceDir\bin\ecs.bat" />
+                </Component>
                 <Component Id="cmpC357076F88D4067CCC23470FBD0A15E8" Guid="{83AC0947-FF4E-4F3E-B246-E623D18FB7E4}">
                     <File Id="filC73006886FD2DA74BDE151F624A156D7" KeyPath="yes" Source="SourceDir\bin\cs_dbg.exe" />
                 </Component>
@@ -197,6 +203,8 @@
             <ComponentRef Id="cmpDC88EB415BE80B6C5004DD59CA5177D4" />
             <ComponentRef Id="cmp802ECBB3D5A542900D4AB0E49FE7F126" />
             <ComponentRef Id="cmpCD52B7C70176CFE8B2BB6AFE60F125D4" />
+            <ComponentRef Id="cmpB4FFD1BB7CD8AC154FC373A13D47AA8A" />
+            <ComponentRef Id="cmpF0213B6DC1F50615A620363429AEE87D" />
             <ComponentRef Id="cmpC357076F88D4067CCC23470FBD0A15E8" />
             <ComponentRef Id="cmp181E75EF6B9D2B86D16FA6287D426B62" />
             <ComponentRef Id="cmp01918FE7CCA619B444F6C7F97257ABC8" />
