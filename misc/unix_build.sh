@@ -20,6 +20,7 @@ function fetch_git ()
         cd ..
     fi
 }
+fetch_git covscript/ecs &
 fetch_git covscript/cspkg &
 fetch_git covscript/csdbc &
 fetch_git covscript/stdutils &

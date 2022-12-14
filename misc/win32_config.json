@@ -1,6 +1,7 @@
 {
     "git_repo": "https://github.com/",
     "repos": [
+        "covscript/ecs",
         "covscript/csdbc",
         "covscript/stdutils",
         "covscript/covscript-database",
