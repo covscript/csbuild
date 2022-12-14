@@ -13,6 +13,7 @@
         "covscript/covscript-zip"
     ],
     "build": [
+        "ecs",
         "stdutils",
         "covscript-database",
         "covscript-darwin",
