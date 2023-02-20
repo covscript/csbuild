@@ -20,3 +20,4 @@ cp -rf covscript-process/build ..
 cd ..
 ./build/bin/cs -i ./build/imports ./misc/cspkg_build.csc ./misc/cspkg_config.json
 cp -rf build-cache/ecs/build .
+chmod +x ./build/bin/ecs
