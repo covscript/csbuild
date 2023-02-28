@@ -17,7 +17,8 @@ CSBuild is a system used for parallel building, automatic releasing and continue
     "Info": "Test Package",
     "Author": "Anonymous",
     "Version": "1.0.0",
-    "Target": "Path to your package",
+    "Target": "Path to your package(*.cse|*.csp)",
+    "Source": "Path to your source file(*.cpp)",
     "Dependencies": []
 }
 
@@ -28,31 +29,32 @@ CSBuild is a system used for parallel building, automatic releasing and continue
 + `Author` is the name of the package author.
 + `Version` is the version of your package, which will be sorted in lexicographical order.
 + `Target` is the path to your package file(base to the repository directory).
++ `Source` is the path to your source file(base to the repository directory).
+  + Note that if you need more complicated method to configure your project like `cmake`, this field is unessential.
+  + Currently this method for building is **experimental** that can't bundle in CSBuild directly. Please use it for debugging only before this method is merged into mainline support.
 + `Dependencies` is an array of package names you depend on.
+  + An standard extension **should not** have any dependencies. 
 
 #### Example:
 ```json
 {
-    "Type": "Package",
-    "Name": "csdbc_mysql",
-    "Info": "CSDBC MySQL Driver",
+    "Type": "Extension",
+    "Name": "analysis_impl",
+    "Info": "Data Analysis Implementation",
     "Author": "CovScript Organization",
-    "Version": "1.0.1",
-    "Target": "csdbc_mysql.csp",
-    "Dependencies": [
-        "database",
-        "codec",
-        "csdbc",
-        "regex"
-    ]
+    "Version": "1.1.0",
+    "Source": "analysis_impl.cpp",
+    "Target": "analysis_impl.cse",
+    "Dependencies": []
 }
 ```
 ### Step 2: Put your json file into the `csbuild` folder of your repository
 An legal `csbuild` folder should contains following files:
 + JSON files: Package Description File, can be multiple.
-+ make.bat: Build script on Windows(Extensions only)
-+ make.sh: Build script on Unix(Extensions only)
-### Step 3: Write your build script(for Extensions)
++ *Build Scripts*: Extensions Only
+  + make.bat: Build script on Windows
+  + make.sh: Build script on Unix Systems
+### Step 3: Write your build script (for Extensions)
 Build scripts are variable between different projects, but at least you should follow these basic rules:
 + No extra effect on system.
 + Can be executed paralleled.
