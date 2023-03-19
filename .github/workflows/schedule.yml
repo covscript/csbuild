@@ -36,8 +36,8 @@ jobs:
         with:
           owner: covscript-archives
           repo: mingw-w64
-          tag: gcc-12.2.0-mingw-w64-10.0.0-r4
-          file: gcc-12.2.0-mingw-w64-10.0.0-r4-covscript.org.zip
+          tag: 12.2.0.1
+          file: gcc-12.2.0-mingw-w64-10.0.0-r4-patch1-covscript.org.zip
           
       - name: Download Wix Toolset
         if: matrix.os == 'windows-latest'
@@ -55,7 +55,7 @@ jobs:
           rm C:/ProgramData/chocolatey/bin/g++.exe -force
           rm C:/Strawberry/c/bin/gcc.exe -force
           rm C:/Strawberry/c/bin/g++.exe -force
-          7z x gcc-12.2.0-mingw-w64-10.0.0-r4-covscript.org.zip -oC:\
+          7z x gcc-12.2.0-mingw-w64-10.0.0-r4-patch1-covscript.org.zip -oC:\
           7z x wix311-binaries.zip -oC:\Wix
           
       - name: Build on Windows
