@@ -47,6 +47,7 @@ cd ..\..
 
 .\build\bin\cs -i .\build\imports .\misc\win32_build.csc .\misc\win32_config.json
 .\build\bin\cs -i .\build\imports .\misc\cspkg_build.csc %CSPKG_CONFIG%
+.\build\bin\cs -i .\build\imports .\misc\replace_source.csc .\build\bin\cspkg
 
 cd build-cache
 xcopy /E /Y covscript-curl\build ..\build\

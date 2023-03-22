@@ -27,5 +27,6 @@ cp -rf covscript-process/build ..
 
 cd ..
 ./build/bin/cs -i ./build/imports ./misc/cspkg_build.csc $CSPKG_CONFIG
+./build/bin/cs -i ./build/imports ./misc/replace_source.csc ./build/bin/cspkg
 cp -rf build-cache/ecs/build .
 chmod +x ./build/bin/ecs
