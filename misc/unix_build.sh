@@ -37,7 +37,7 @@ fetch_git covscript/covscript-zip &
 fetch_git covscript/covscript-database &
 wait
 cd covscript
-if ["$1"="release"]; then
+if [[ "$#" == 1 && "$1" = "release" ]]; then
     CSPKG_CONFIG="./misc/cspkg_config.json"
     git checkout 3.4.1
 else
