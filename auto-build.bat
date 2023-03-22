@@ -11,7 +11,7 @@ call:git_fetch covscript-codec
 call:git_fetch covscript-process
 
 cd covscript
-if "%1%"=="release" (
+if "%1%" EQU "release" (
     echo Building for release...
     set CSPKG_CONFIG=".\misc\cspkg_config.json"
     git checkout 3.4.1
@@ -47,7 +47,9 @@ cd ..\..
 
 .\build\bin\cs -i .\build\imports .\misc\win32_build.csc .\misc\win32_config.json
 .\build\bin\cs -i .\build\imports .\misc\cspkg_build.csc %CSPKG_CONFIG%
-.\build\bin\cs -i .\build\imports .\misc\replace_source.csc .\build\bin\cspkg
+if "%1%" NEQ "release" (
+    .\build\bin\cs -i .\build\imports .\misc\replace_source.csc .\build\bin\cspkg
+)
 
 cd build-cache
 xcopy /E /Y covscript-curl\build ..\build\
