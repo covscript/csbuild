@@ -4,9 +4,11 @@ CSBuild is a system used for parallel building, automatic releasing and continue
 ## Supported Operating System
 |Platform|Architectural|Toolchain|Installer|Build Tool|Package Tool|
 |----|----|----|----|----|----|
-|Microsoft Windows|x86, x86_64|MinGW-w64|Microsoft Installer|auto-build.bat|package_tools/wix/make.bat|
-|Canonical Ubuntu|x86, x86_64, ARM, MIPS64EL|GCC, LLVM Clang|Debian Packager|auto-build.sh|package_tools/deb/make.sh
-|Apple macOS|x86_64|Apple Clang|Apple Disk Image|auto-build.sh|package_tools/dmg/make.sh [--no-gui]
+|Microsoft Windows|x86, x86_64|MinGW-w64|Microsoft Installer|`auto-build.bat`|`package_tools/wix/make.bat`|
+|Canonical Ubuntu|x86, x86_64, ARM, MIPS64EL|GCC, LLVM Clang|Debian Packager|`auto-build.sh`|`package_tools/deb/make.sh`|
+|Apple macOS|x86_64|Apple Clang|Apple Disk Image|`auto-build.sh`|`package_tools/dmg/make.sh [--no-gui]`|
+
+To build release version rather than nightly version, please add `release` argument when running build tool command.
 ## Build your package with CSBuild
 ### Step 1: Write your Package Description File
 #### Package Description File Template:
