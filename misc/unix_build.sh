@@ -36,6 +36,15 @@ fetch_git covscript/covscript-curl &
 fetch_git covscript/covscript-zip &
 fetch_git covscript/covscript-database &
 wait
+cd covscript
+if ["$1"="release"]; then
+    CSPKG_CONFIG="./misc/cspkg_config.json"
+    git checkout 3.4.1
+else
+    CSPKG_CONFIG="./misc/cspkg_nightly_config.json"
+    git checkout master
+fi
+cd ..
 start cspkg "./csbuild/make.sh"
 start covscript "./csbuild/make.sh"
 # Concurrent works
