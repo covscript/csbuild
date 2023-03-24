@@ -9,6 +9,18 @@ CSBuild is a system used for parallel building, automatic releasing and continue
 |Apple macOS|x86_64|Apple Clang|Apple Disk Image|`auto-build.sh`|`package_tools/dmg/make.sh [--no-gui]`|
 
 To build release version rather than nightly version, please add `release` argument when running build tool command.
+## Setup build environment
+### Windows
+You need to install Git and CMake on your system first.
+
+For building environment, please download [official maintained MinGW-w64 environment](https://github.com/covscript-archives/mingw-w64).
+
+Otherwise, you need to install libffi, libglfw3 and libcurl manually.
+### Linux
+```
+sudo apt install git cmake build-essential
+sudo apt install libffi-dev unixodbc-dev libglfw3-dev libcurl4-openssl-dev
+```
 ## Build your package with CSBuild
 ### Step 1: Write your Package Description File
 #### Package Description File Template:
