@@ -4,23 +4,27 @@ cd %~dp0\build-cache
 
 set GIT_REPO="https://github.com/covscript/"
 
-call:git_fetch cspkg
-call:git_fetch covscript
-call:git_fetch covscript-regex
-call:git_fetch covscript-codec
-call:git_fetch covscript-process
+call:git_clone covscript
 
-cd covscript
 if "%1%" EQU "release" (
     echo Building for release...
     set CSPKG_CONFIG=".\misc\cspkg_config.json"
+    cd covscript
     git checkout 3.4.1
+    cd ..
 ) else (
     echo Building for nightly...
     set CSPKG_CONFIG=".\misc\cspkg_nightly_config.json"
+    cd covscript
     git checkout master
+    cd ..
+    call:git_fetch covscript
 )
-cd ..
+
+call:git_fetch cspkg
+call:git_fetch covscript-regex
+call:git_fetch covscript-codec
+call:git_fetch covscript-process
 
 call:call_bat cspkg
 call:call_bat covscript
@@ -61,6 +65,11 @@ goto:eof
 cd %1%
 call csbuild\make.bat
 cd ..
+goto:eof
+:git_clone
+if not exist %1% (
+    git clone %GIT_REPO%/%1%
+)
 goto:eof
 :git_fetch
 if exist %1% (

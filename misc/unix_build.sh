@@ -8,6 +8,12 @@ function start ()
 mkdir -p build-cache
 cd build-cache
 git_repo="https://github.com/"
+function clone_git ()
+{
+    if [ ! -d "${1#*/}" ]; then
+        git clone $git_repo/$1
+    fi
+}
 function fetch_git ()
 {
     if [ ! -d "${1#*/}" ]; then
@@ -20,11 +26,23 @@ function fetch_git ()
         cd ..
     fi
 }
+clone_git covscript/covscript
+if [[ "$#" == 1 && "$1" = "release" ]]; then
+    CSPKG_CONFIG="./misc/cspkg_config.json"
+    cd covscript
+    git checkout 3.4.1
+    cd ..
+else
+    CSPKG_CONFIG="./misc/cspkg_nightly_config.json"
+    cd covscript
+    git checkout master
+    cd ..
+    fetch_git covscript/covscript &
+fi
 fetch_git covscript/ecs &
 fetch_git covscript/cspkg &
 fetch_git covscript/csdbc &
 fetch_git covscript/stdutils &
-fetch_git covscript/covscript &
 fetch_git covscript/covscript-regex &
 fetch_git covscript/covscript-codec &
 fetch_git covscript/covscript-darwin &
@@ -36,15 +54,6 @@ fetch_git covscript/covscript-curl &
 fetch_git covscript/covscript-zip &
 fetch_git covscript/covscript-database &
 wait
-cd covscript
-if [[ "$#" == 1 && "$1" = "release" ]]; then
-    CSPKG_CONFIG="./misc/cspkg_config.json"
-    git checkout 3.4.1
-else
-    CSPKG_CONFIG="./misc/cspkg_nightly_config.json"
-    git checkout master
-fi
-cd ..
 start cspkg "./csbuild/make.sh"
 start covscript "./csbuild/make.sh"
 # Concurrent works
