@@ -1,0 +1,11 @@
+{
+    "git_repo": "https://github.com/",
+    "repos": [
+        "covscript/ecs",
+        "covscript/covscript-curl"
+    ],
+    "build": [
+        "ecs",
+        "covscript-curl"
+    ]
+}
