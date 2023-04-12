@@ -167,21 +167,11 @@ covscriptDir="\${selfDir}/covscript"
 source "\${selfDir}/config"
 
 export PATH="\${PATH}:\${covscriptDir}/bin"
+export CS_DEV_PATH="\${covscriptDir}"
 export LD_LIBRARY_PATH="\${LD_LIBRARY_PATH}:\${covscriptDir}/lib"
 
-csReplBin="\${covscriptDir}/bin/cs"
-csUserImportPath="\$HOME/Library/Application Support/org.covscript.env/\${csABIVersion}/imports"
-
-if [[ "\$HOME"x != ""x ]];then
-    if [[ ! -d "\${csUserImportPath}" ]]; then
-        mkdir -p -m 755 "\${csUserImportPath}"
-    fi
-else
-	echo "Warning: HOME env is not set"
-fi
-
-csImportPath="\${covscriptDir}/imports:\${csUserImportPath}"
-exec "\${csReplBin}" --import-path "\${csImportPath}"
+echo "Covariant Script Development Shell"
+\$SHELL
 
 EOF
 
