@@ -10,7 +10,7 @@ if "%1%" EQU "release" (
     echo Building for release...
     set CSPKG_CONFIG=".\misc\cspkg_config.json"
     cd covscript
-    git checkout 3.4.1
+    git checkout 3.4.2
     cd ..
 ) else (
     echo Building for nightly...

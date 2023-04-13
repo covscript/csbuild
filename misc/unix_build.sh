@@ -30,7 +30,7 @@ clone_git covscript/covscript
 if [[ "$#" == 1 && "$1" = "release" ]]; then
     CSPKG_CONFIG="./misc/cspkg_config.json"
     cd covscript
-    git checkout 3.4.1
+    git checkout 3.4.2
     cd ..
 else
     CSPKG_CONFIG="./misc/cspkg_nightly_config.json"
