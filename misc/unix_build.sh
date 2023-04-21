@@ -27,18 +27,18 @@ function fetch_git ()
     fi
 }
 clone_git covscript/covscript
+cd covscript
+git checkout master
+git fetch
+git pull
+git clean -dfx
 if [[ "$#" == 1 && "$1" = "release" ]]; then
     CSPKG_CONFIG="./misc/cspkg_config.json"
-    cd covscript
-    git checkout 3.4.2
-    cd ..
+    git checkout $(cat ./csbuild/release.txt)
 else
     CSPKG_CONFIG="./misc/cspkg_nightly_config.json"
-    cd covscript
-    git checkout master
-    cd ..
-    fetch_git covscript/covscript &
 fi
+cd ..
 fetch_git covscript/ecs &
 fetch_git covscript/cspkg &
 fetch_git covscript/csdbc &

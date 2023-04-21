@@ -5,21 +5,21 @@ cd %~dp0\build-cache
 set GIT_REPO="https://github.com/covscript/"
 
 call:git_clone covscript
-
+cd covscript
+git checkout master
+git fetch
+git pull
+git clean -dfx
 if "%1%" EQU "release" (
     echo Building for release...
     set CSPKG_CONFIG=".\misc\cspkg_config.json"
-    cd covscript
-    git checkout 3.4.2
-    cd ..
+    set /p RELEASE_TAG= < .\csbuild\release.txt
+    git checkout %RELEASE_TAG%
 ) else (
     echo Building for nightly...
     set CSPKG_CONFIG=".\misc\cspkg_nightly_config.json"
-    cd covscript
-    git checkout master
-    cd ..
-    call:git_fetch covscript
 )
+cd ..
 
 call:git_fetch cspkg
 call:git_fetch covscript-regex
