@@ -1,5 +1,5 @@
 # Covariant Script Build System
-[![Action Status](https://github.com/covscript/csbuild/workflows/schedule/badge.svg)](https://github.com/covscript/csbuild/actions)  
+[![schedule_release](https://github.com/covscript/csbuild/actions/workflows/schedule_release.yml/badge.svg)](https://github.com/covscript/csbuild/actions/workflows/schedule_release.yml) [![schedule](https://github.com/covscript/csbuild/actions/workflows/schedule.yml/badge.svg)](https://github.com/covscript/csbuild/actions/workflows/schedule.yml)  
 CSBuild is a system used for parallel building, automatic releasing and continues integration of official maintained packages.
 ## Supported Operating System
 |Platform|Architectural|Toolchain|Installer|Build Tool|Package Tool|
