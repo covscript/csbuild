@@ -98,7 +98,7 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "windows-schedule-release"
-          title: "Windows Schedule Build"
+          title: "Windows Schedule Release Build"
           prerelease: false
           files: |
             *.msi
@@ -110,7 +110,7 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "ubuntu-schedule-release"
-          title: "Ubuntu Schedule Build"
+          title: "Ubuntu Schedule Release Build"
           prerelease: false
           files: |
             *.deb

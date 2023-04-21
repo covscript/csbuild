@@ -98,8 +98,8 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "windows-schedule"
-          title: "Windows Schedule Build"
-          prerelease: false
+          title: "Windows Schedule Nightly Build"
+          prerelease: true
           files: |
             *.msi
             *.7z
@@ -110,8 +110,8 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "ubuntu-schedule"
-          title: "Ubuntu Schedule Build"
-          prerelease: false
+          title: "Ubuntu Schedule Nightly Build"
+          prerelease: true
           files: |
             *.deb
             *.zip
