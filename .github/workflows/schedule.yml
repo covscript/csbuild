@@ -67,10 +67,10 @@ jobs:
       - name: Run tests on Ubuntu
         if: matrix.os == 'ubuntu-latest'
         run: |
-          sudo dpkg -i covscript-amd64.deb
+          sudo dpkg -i covscript-amd64-nightly.deb
           cs -v
           cs_dbg -v
-          cspkg install --import
+          cspkg install --import --yes
           cspkg list
           cs build-cache/covscript/.github/workflows/benchmark.csc
           
