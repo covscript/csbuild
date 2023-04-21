@@ -13,8 +13,7 @@ git clean -dfx
 if "%1%" EQU "release" (
     echo Building for release...
     set CSPKG_CONFIG=".\misc\cspkg_config.json"
-    set /p RELEASE_TAG= < .\csbuild\release.txt
-    git checkout %RELEASE_TAG%
+    for /f "delims=" %%x in (.\csbuild\release.txt) do git checkout %%x
 ) else (
     echo Building for nightly...
     set CSPKG_CONFIG=".\misc\cspkg_nightly_config.json"
