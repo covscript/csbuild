@@ -28,7 +28,7 @@ jobs:
           sudo apt-get install -y unixodbc unixodbc-dev libcurl4-openssl-dev libglfw3-dev
           bash auto-build.sh
           bash package_tools/deb/make.sh
-          cp *.deb covscript-amd64.deb
+          cp *.deb covscript-amd64-nightly.deb
       
       - name: Download MinGW-w64
         if: matrix.os == 'windows-latest'
@@ -62,7 +62,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           .github/workflows/build.bat
-          cp *.msi covscript-amd64.msi
+          cp *.msi covscript-amd64-nightly.msi
           
       - name: Run tests on Ubuntu
         if: matrix.os == 'ubuntu-latest'
@@ -78,19 +78,19 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         uses: montudor/action-zip@v0.1.1
         with:
-          args: zip -qq -r cspkg-repo.zip cspkg-repo
+          args: zip -qq -r cspkg-linux-x86_64-nightly.zip cspkg-repo
           
       - name: Package Build files on Ubuntu
         if: matrix.os == 'ubuntu-latest'
         uses: montudor/action-zip@v0.1.1
         with:
-          args: zip -qq -r covscript-linux.zip build
+          args: zip -qq -r covscript-linux-x86_64-nightly.zip build
           
       - name: Package CSPKG Repo and Build files on Windows
         if: matrix.os == 'windows-latest'
         run: |
-          7z a -mmt4 -mx9 cspkg-repo.7z cspkg-repo
-          7z a -mmt4 -mx9 covscript-win32.7z build
+          7z a -mmt4 -mx9 cspkg-winucrt-x86_64-nightly.7z cspkg-repo
+          7z a -mmt4 -mx9 covscript-winucrt-x86_64-nightly.7z build
 
       - name: Automatic Release MSI
         if: matrix.os == 'windows-latest'
