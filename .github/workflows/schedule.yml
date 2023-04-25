@@ -62,7 +62,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           .github/workflows/build.bat
-          cp *.msi covscript-amd64-nightly.msi
+          cp *.msi covscript-x64-nightly.msi
           
       - name: Run tests on Ubuntu
         if: matrix.os == 'ubuntu-latest'
