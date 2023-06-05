@@ -98,7 +98,7 @@ else
         b.arg({"..\\..\\misc\\cmd_call.csc", "make"})
     else
         b.cmd("bash")
-        b.arg("./csbuild/make.sh")
+        b.arg({"./csbuild/make.sh"})
     end
     var p = b.start()
     p.wait()
