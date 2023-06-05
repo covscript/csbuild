@@ -97,7 +97,7 @@ else
         b.cmd(".\\build\\bin\\cs.exe")
         b.arg({"..\\..\\misc\\cmd_call.csc", "make"})
     else
-        b.cmd("./build/bin/cs")
+        b.cmd("../../build/bin/cs")
         b.arg({"../../misc/cmd_call.csc", "make"})
     end
     var p = b.start()
