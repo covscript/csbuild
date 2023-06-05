@@ -1,7 +1,7 @@
 #!/bin/bash
 function start ()
 {
-    ../build/bin/cs -i ../build/imports ../misc/auto_build.csc $1
+    ./build/bin/cs -i ./build/imports ./misc/auto_build.csc ./build-cache/$1
 }
 
 CURRENT_FOLDER=$(dirname $(readlink -f "$0"))
@@ -33,6 +33,8 @@ cp -rf covscript-codec/build .. &
 cp -rf covscript-process/build .. &
 wait
 
+cd ..
+
 # Concurrent works
 
 start ecs &
@@ -46,7 +48,6 @@ start covscript-zip &
 start covscript-database &
 wait
 
-cd ..
 ./build/bin/cs -i ./build/imports ./misc/cspkg_build.csc $CSPKG_CONFIG
 if [[ "$#" != 1 || "$1" != "release" ]]; then
     ./build/bin/cs -i ./build/imports ./misc/replace_source.csc ./build/bin/cspkg
