@@ -93,8 +93,13 @@ if !system.file.exist(build_script)
 else
     var b = new process.builder
     b.dir(base_path)
-    b.cmd("./build/bin/cs.exe")
-    b.arg({"../../misc/cmd_call.csc", "make"})
+    if system.is_platform_windows()
+        b.cmd("./build/bin/cs")
+        b.arg({"../../misc/cmd_call.csc", "make"})
+    else
+        b.cmd(".\\build\\bin\\cs.exe")
+        b.arg({"..\\..\\misc\\cmd_call.csc", "make"})
+    end
     var p = b.start()
     p.wait()
     read_to_end(p.out())
