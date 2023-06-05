@@ -91,16 +91,5 @@ if !system.file.exist(build_script)
         end
     end
 else
-    var b = new process.builder
-    b.dir(base_path)
-    if system.is_platform_windows()
-        b.cmd(".\\build\\bin\\cs.exe")
-        b.arg({"..\\..\\misc\\cmd_call.csc", "make"})
-    else
-        b.cmd("../../build/bin/cs")
-        b.arg({"../../misc/cmd_call.csc", "make"})
-    end
-    var p = b.start()
-    p.wait()
-    read_to_end(p.out())
+    system.run((system.is_platform_windows() ? ".\\misc\\csbuild_trigger.bat " : "bash ./misc/csbuild_trigger.sh ") + base_path)
 end
