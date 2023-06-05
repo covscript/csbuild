@@ -1,9 +1,7 @@
 #!/bin/bash
 function start ()
 {
-    cd $1
-    bash $2
-    cd ..
+    ../build/bin/cs -i ../build/imports ../misc/auto_build.csc $1
 }
 mkdir -p build-cache
 cd build-cache
@@ -22,7 +20,6 @@ function fetch_git ()
         cd ${1#*/}
         git fetch
         git pull
-        git clean -dfx
         cd ..
     fi
 }
@@ -31,7 +28,6 @@ cd covscript
 git checkout master
 git fetch
 git pull
-git clean -dfx
 if [[ "$#" == 1 && "$1" = "release" ]]; then
     CSPKG_CONFIG="./misc/cspkg_config.json"
     git checkout $(cat ./csbuild/release.txt)
@@ -43,6 +39,7 @@ fetch_git covscript/ecs &
 fetch_git covscript/cspkg &
 fetch_git covscript/csdbc &
 fetch_git covscript/stdutils &
+fetch_git covscript/covanalysis &
 fetch_git covscript/covscript-regex &
 fetch_git covscript/covscript-codec &
 fetch_git covscript/covscript-darwin &
@@ -54,19 +51,20 @@ fetch_git covscript/covscript-curl &
 fetch_git covscript/covscript-zip &
 fetch_git covscript/covscript-database &
 wait
-start cspkg "./csbuild/make.sh"
-start covscript "./csbuild/make.sh"
+start cspkg
+start covscript
 # Concurrent works
-start ecs "./csbuild/make.sh" &
-start stdutils "./csbuild/make.sh" &
-start covscript-regex "./csbuild/make.sh" &
-start covscript-codec "./csbuild/make.sh" &
-start covscript-darwin "./csbuild/make.sh" &
-start covscript-sqlite "./csbuild/make.sh" &
-start covscript-network "./csbuild/make.sh" &
-start covscript-imgui "./csbuild/make.sh" &
-start covscript-process "./csbuild/make.sh" &
-start covscript-curl "./csbuild/make.sh" &
-start covscript-zip "./csbuild/make.sh" &
-start covscript-database "./csbuild/make.sh" &
+start ecs &
+start stdutils &
+start covanalysis &
+start covscript-regex &
+start covscript-codec &
+start covscript-darwin &
+start covscript-sqlite &
+start covscript-network &
+start covscript-imgui &
+start covscript-process &
+start covscript-curl &
+start covscript-zip &
+start covscript-database &
 wait

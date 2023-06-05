@@ -22,7 +22,6 @@ function fetch_git ()
         cd ${1#*/}
         git fetch
         git pull
-        git clean -dfx
         cd ..
     fi
 }
@@ -31,7 +30,6 @@ cd covscript
 git checkout master
 git fetch
 git pull
-git clean -dfx
 if [[ "$#" == 1 && "$1" = "release" ]]; then
     CSPKG_CONFIG="./misc/cspkg_config.json"
     git checkout $(cat ./csbuild/release.txt)

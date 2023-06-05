@@ -9,7 +9,6 @@ cd covscript
 git checkout master
 git fetch
 git pull
-git clean -dfx
 if "%1%" EQU "release" (
     echo Building for release...
     set CSPKG_CONFIG=".\misc\cspkg_config.json"
@@ -75,7 +74,6 @@ if exist %1% (
     cd %1%
     git fetch
     git pull
-    git clean -dfx
     cd ..
 ) else (
     git clone %GIT_REPO%/%1% --depth=1

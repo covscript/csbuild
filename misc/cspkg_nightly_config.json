@@ -4,6 +4,7 @@
         "ecs",
         "csdbc",
         "stdutils",
+        "covanalysis",
         "covscript-process",
         "covscript-database",
         "covscript-regex",

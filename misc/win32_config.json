@@ -4,6 +4,7 @@
         "covscript/ecs",
         "covscript/csdbc",
         "covscript/stdutils",
+        "covscript/covanalysis",
         "covscript/covscript-database",
         "covscript/covscript-darwin",
         "covscript/covscript-sqlite",
@@ -15,6 +16,7 @@
     "build": [
         "ecs",
         "stdutils",
+        "covanalysis",
         "covscript-database",
         "covscript-darwin",
         "covscript-sqlite",

@@ -159,10 +159,10 @@ foreach it in target.install
                     info.Version += "_ABI" + env.covscript_abi()
                 end
                 system.out.println("csbuild: building package " + info.Name + "(" + info.Version + ")...")
-                var file_reg = regex.build("^.*?(\\w+\\.(cse|csp))$")
+                var file_reg = regex.build("^.*?(\\w+\\.(cse|csp|ecsx|csym))$")
                 var file_name = file_reg.match(info.Target)
                 if file_name.empty() || !system.file.exist(path + system.path.separator + info.Target)
-                    system.out.println("csbuild: invalid target in module \'" + it + "\'")
+                    system.out.println("csbuild: invalid target \'" + info.Target + "\' in module \'" + it + "\'")
                     continue
                 end
                 if info.Type == "Extension"

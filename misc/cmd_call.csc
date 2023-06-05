@@ -3,6 +3,5 @@ case "make"
     system.run(".\\csbuild\\make.bat"); end
 case "git"
     system.run("git fetch")
-    system.run("git pull")
-    system.run("git clean -dfx"); end
+    system.run("git pull"); end
 end
