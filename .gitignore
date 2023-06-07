@@ -7,3 +7,4 @@ cspkg-repo/
 temp.wxs
 *.wixobj
 *.msi
+misc/cert/

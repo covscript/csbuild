@@ -66,6 +66,6 @@ end
 system.out.println("csbuild: fetching git repository...")
 call_parallel(vlist)
 vlist.clear()
-foreach it in target.build do vlist.push_back({runtime.get_current_dir(), ".\\build\\bin\\cs.exe", {".\\misc\\auto_build.csc", runtime.get_current_dir() + system.path.separator + "build-cache" + system.path.separator + it}})
+foreach it in target.build do vlist.push_back({".", ".\\build\\bin\\cs.exe", {"-i", ".\\build\\imports", ".\\misc\\auto_build.csc", ".\\build-cache" + system.path.separator + it}})
 system.out.println("csbuild: building packages...")
 call_parallel(vlist)

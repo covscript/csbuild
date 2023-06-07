@@ -70,8 +70,6 @@ jobs:
           sudo dpkg -i covscript-amd64.deb
           cs -v
           cs_dbg -v
-          cspkg install --import --yes
-          cspkg list
           cs build-cache/covscript/.github/workflows/benchmark.csc
           
       - name: Package CSPKG Repo on Ubuntu

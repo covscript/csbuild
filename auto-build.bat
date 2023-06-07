@@ -43,9 +43,13 @@ xcopy /E /Y covscript-regex\build ..\build\
 xcopy /E /Y covscript-codec\build ..\build\
 xcopy /E /Y covscript-process\build ..\build\
 
-cd ..\misc\bin
-call sign.bat ..\cert\covscript ..\..\build\bin\*.exe
-cd ..\..
+cd ..
+
+if exist .\misc\cert\ (
+    cd .\misc\bin
+    call sign.bat ..\cert\covscript ..\..\build\bin\*.exe
+    cd ..\..
+)
 
 .\build\bin\cs -i .\build\imports .\misc\win32_build.csc .\misc\win32_config.json
 .\build\bin\cs -i .\build\imports .\misc\cspkg_build.csc %CSPKG_CONFIG%

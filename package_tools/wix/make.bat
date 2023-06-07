@@ -16,5 +16,7 @@ del /Q .\Product.wxs
 cd ..\..
 del /Q .\build\icon.ico
 del /Q .\build\license.rtf
-cd misc\bin
-sign.bat ..\cert\covscript ..\..\*.msi
+if exist misc\cert (
+    cd misc\bin
+    sign.bat ..\cert\covscript ..\..\*.msi
+)
