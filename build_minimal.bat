@@ -76,5 +76,8 @@ if exist %1% (
     cd ..
 ) else (
     git clone %GIT_REPO%/%1% --depth=1
+    cd %1%
+    git submodule update --init
+    cd ..
 )
 goto:eof

@@ -71,6 +71,9 @@ goto:eof
 :git_clone
 if not exist %1% (
     git clone %GIT_REPO%/%1%
+    cd %1%
+    git submodule update --init
+    cd ..
 )
 goto:eof
 :git_fetch
