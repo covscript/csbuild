@@ -12,9 +12,6 @@ function clone_git ()
 {
     if [ ! -d "${1#*/}" ]; then
         git clone $git_repo/$1
-        cd $1
-        git submodule update --init
-        cd ..
     fi
 }
 function fetch_git ()
@@ -33,6 +30,7 @@ cd covscript
 git checkout master
 git fetch
 git pull
+git submodule update --init
 if [[ "$#" == 1 && "$1" = "release" ]]; then
     CSPKG_CONFIG="./misc/cspkg_config.json"
     git checkout $(cat ./csbuild/release.txt)

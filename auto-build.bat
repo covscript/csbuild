@@ -9,6 +9,7 @@ cd covscript
 git checkout master
 git fetch
 git pull
+git submodule update --init
 if "%1%" EQU "release" (
     echo Building for release...
     set CSPKG_CONFIG=".\misc\cspkg_config.json"
@@ -71,9 +72,6 @@ goto:eof
 :git_clone
 if not exist %1% (
     git clone %GIT_REPO%/%1%
-    cd %1%
-    git submodule update --init
-    cd ..
 )
 goto:eof
 :git_fetch
