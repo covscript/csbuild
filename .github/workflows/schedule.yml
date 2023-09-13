@@ -15,14 +15,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest ]
+        os: [ ubuntu-20.04, windows-latest ]
 
     steps:
       - name: Checkout
         uses: actions/checkout@master
 
       - name: Build on Ubuntu
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-20.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y unixodbc unixodbc-dev libcurl4-openssl-dev libglfw3-dev
@@ -65,7 +65,7 @@ jobs:
           cp *.msi covscript-x64-nightly.msi
           
       - name: Run tests on Ubuntu
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-20.04'
         run: |
           sudo dpkg -i covscript-amd64-nightly.deb
           cs -v
@@ -73,13 +73,13 @@ jobs:
           cs build-cache/covscript/.github/workflows/benchmark.csc
           
       - name: Package CSPKG Repo on Ubuntu
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-20.04'
         uses: montudor/action-zip@v0.1.1
         with:
           args: zip -qq -r cspkg-linux-x86_64-nightly.zip cspkg-repo
           
       - name: Package Build files on Ubuntu
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-20.04'
         uses: montudor/action-zip@v0.1.1
         with:
           args: zip -qq -r covscript-linux-x86_64-nightly.zip build
@@ -103,7 +103,7 @@ jobs:
             *.7z
       
       - name: Automatic Release DEB
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-20.04'
         uses: marvinpinto/action-automatic-releases@v1.2.1
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
