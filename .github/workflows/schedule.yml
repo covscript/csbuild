@@ -61,13 +61,13 @@ jobs:
           
       - name: Package CSPKG Repo on Ubuntu
         if: matrix.os == 'ubuntu-20.04'
-        uses: montudor/action-zip@v0.1.1
+        uses: montudor/action-zip@v1
         with:
           args: zip -qq -r cspkg-linux-x86_64-nightly.zip cspkg-repo
           
       - name: Package Build files on Ubuntu
         if: matrix.os == 'ubuntu-20.04'
-        uses: montudor/action-zip@v0.1.1
+        uses: montudor/action-zip@v1
         with:
           args: zip -qq -r covscript-linux-x86_64-nightly.zip build
           
@@ -79,7 +79,7 @@ jobs:
 
       - name: Automatic Release MSI
         if: matrix.os == 'windows-2022'
-        uses: marvinpinto/action-automatic-releases@v1.2.1
+        uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "windows-schedule"
@@ -91,7 +91,7 @@ jobs:
       
       - name: Automatic Release DEB
         if: matrix.os == 'ubuntu-20.04'
-        uses: marvinpinto/action-automatic-releases@v1.2.1
+        uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "ubuntu-schedule"
