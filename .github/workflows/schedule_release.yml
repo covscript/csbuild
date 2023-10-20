@@ -15,7 +15,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-20.04, windows-latest ]
+        os: [ ubuntu-20.04, windows-2022 ]
 
     steps:
       - name: Checkout
@@ -31,35 +31,21 @@ jobs:
           cp *.deb covscript-amd64.deb
       
       - name: Download MinGW-w64
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'windows-2022'
         uses: i3h/download-release-asset@v1
         with:
           owner: covscript-archives
           repo: mingw-w64
           tag: 13.1.0.1
           file: gcc-13.1.0-mingw-w64ucrt-11.0.0-r5-covscript.org.zip
-          
-      - name: Download Wix Toolset
-        if: matrix.os == 'windows-latest'
-        uses: i3h/download-release-asset@v1
-        with:
-          owner: wixtoolset
-          repo: wix3
-          tag: wix3112rtm
-          file: wix311-binaries.zip
-          
+
       - name: Install Toolset in Windows
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'windows-2022'
         run: |
-          rm C:/ProgramData/chocolatey/bin/gcc.exe -force
-          rm C:/ProgramData/chocolatey/bin/g++.exe -force
-          rm C:/Strawberry/c/bin/gcc.exe -force
-          rm C:/Strawberry/c/bin/g++.exe -force
           7z x gcc-13.1.0-mingw-w64ucrt-11.0.0-r5-covscript.org.zip -oC:\
-          7z x wix311-binaries.zip -oC:\Wix
           
       - name: Build on Windows
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'windows-2022'
         run: |
           .github/workflows/build_release.bat
           cp *.msi covscript-x64.msi
@@ -85,13 +71,13 @@ jobs:
           args: zip -qq -r covscript-linux-x86_64.zip build
           
       - name: Package CSPKG Repo and Build files on Windows
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'windows-2022'
         run: |
           7z a -mmt4 -mx9 cspkg-winucrt-x86_64.7z cspkg-repo
           7z a -mmt4 -mx9 covscript-winucrt-x86_64.7z build
 
       - name: Automatic Release MSI
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'windows-2022'
         uses: marvinpinto/action-automatic-releases@v1.2.1
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
