@@ -42,7 +42,8 @@ jobs:
       - name: Install Toolset in Windows
         if: matrix.os == 'windows-2022'
         run: |
-          7z x gcc-13.1.0-mingw-w64ucrt-11.0.0-r5-covscript.org.zip -oC:\
+          mkdir C:\mingw64-covscript
+          7z x gcc-13.1.0-mingw-w64ucrt-11.0.0-r5-covscript.org.zip -oC:\mingw64-covscript
           
       - name: Build on Windows
         if: matrix.os == 'windows-2022'
