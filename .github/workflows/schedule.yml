@@ -36,14 +36,14 @@ jobs:
         with:
           owner: covscript-archives
           repo: mingw-w64
-          tag: 13.1.0.1
-          file: gcc-13.1.0-mingw-w64ucrt-11.0.0-r5-covscript.org.zip
+          tag: 13.2.0.1
+          file: gcc-13.2.0-mingw-w64ucrt-11.0.1-r3-covscript.org.zip
           
       - name: Install Toolset in Windows
         if: matrix.os == 'windows-2022'
         run: |
           mkdir C:\mingw64-covscript
-          7z x gcc-13.1.0-mingw-w64ucrt-11.0.0-r5-covscript.org.zip -oC:\mingw64-covscript
+          7z x gcc-13.2.0-mingw-w64ucrt-11.0.1-r3-covscript.org.zip -oC:\mingw64-covscript
           
       - name: Build on Windows
         if: matrix.os == 'windows-2022'
