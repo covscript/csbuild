@@ -1,6 +1,11 @@
 # Covariant Script Build System
 [![schedule_release](https://github.com/covscript/csbuild/actions/workflows/schedule_release.yml/badge.svg)](https://github.com/covscript/csbuild/actions/workflows/schedule_release.yml) [![schedule](https://github.com/covscript/csbuild/actions/workflows/schedule.yml/badge.svg)](https://github.com/covscript/csbuild/actions/workflows/schedule.yml)  
 CSBuild is a system used for parallel building, automatic releasing and continues integration of official maintained packages.
+
+## Latest Release
+
+v3.4.3-patch3 (updated on 2024.08.10)
+
 ## Supported Operating System
 |Platform|Architectural|Toolchain|Installer|Build Tool|Package Tool|
 |----|----|----|----|----|----|
@@ -82,7 +87,7 @@ Based on basic rules, a good build script should follow these rules additionally
 + Providing same experience in different platforms
 #### Example of CMakeLists.txt for CovScript Extension
 ```
-cmake_minimum_required(VERSION 3.4)
+cmake_minimum_required(VERSION 3.10)
 
 project(covscript-regex)
 
