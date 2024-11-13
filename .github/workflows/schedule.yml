@@ -65,30 +65,18 @@ jobs:
           cs -v
           cs_dbg -v
           cs build-cache/covscript/.github/workflows/benchmark.csc
-          
-      - name: Package CSPKG Repo on Ubuntu
-        if: matrix.os == 'ubuntu-22.04'
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -r cspkg-linux-x86_64-nightly.zip cspkg-repo
-          
-      - name: Package Build files on Ubuntu
-        if: matrix.os == 'ubuntu-22.04'
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -r covscript-linux-x86_64-nightly.zip build
-      
-      - name: Package CSPKG Repo on macOS
+
+      - name: Package CSPKG Repo and Build files on Ubuntu
         if: matrix.os == 'macos-14'
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -r cspkg-macos-arm64-nightly.zip cspkg-repo
+        run: |
+          7z a -mmt4 -mx9 cspkg-linux-x86_64-nightly.7z cspkg-repo
+          7z a -mmt4 -mx9 covscript-linux-x86_64-nightly.7z build
           
-      - name: Package Build files on macOS
+      - name: Package CSPKG Repo and Build files on macOS
         if: matrix.os == 'macos-14'
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -r covscript-macos-arm64-nightly.zip build
+        run: |
+          7z a -mmt4 -mx9 cspkg-macos-arm64-nightly.7z cspkg-repo
+          7z a -mmt4 -mx9 covscript-macos-arm64-nightly.7z build
           
       - name: Package CSPKG Repo and Build files on Windows
         if: matrix.os == 'windows-2022'
@@ -118,7 +106,7 @@ jobs:
           prerelease: true
           files: |
             *.deb
-            *.zip
+            *.7z
       
       - name: Automatic Release DMG
         if: matrix.os == 'macos-14'
@@ -130,4 +118,4 @@ jobs:
           prerelease: true
           files: |
             *.dmg
-            *.zip
+            *.7z
