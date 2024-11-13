@@ -23,12 +23,13 @@ For building environment, please download [official maintained MinGW-w64 environ
 Otherwise, you need to install libffi, libglfw3 and libcurl manually.
 ### Linux
 ```
-sudo apt install git cmake build-essential
-sudo apt install libffi-dev unixodbc-dev libglfw3-dev libcurl4-openssl-dev
+sudo apt install -y git cmake p7zip build-essential
+sudo apt install -y libffi-dev unixodbc-dev libglfw3-dev libcurl4-openssl-dev
 ```
 ### macOS
 ```
-brew install git cmake wget p7zip glfw libffi libiodbc
+brew install git cmake wget p7zip
+brew install glfw libffi unixodbc
 ```
 ## Build your package with CSBuild
 ### Step 1: Write your Package Description File
