@@ -67,7 +67,7 @@ jobs:
           cs build-cache/covscript/.github/workflows/benchmark.csc
 
       - name: Package CSPKG Repo and Build files on Ubuntu
-        if: matrix.os == 'macos-14'
+        if: matrix.os == 'ubuntu-22.04'
         run: |
           7z a -mmt4 -mx9 cspkg-linux-x86_64-nightly.7z cspkg-repo
           7z a -mmt4 -mx9 covscript-linux-x86_64-nightly.7z build
