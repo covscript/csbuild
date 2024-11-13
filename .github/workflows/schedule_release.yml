@@ -15,19 +15,27 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-20.04, windows-2022 ]
+        os: [ ubuntu-22.04, macos-14, windows-2022 ]
 
     steps:
       - name: Checkout
         uses: actions/checkout@master
 
       - name: Build on Ubuntu
-        if: matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         run: |
           bash misc/base_install_linux.sh
           bash auto-build.sh release
           bash package_tools/deb/make.sh
           cp *.deb covscript-amd64.deb
+      
+      - name: Build on macOS
+        if: matrix.os == 'macos-14'
+        run: |
+          bash misc/base_install_macOS.sh
+          bash auto-build.sh release
+          bash package_tools/dmg/make.sh
+          cp *.dmg covscript-arm64.dmg
       
       - name: Download MinGW-w64
         if: matrix.os == 'windows-2022'
@@ -37,7 +45,7 @@ jobs:
           repo: mingw-w64
           tag: 13.2.0.1
           file: gcc-13.2.0-mingw-w64ucrt-11.0.1-r3-covscript.org.zip
-
+          
       - name: Install Toolset in Windows
         if: matrix.os == 'windows-2022'
         run: |
@@ -51,24 +59,24 @@ jobs:
           cp *.msi covscript-x64.msi
           
       - name: Run tests on Ubuntu
-        if: matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         run: |
           sudo dpkg -i covscript-amd64.deb
           cs -v
           cs_dbg -v
           cs build-cache/covscript/.github/workflows/benchmark.csc
+
+      - name: Package CSPKG Repo and Build files on Ubuntu
+        if: matrix.os == 'ubuntu-22.04'
+        run: |
+          7z a -mmt4 -mx9 cspkg-linux-x86_64.7z cspkg-repo
+          7z a -mmt4 -mx9 covscript-linux-x86_64.7z build
           
-      - name: Package CSPKG Repo on Ubuntu
-        if: matrix.os == 'ubuntu-20.04'
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -r cspkg-linux-x86_64.zip cspkg-repo
-          
-      - name: Package Build files on Ubuntu
-        if: matrix.os == 'ubuntu-20.04'
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -r covscript-linux-x86_64.zip build
+      - name: Package CSPKG Repo and Build files on macOS
+        if: matrix.os == 'macos-14'
+        run: |
+          7z a -mmt4 -mx9 cspkg-macos-arm64.7z cspkg-repo
+          7z a -mmt4 -mx9 covscript-macos-arm64.7z build
           
       - name: Package CSPKG Repo and Build files on Windows
         if: matrix.os == 'windows-2022'
@@ -89,7 +97,7 @@ jobs:
             *.7z
       
       - name: Automatic Release DEB
-        if: matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -98,4 +106,16 @@ jobs:
           prerelease: false
           files: |
             *.deb
-            *.zip
+            *.7z
+      
+      - name: Automatic Release DMG
+        if: matrix.os == 'macos-14'
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "macos-schedule-release"
+          title: "macOS Schedule Release Build"
+          prerelease: false
+          files: |
+            *.dmg
+            *.7z
