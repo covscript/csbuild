@@ -15,20 +15,27 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-20.04, windows-2022 ]
+        os: [ ubuntu-22.04, macos-14, windows-2022 ]
 
     steps:
       - name: Checkout
         uses: actions/checkout@master
 
       - name: Build on Ubuntu
-        if: matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         run: |
-          sudo apt-get update
-          sudo apt-get install -y unixodbc unixodbc-dev libcurl4-openssl-dev libglfw3-dev
+          bash misc/base_install_linux.sh
           bash auto-build.sh
           bash package_tools/deb/make.sh
           cp *.deb covscript-amd64-nightly.deb
+      
+      - name: Build on macOS
+        if: matrix.os == 'macos-14'
+        run: |
+          bash misc/base_install_macOS.sh
+          bash auto-build.sh
+          bash package_tools/dmg/make.sh
+          cp *.dmg covscript-arm64-nightly.dmg
       
       - name: Download MinGW-w64
         if: matrix.os == 'windows-2022'
@@ -52,7 +59,7 @@ jobs:
           cp *.msi covscript-x64-nightly.msi
           
       - name: Run tests on Ubuntu
-        if: matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         run: |
           sudo dpkg -i covscript-amd64-nightly.deb
           cs -v
@@ -60,16 +67,28 @@ jobs:
           cs build-cache/covscript/.github/workflows/benchmark.csc
           
       - name: Package CSPKG Repo on Ubuntu
-        if: matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         uses: montudor/action-zip@v1
         with:
           args: zip -qq -r cspkg-linux-x86_64-nightly.zip cspkg-repo
           
       - name: Package Build files on Ubuntu
-        if: matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         uses: montudor/action-zip@v1
         with:
           args: zip -qq -r covscript-linux-x86_64-nightly.zip build
+      
+      - name: Package CSPKG Repo on macOS
+        if: matrix.os == 'macos-14'
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r cspkg-macos-arm64-nightly.zip cspkg-repo
+          
+      - name: Package Build files on macOS
+        if: matrix.os == 'macos-14'
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r covscript-macos-arm64-nightly.zip build
           
       - name: Package CSPKG Repo and Build files on Windows
         if: matrix.os == 'windows-2022'
@@ -90,7 +109,7 @@ jobs:
             *.7z
       
       - name: Automatic Release DEB
-        if: matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -99,4 +118,16 @@ jobs:
           prerelease: true
           files: |
             *.deb
+            *.zip
+      
+      - name: Automatic Release DMG
+        if: matrix.os == 'macos-14'
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "macos-schedule"
+          title: "macOS Schedule Nightly Build"
+          prerelease: true
+          files: |
+            *.dmg
             *.zip
