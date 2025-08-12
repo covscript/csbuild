@@ -14,18 +14,22 @@ namespace utils
 end
 
 namespace env
+    @begin
+    var arch_map = {
+        "AMD64" : "x64",
+        "x86"   : "x86"
+    }.to_hash_map()
+    @end
     function arch()
-        var p = process.exec("wmic", {"OS", "GET", "OSArchitecture"}); p.out().getline()
-        var name = utils.filter(p.out().getline(), [](ch)->!ch.isspace())
-        switch name
-            default
-                throw runtime.exception("Unrecognizable platform name: " + name)
-            end
-            case "64-bit"
-                return "x64"
-            end
-            case "32-bit"
-                return "x86"
+        if system.is_platform_unix()
+            var p = process.exec("arch", {})
+            return p.out().getline()
+        else
+            var arch_name = system.getenv("PROCESSOR_ARCHITECTURE")
+            if env.arch_map.exist(arch_name)
+                return env.arch_map[arch_name]
+            else
+                throw runtime.exception("Unrecognizable platform name: " + arch_name)
             end
         end
     end

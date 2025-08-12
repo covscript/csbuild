@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Copyright (C) 2017-2023 Michael Lee(æŽç™»æ·³)
+# Copyright (C) 2017-2023 Michael Lee(ÀîµÇ´¾)
 #
 # Email:   lee@unicov.cn, mikecovlee@163.com
 # Github:  https://github.com/mikecovlee
@@ -82,23 +82,23 @@ namespace env
             return "macos"
         end
     end
+    @begin
+    var arch_map = {
+        "AMD64" : "x86_64",
+        "ARM64" : "arm64",
+        "x86"   : "i386"
+    }.to_hash_map()
+    @end
     function arch()
         if system.is_platform_unix()
             var p = process.exec("arch", {})
             return p.out().getline()
         else
-            var p = process.exec("wmic", {"OS", "GET", "OSArchitecture"}); p.out().getline()
-            var name = utils.filter(p.out().getline(), [](ch)->!ch.isspace())
-            switch name
-                default
-                    throw runtime.exception("Unrecognizable platform name: " + name)
-                end
-                case "64-bit"
-                    return "x86_64"
-                end
-                case "32-bit"
-                    return "i386"
-                end
+            var arch_name = system.getenv("PROCESSOR_ARCHITECTURE")
+            if env.arch_map.exist(arch_name)
+                return env.arch_map[arch_name]
+            else
+                throw runtime.exception("Unrecognizable platform name: " + arch_name)
             end
         end
     end
