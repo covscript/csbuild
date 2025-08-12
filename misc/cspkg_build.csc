@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Copyright (C) 2017-2023 Michael Lee(¿Óµ«¥æ)
+# Copyright (C) 2017-2023 Michael Lee(ÊùéÁôªÊ∑≥)
 #
 # Email:   lee@unicov.cn, mikecovlee@163.com
 # Github:  https://github.com/mikecovlee
