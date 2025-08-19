@@ -3,7 +3,9 @@
     "install": [
         "ecs",
         "csdbc",
+        "cspkg",
         "stdutils",
+        "parsergen",
         "covanalysis",
         "covscript-process",
         "covscript-database",

@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Copyright (C) 2017-2023 Michael Lee(李登淳)
+# Copyright (C) 2017-2025 Michael Lee(李登淳)
 #
-# Email:   lee@unicov.cn, mikecovlee@163.com
+# Email:   mikecovlee@163.com
 # Github:  https://github.com/mikecovlee
 # Website: http://covscript.org.cn
 
@@ -132,17 +132,19 @@ if target.remote_base[-1] != '/'
     target.remote_base += '/'
 end
 
-system.out.println("csbuild: installing packages...")
+system.out.println("csbuild: enumerate packages...")
 
-var idx_path = "cspkg-repo" + system.path.separator + "index_files" + system.path.separator + "packages" + system.path.separator + "universal"
+var idx_path = "cspkg-repo" + system.path.separator + "index" + system.path.separator + "universal"
 var pkg_path = "cspkg-repo" + system.path.separator + "universal"
-var idx_os_path = "cspkg-repo" + system.path.separator + "index_files" + system.path.separator + "packages" + system.path.separator + env.platform() + system.path.separator + env.arch()
+var idx_os_path = "cspkg-repo" + system.path.separator + "index" + system.path.separator + env.platform() + system.path.separator + env.arch()
 var pkg_os_path = "cspkg-repo" + system.path.separator + env.platform() + system.path.separator + env.arch()
 
 system.path.mkdir_p(idx_path)
 system.path.mkdir_p(pkg_path)
 system.path.mkdir_p(idx_os_path)
 system.path.mkdir_p(pkg_os_path)
+
+var pkg_idx = {}, pkg_os_idx = {}
 
 foreach it in target.install
     var path = "build-cache" + system.path.separator + it
@@ -151,14 +153,16 @@ foreach it in target.install
         continue
     end
     var files = system.path.scan(path + system.path.separator + "csbuild")
+    var valid_files = 0
     foreach entry in files
         if entry.type == system.path.type.reg
             if is_json_file(entry.name)
+                ++valid_files
                 var info = utils.open_json(path + system.path.separator + "csbuild" + system.path.separator + entry.name)
                 if info.Type == "Extension"
                     info.Version += "_ABI" + env.covscript_abi()
                 end
-                system.out.println("csbuild: building package " + info.Name + "(" + info.Version + ")...")
+                system.out.println("csbuild: collecting " + info.Name + "(" + info.Version + ")...")
                 var file_reg = regex.build("^.*?(\\w+\\.(cse|csp|ecsx|csym))$")
                 var file_name = file_reg.match(info.Target)
                 if file_name.empty() || !system.file.exist(path + system.path.separator + info.Target)
@@ -170,6 +174,7 @@ foreach it in target.install
                     info.Target = target.remote_base + env.platform() + "/" + env.arch() + "/" + file_name.str(1)
                     info.erase("Type")
                     utils.save_json(info, idx_os_path + system.path.separator + info.Name + ".json")
+                    pkg_os_idx.push_back(info.Name)
                     continue
                 end
                 if info.Type == "Package"
@@ -177,8 +182,16 @@ foreach it in target.install
                     info.Target = target.remote_base + "universal/" + file_name.str(1)
                     info.erase("Type")
                     utils.save_json(info, idx_path + system.path.separator + info.Name + ".json")
+                    pkg_idx.push_back(info.Name)
                 end
             end
         end
     end
+    if valid_files == 0
+        system.out.println("csbuild: configure file not found in module \'" + it + "\'")
+        continue
+    end
 end
+
+utils.save_json(pkg_idx, idx_path + system.path.separator + "index.json")
+utils.save_json(pkg_os_idx, idx_os_path + system.path.separator + "index.json")

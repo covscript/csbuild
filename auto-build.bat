@@ -53,7 +53,7 @@ if exist .\misc\cert\ (
 )
 
 .\build\bin\cs -i .\build\imports .\misc\win32_build.csc .\misc\win32_config.json
-.\build\bin\cs -i .\build\imports .\misc\cspkg_build.csc %CSPKG_CONFIG%
+.\build\bin\cs -i .\build\imports .\misc\cspkg_collect.csc %CSPKG_CONFIG%
 if "%1%" NEQ "release" (
     .\build\bin\cs -i .\build\imports .\misc\replace_source.csc .\build\bin\cspkg
 )

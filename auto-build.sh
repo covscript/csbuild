@@ -45,6 +45,7 @@ cp -rf covscript-codec/build .. &
 cp -rf covscript-process/build .. &
 wait
 
+fetch_git mikecovlee/parsergen &
 fetch_git covscript/csdbc &
 fetch_git covscript/stdutils &
 fetch_git covscript/covanalysis &
@@ -70,7 +71,7 @@ start covscript-zip &
 start covscript-database &
 wait
 
-./build/bin/cs -i ./build/imports ./misc/cspkg_build.csc $CSPKG_CONFIG
+./build/bin/cs -i ./build/imports ./misc/cspkg_collect.csc $CSPKG_CONFIG
 if [[ "$#" != 1 || "$1" != "release" ]]; then
     ./build/bin/cs -i ./build/imports ./misc/replace_source.csc ./build/bin/cspkg
 fi
