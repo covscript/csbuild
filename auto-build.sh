@@ -7,11 +7,11 @@ git_repo="https://github.com/"
 function fetch_git ()
 {
     if [ ! -d "${1#*/}" ]; then
-        git clone $git_repo/$1 --depth=1
+        git clone $git_repo/$1 --depth=1 --recurse-submodules
     else
         cd ${1#*/}
         git fetch
-        git pull
+        git pull --recurse-submodules
         cd ..
     fi
 }
@@ -55,6 +55,7 @@ fetch_git covscript/covscript-network &
 fetch_git covscript/covscript-imgui &
 fetch_git covscript/covscript-zip &
 fetch_git covscript/covscript-database &
+fetch_git covscript/covscript-gmssl &
 wait
 
 cd ..
@@ -69,6 +70,7 @@ start covscript-network &
 start covscript-imgui &
 start covscript-zip &
 start covscript-database &
+start covscript-gmssl &
 wait
 
 ./build/bin/cs -i ./build/imports ./misc/cspkg_collect.csc $CSPKG_CONFIG

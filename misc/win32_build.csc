@@ -59,7 +59,7 @@ foreach it in target.repos
     if system.path.exist("build-cache" + system.path.separator + module)
         vlist.push_back({"build-cache" + system.path.separator + module, ".\\build\\bin\\cs.exe", {"..\\..\\misc\\cmd_call.csc", "git"}})
     else
-        vlist.push_back({"build-cache", "git", {"clone", target.git_repo + it, "--depth=1"}})
+        vlist.push_back({"build-cache", "git", {"clone", target.git_repo + it, "--depth=1 --recurse-submodules"}})
     end
 end
 

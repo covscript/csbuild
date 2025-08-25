@@ -1,5 +1,5 @@
 {
-    "remote_base" : "http://mirrors.covariant.cn/cspkg/",
+    "remote_base" : "http://mirrors.covariant.cn/cspkg_v2/",
     "install": [
         "ecs",
         "csdbc",
@@ -9,6 +9,7 @@
         "covanalysis",
         "covscript-process",
         "covscript-database",
+        "covscript-gmssl",
         "covscript-regex",
         "covscript-codec",
         "covscript-darwin",

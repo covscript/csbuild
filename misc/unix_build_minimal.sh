@@ -11,17 +11,17 @@ git_repo="https://github.com/"
 function clone_git ()
 {
     if [ ! -d "${1#*/}" ]; then
-        git clone $git_repo/$1
+        git clone $git_repo/$1 --depth=1 --recurse-submodules
     fi
 }
 function fetch_git ()
 {
     if [ ! -d "${1#*/}" ]; then
-        git clone $git_repo/$1 --depth=1
+        git clone $git_repo/$1 --depth=1 --recurse-submodules
     else
         cd ${1#*/}
         git fetch
-        git pull
+        git pull --recurse-submodules
         cd ..
     fi
 }
@@ -29,7 +29,7 @@ clone_git covscript/covscript
 cd covscript
 git checkout master
 git fetch
-git pull
+git pull --recurse-submodules
 git submodule update --init
 if [[ "$#" == 1 && "$1" = "release" ]]; then
     CSPKG_CONFIG="./misc/cspkg_config.json"

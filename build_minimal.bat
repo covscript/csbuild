@@ -8,7 +8,7 @@ call:git_clone covscript
 cd covscript
 git checkout master
 git fetch
-git pull
+git pull --recurse-submodules
 git submodule update --init
 if "%1%" EQU "release" (
     echo Building for release...
@@ -66,16 +66,16 @@ cd ..
 goto:eof
 :git_clone
 if not exist %1% (
-    git clone %GIT_REPO%/%1%
+    git clone %GIT_REPO%/%1% --depth=1 --recurse-submodules
 )
 goto:eof
 :git_fetch
 if exist %1% (
     cd %1%
     git fetch
-    git pull
+    git pull --recurse-submodules
     cd ..
 ) else (
-    git clone %GIT_REPO%/%1% --depth=1
+    git clone %GIT_REPO%/%1% --depth=1 --recurse-submodules
 )
 goto:eof
