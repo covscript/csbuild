@@ -1,5 +1,5 @@
 import regex
-var url_reg = regex.build("^(.*)http://mirrors\\.covariant\\.cn/cspkg_v2/index\\.json(.*)$")
+var url_reg = regex.build("^(.*)http://mirrors\\.covariant\\.cn/cspkg_v2/(.*)$")
 var target_file = context.cmd_args[1]
 var file_data = new array
 var ifs = iostream.ifstream(target_file)
@@ -11,7 +11,7 @@ loop
     var match = url_reg.match(line)
     if !match.empty()
         system.out.println("Replacing CSPKG release source with nightly source...")
-        file_data.push_back(match.str(1) + "http://mirrors.covariant.cn/cspkg_v2_nightly/index.json" + match.str(2))
+        file_data.push_back(match.str(1) + "http://mirrors.covariant.cn/cspkg_v2_nightly/" + match.str(2))
     else
         file_data.push_back(line)
     end
