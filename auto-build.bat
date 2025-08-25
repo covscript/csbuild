@@ -52,6 +52,12 @@ if exist .\misc\cert\ (
     cd ..\..
 )
 
+@REM Patch for gmssl
+cd build-cache
+call:git_fetch covscript-gmssl
+call:call_bat covscript-gmssl
+cd ..
+
 .\build\bin\cs -i .\build\imports .\misc\win32_build.csc .\misc\win32_config.json
 .\build\bin\cs -i .\build\imports .\misc\cspkg_collect.csc %CSPKG_CONFIG%
 if "%1%" NEQ "release" (
