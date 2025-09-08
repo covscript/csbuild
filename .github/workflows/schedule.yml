@@ -15,14 +15,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-22.04, macos-14, windows-2022 ]
+        os: [ ubuntu-22.04, ubuntu-22.04-arm, macos-14, macos-14-large, windows-2022 ]
 
     steps:
       - name: Checkout
         uses: actions/checkout@master
 
       - name: Build on Ubuntu
-        if: matrix.os == 'ubuntu-22.04'
+        if: matrix.os == 'ubuntu-22.04' || matrix.os == 'ubuntu-22.04-arm'
         run: |
           bash misc/base_install_linux.sh
           bash auto-build.sh
@@ -30,7 +30,7 @@ jobs:
           cp *.deb covscript-amd64-nightly.deb
       
       - name: Build on macOS
-        if: matrix.os == 'macos-14'
+        if: matrix.os == 'macos-14' || matrix.os == 'macos-14-large'
         run: |
           bash misc/base_install_macOS.sh
           bash auto-build.sh
@@ -43,14 +43,14 @@ jobs:
         with:
           owner: covscript-archives
           repo: mingw-w64
-          tag: 13.2.0.1
-          file: gcc-13.2.0-mingw-w64ucrt-11.0.1-r3-covscript.org.zip
+          tag: 15.1.0.4
+          file: gcc-15.1.0-mingw-w64ucrt-13.0.0-r4-covscript-org.zip
           
       - name: Install Toolset in Windows
         if: matrix.os == 'windows-2022'
         run: |
           mkdir C:\mingw64-covscript
-          7z x gcc-13.2.0-mingw-w64ucrt-11.0.1-r3-covscript.org.zip -oC:\mingw64-covscript
+          7z x gcc-15.1.0-mingw-w64ucrt-13.0.0-r4-covscript-org.zip -oC:\mingw64-covscript
           
       - name: Build on Windows
         if: matrix.os == 'windows-2022'
@@ -59,24 +59,36 @@ jobs:
           cp *.msi covscript-x64-nightly.msi
           
       - name: Run tests on Ubuntu
-        if: matrix.os == 'ubuntu-22.04'
+        if: matrix.os == 'ubuntu-22.04' || matrix.os == 'ubuntu-22.04-arm'
         run: |
-          sudo dpkg -i covscript-amd64-nightly.deb
+          sudo dpkg -i covscript-*.deb
           cs -v
           cs_dbg -v
           cs build-cache/covscript/.github/workflows/benchmark.csc
 
-      - name: Package CSPKG Repo and Build files on Ubuntu
+      - name: Package CSPKG Repo and Build files on Ubuntu (x86 64)
         if: matrix.os == 'ubuntu-22.04'
         run: |
           7z a -mmt4 -mx9 cspkg-linux-x86_64-nightly.7z cspkg-repo
           7z a -mmt4 -mx9 covscript-linux-x86_64-nightly.7z build
+      
+      - name: Package CSPKG Repo and Build files on Ubuntu (ARM 64)
+        if: matrix.os == 'ubuntu-22.04-arm'
+        run: |
+          7z a -mmt4 -mx9 cspkg-linux-aarch64-nightly.7z cspkg-repo
+          7z a -mmt4 -mx9 covscript-linux-aarch64-nightly.7z build
           
-      - name: Package CSPKG Repo and Build files on macOS
+      - name: Package CSPKG Repo and Build files on macOS (Apple Silicon)
         if: matrix.os == 'macos-14'
         run: |
           7z a -mmt4 -mx9 cspkg-macos-arm64-nightly.7z cspkg-repo
           7z a -mmt4 -mx9 covscript-macos-arm64-nightly.7z build
+      
+      - name: Package CSPKG Repo and Build files on macOS (Intel)
+        if: matrix.os == 'macos-14-large'
+        run: |
+          7z a -mmt4 -mx9 cspkg-macos-i386-nightly.7z cspkg-repo
+          7z a -mmt4 -mx9 covscript-macos-i386-nightly.7z build
           
       - name: Package CSPKG Repo and Build files on Windows
         if: matrix.os == 'windows-2022'
@@ -97,7 +109,7 @@ jobs:
             *.7z
       
       - name: Automatic Release DEB
-        if: matrix.os == 'ubuntu-22.04'
+        if: matrix.os == 'ubuntu-22.04' || matrix.os == 'ubuntu-22.04-arm'
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -109,7 +121,7 @@ jobs:
             *.7z
       
       - name: Automatic Release DMG
-        if: matrix.os == 'macos-14'
+        if: matrix.os == 'macos-14' || matrix.os == 'macos-14-large'
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
