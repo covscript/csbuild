@@ -15,7 +15,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-22.04, ubuntu-22.04-arm, macos-14, macos-14-large, windows-2022 ]
+        os: [ ubuntu-22.04, ubuntu-22.04-arm, macos-14, windows-2022 ]
 
     steps:
       - name: Checkout
@@ -27,10 +27,10 @@ jobs:
           bash misc/base_install_linux.sh
           bash auto-build.sh
           bash package_tools/deb/make.sh
-          cp *.deb covscript-amd64-nightly.deb
+          cp *.deb covscript-$(arch)-nightly.deb
       
       - name: Build on macOS
-        if: matrix.os == 'macos-14' || matrix.os == 'macos-14-large'
+        if: matrix.os == 'macos-14'
         run: |
           bash misc/base_install_macOS.sh
           bash auto-build.sh
@@ -61,34 +61,22 @@ jobs:
       - name: Run tests on Ubuntu
         if: matrix.os == 'ubuntu-22.04' || matrix.os == 'ubuntu-22.04-arm'
         run: |
-          sudo dpkg -i covscript-*.deb
+          sudo dpkg -i covscript-$(arch)-nightly.deb
           cs -v
           cs_dbg -v
           cs build-cache/covscript/.github/workflows/benchmark.csc
 
-      - name: Package CSPKG Repo and Build files on Ubuntu (x86 64)
-        if: matrix.os == 'ubuntu-22.04'
+      - name: Package CSPKG Repo and Build files on Ubuntu
+        if: matrix.os == 'ubuntu-22.04' || matrix.os == 'ubuntu-22.04-arm'
         run: |
-          7z a -mmt4 -mx9 cspkg-linux-x86_64-nightly.7z cspkg-repo
-          7z a -mmt4 -mx9 covscript-linux-x86_64-nightly.7z build
-      
-      - name: Package CSPKG Repo and Build files on Ubuntu (ARM 64)
-        if: matrix.os == 'ubuntu-22.04-arm'
-        run: |
-          7z a -mmt4 -mx9 cspkg-linux-aarch64-nightly.7z cspkg-repo
-          7z a -mmt4 -mx9 covscript-linux-aarch64-nightly.7z build
+          7z a -mmt4 -mx9 cspkg-linux-$(arch)-nightly.7z cspkg-repo
+          7z a -mmt4 -mx9 covscript-linux-$(arch)-nightly.7z build
           
-      - name: Package CSPKG Repo and Build files on macOS (Apple Silicon)
+      - name: Package CSPKG Repo and Build files on macOS
         if: matrix.os == 'macos-14'
         run: |
           7z a -mmt4 -mx9 cspkg-macos-arm64-nightly.7z cspkg-repo
           7z a -mmt4 -mx9 covscript-macos-arm64-nightly.7z build
-      
-      - name: Package CSPKG Repo and Build files on macOS (Intel)
-        if: matrix.os == 'macos-14-large'
-        run: |
-          7z a -mmt4 -mx9 cspkg-macos-i386-nightly.7z cspkg-repo
-          7z a -mmt4 -mx9 covscript-macos-i386-nightly.7z build
           
       - name: Package CSPKG Repo and Build files on Windows
         if: matrix.os == 'windows-2022'
@@ -109,7 +97,7 @@ jobs:
             *.7z
       
       - name: Automatic Release DEB
-        if: matrix.os == 'ubuntu-22.04' || matrix.os == 'ubuntu-22.04-arm'
+        if: matrix.os == 'ubuntu-22.04'
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -120,8 +108,20 @@ jobs:
             *.deb
             *.7z
       
+      - name: Automatic Release DEB
+        if: matrix.os == 'ubuntu-22.04-arm'
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "ubuntu-arm-schedule"
+          title: "Ubuntu for ARM Schedule Nightly Build"
+          prerelease: true
+          files: |
+            *.deb
+            *.7z
+      
       - name: Automatic Release DMG
-        if: matrix.os == 'macos-14' || matrix.os == 'macos-14-large'
+        if: matrix.os == 'macos-14'
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
