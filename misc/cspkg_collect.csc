@@ -64,6 +64,20 @@ namespace env
             return system.getenv("HOME")
         end
     end
+    function covscript_home()
+        try
+            return system.getenv("COVSCRIPT_HOME")
+        catch e; end
+        if system.is_platform_windows()
+            return env.user_home() + system.path.separator + "Documents" + system.path.separator + "CovScript"
+        end
+        if system.is_platform_linux()
+            return "/usr/share/covscript"
+        end
+        if system.is_platform_darwin()
+            return "/Applications/CovScript.app/Contents/MacOS/covscript"
+        end
+    end
     function platform()
         if env.covscript_std() >= "250901"
             return env.platform()
@@ -103,20 +117,6 @@ namespace env
             else
                 throw runtime.exception("Unrecognizable platform name: " + arch_name)
             end
-        end
-    end
-    function covscript_home()
-        try
-            return system.getenv("COVSCRIPT_HOME")
-        catch e; end
-        if system.is_platform_windows()
-            return env.user_home() + system.path.separator + "Documents" + system.path.separator + "CovScript"
-        end
-        if system.is_platform_linux()
-            return "/usr/share/covscript"
-        end
-        if system.is_platform_darwin()
-            return "/Applications/CovScript.app/Contents/MacOS/covscript"
         end
     end
     var cs_abi = null
