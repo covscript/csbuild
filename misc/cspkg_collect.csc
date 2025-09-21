@@ -80,7 +80,7 @@ namespace env
     end
     function platform()
         if env.covscript_std() >= "250901"
-            return env.platform()
+            return system.os_name
         end
         if system.is_platform_windows()
             if env.win_ucrt
@@ -105,7 +105,7 @@ namespace env
     @end
     function arch()
         if env.covscript_std() >= "250901"
-            return env.arch()
+            return system.arch_name
         end
         if system.is_platform_unix()
             var p = process.exec("arch", {})
