@@ -45,7 +45,18 @@ namespace utils
 end
 
 namespace env
-    var win_ucrt = true
+    var cs_std = null
+    function covscript_std()
+        if env.cs_std != null
+            return env.cs_std
+        end
+        var abi_reg = regex.build("STD Version: ([A-Z0-9]{6})")
+        var p = process.exec("./build/bin/cs", {"-v"})
+        var r = null, line = null
+        loop; until !(r = abi_reg.search(line = p.out().getline())).empty()
+        env.cs_std = r.str(1)
+        return env.cs_std
+    end
     function user_home()
         if system.is_platform_windows()
             return system.getenv("USERPROFILE")
@@ -68,6 +79,9 @@ namespace env
         end
     end
     function platform()
+        if env.covscript_std() >= "250901"
+            return system.os_name
+        end
         if system.is_platform_windows()
             if env.win_ucrt
                 return "winucrt"
@@ -90,6 +104,9 @@ namespace env
     }.to_hash_map()
     @end
     function arch()
+        if env.covscript_std() >= "250901"
+            return system.arch_name
+        end
         if system.is_platform_unix()
             var p = process.exec("arch", {})
             return p.out().getline()
@@ -102,16 +119,17 @@ namespace env
             end
         end
     end
+    var cs_abi = null
     function covscript_abi()
+        if env.cs_abi != null
+            return env.cs_abi
+        end
         var abi_reg = regex.build("ABI Version: ([A-Z0-9]{6})")
         var p = process.exec("./build/bin/cs", {"-v"})
         var r = null, line = null
         loop; until !(r = abi_reg.search(line = p.out().getline())).empty()
-        if env.win_ucrt && system.is_platform_windows()
-            return r.str(1) + "_UCRT"
-        else
-            return r.str(1)
-        end
+        env.cs_abi = r.str(1)
+        return env.cs_abi
     end
 end
 
