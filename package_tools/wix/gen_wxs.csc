@@ -71,12 +71,12 @@ while ifs.good()
     var str = ifs.getline()
     var result = reg1.match(str)
     if !result.empty()
-        ofs.println(result.str(1) + "Covariant Script Runtime - " + env.covscript_ver() + " (" + env.platform() + ")" + result.str(2) + env.covscript_ver() + result.str(3))
+        ofs.println(result.str(1) + "Covariant Script Runtime - " + env.covscript_ver() + " (" + env.arch() + ")" + result.str(2) + env.covscript_ver() + result.str(3))
         continue
     end
     result = reg2.match(str)
     if !result.empty()
-        ofs.println(result.str(1) + env.platform() + result.str(2))
+        ofs.println(result.str(1) + env.arch() + result.str(2))
         continue
     end
     ofs.println(str)
