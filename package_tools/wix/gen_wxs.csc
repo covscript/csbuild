@@ -1,8 +1,6 @@
 import process
 import regex
 
-@require: 250901
-
 namespace utils
     function filter(str, cond)
         var _s = ""
