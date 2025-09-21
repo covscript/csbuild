@@ -20,8 +20,6 @@
 # Github:  https://github.com/mikecovlee
 # Website: http://covscript.org.cn
 
-@require: 250901
-
 import codec.json as json
 import process
 import regex
@@ -47,11 +45,64 @@ namespace utils
 end
 
 namespace env
+    var cs_std = null
+    function covscript_std()
+        if env.cs_std != null
+            return env.cs_std
+        end
+        var abi_reg = regex.build("STD Version: ([A-Z0-9]{6})")
+        var p = process.exec("./build/bin/cs", {"-v"})
+        var r = null, line = null
+        loop; until !(r = abi_reg.search(line = p.out().getline())).empty()
+        env.cs_std = r.str(1)
+        return env.cs_std
+    end
     function user_home()
         if system.is_platform_windows()
             return system.getenv("USERPROFILE")
         else
             return system.getenv("HOME")
+        end
+    end
+    function platform()
+        if env.covscript_std() >= "250901"
+            return env.platform()
+        end
+        if system.is_platform_windows()
+            if env.win_ucrt
+                return "winucrt"
+            else
+                return "windows"
+            end
+        end
+        if system.is_platform_linux()
+            return "linux"
+        end
+        if system.is_platform_darwin()
+            return "macos"
+        end
+    end
+    @begin
+    var arch_map = {
+        "AMD64" : "x86_64",
+        "ARM64" : "arm64",
+        "x86"   : "i386"
+    }.to_hash_map()
+    @end
+    function arch()
+        if env.covscript_std() >= "250901"
+            return env.arch()
+        end
+        if system.is_platform_unix()
+            var p = process.exec("arch", {})
+            return p.out().getline()
+        else
+            var arch_name = system.getenv("PROCESSOR_ARCHITECTURE")
+            if env.arch_map.exist(arch_name)
+                return env.arch_map[arch_name]
+            else
+                throw runtime.exception("Unrecognizable platform name: " + arch_name)
+            end
         end
     end
     function covscript_home()
@@ -68,12 +119,17 @@ namespace env
             return "/Applications/CovScript.app/Contents/MacOS/covscript"
         end
     end
+    var cs_abi = null
     function covscript_abi()
+        if env.cs_abi != null
+            return env.cs_abi
+        end
         var abi_reg = regex.build("ABI Version: ([A-Z0-9]{6})")
         var p = process.exec("./build/bin/cs", {"-v"})
         var r = null, line = null
         loop; until !(r = abi_reg.search(line = p.out().getline())).empty()
-        return r.str(1)
+        env.cs_abi = r.str(1)
+        return env.cs_abi
     end
 end
 
@@ -98,8 +154,8 @@ system.out.println("csbuild: enumerate packages...")
 
 var idx_path = "cspkg-repo" + system.path.separator + "index" + system.path.separator + "universal"
 var pkg_path = "cspkg-repo" + system.path.separator + "universal"
-var idx_os_path = "cspkg-repo" + system.path.separator + "index" + system.path.separator + system.os_name + system.path.separator + system.arch_name
-var pkg_os_path = "cspkg-repo" + system.path.separator + system.os_name + system.path.separator + system.arch_name
+var idx_os_path = "cspkg-repo" + system.path.separator + "index" + system.path.separator + env.platform() + system.path.separator + env.arch()
+var pkg_os_path = "cspkg-repo" + system.path.separator + env.platform() + system.path.separator + env.arch()
 
 system.path.mkdir_p(idx_path)
 system.path.mkdir_p(pkg_path)
@@ -133,7 +189,7 @@ foreach it in target.install
                 end
                 if info.Type == "Extension"
                     system.file.copy(path + system.path.separator + info.Target, pkg_os_path + system.path.separator + file_name.str(1))
-                    info.Target = target.remote_base + system.os_name + "/" + system.arch_name + "/" + file_name.str(1)
+                    info.Target = target.remote_base + env.platform() + "/" + env.arch() + "/" + file_name.str(1)
                     info.erase("Type")
                     utils.save_json(info, idx_os_path + system.path.separator + info.Name + ".json")
                     pkg_os_idx.push_back(info.Name)
