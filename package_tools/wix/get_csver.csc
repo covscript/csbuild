@@ -29,7 +29,6 @@ namespace env
     @begin
     var arch_map = {
         "AMD64" : "x86_64",
-        "ARM64" : "arm64",
         "x86"   : "i386"
     }.to_hash_map()
     @end
