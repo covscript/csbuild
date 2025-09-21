@@ -28,8 +28,8 @@ namespace env
     end
     @begin
     var arch_map = {
-        "AMD64" : "x86_64",
-        "x86"   : "i386"
+        "AMD64" : "x64",
+        "x86"   : "x86"
     }.to_hash_map()
     @end
     function arch()
