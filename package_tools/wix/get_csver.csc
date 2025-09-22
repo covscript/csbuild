@@ -14,18 +14,6 @@ namespace utils
 end
 
 namespace env
-    var cs_std = null
-    function covscript_std()
-        if env.cs_std != null
-            return env.cs_std
-        end
-        var abi_reg = regex.build("STD Version: ([A-Z0-9]{6})")
-        var p = process.exec("../../build/bin/cs", {"-v"})
-        var r = null, line = null
-        loop; until !(r = abi_reg.search(line = p.out().getline())).empty()
-        env.cs_std = r.str(1)
-        return env.cs_std
-    end
     @begin
     var arch_map = {
         "AMD64" : "x64",
@@ -33,19 +21,11 @@ namespace env
     }.to_hash_map()
     @end
     function arch()
-        if env.covscript_std() >= "250901"
-            return system.arch_name
-        end
-        if system.is_platform_unix()
-            var p = process.exec("arch", {})
-            return p.out().getline()
+        var arch_name = system.getenv("PROCESSOR_ARCHITECTURE")
+        if env.arch_map.exist(arch_name)
+            return env.arch_map[arch_name]
         else
-            var arch_name = system.getenv("PROCESSOR_ARCHITECTURE")
-            if env.arch_map.exist(arch_name)
-                return env.arch_map[arch_name]
-            else
-                throw runtime.exception("Unrecognizable platform name: " + arch_name)
-            end
+            throw runtime.exception("Unrecognizable platform name: " + arch_name)
         end
     end
     var cs_ver = null
