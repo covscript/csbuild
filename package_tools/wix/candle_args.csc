@@ -19,5 +19,5 @@ end
 if env.covscript_std() >= "250901"
     system.out.println("")
 else
-    system.out.println("--compatible")
+    system.out.println("-dCOVSCRIPT_WIX_COMPATIBLE")
 end

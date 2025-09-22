@@ -83,11 +83,7 @@ namespace env
             return system.os_name
         end
         if system.is_platform_windows()
-            if env.win_ucrt
-                return "winucrt"
-            else
-                return "windows"
-            end
+            return "winucrt"
         end
         if system.is_platform_linux()
             return "linux"
