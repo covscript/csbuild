@@ -76,6 +76,8 @@ download_files() {
     done
     wait
 
+    rm $CSBUILD_DIR/$mode/cspkg-repo/index.json
+
     rsync -avzP "$CSBUILD_DIR/$mode/cspkg-repo/" "$CSPKG_DIR"
 
     rsync -avzP "$CSBUILD_DIR/"covscript-*${FILE_APPENDIX}.* "$PKG_DIR"

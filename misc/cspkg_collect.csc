@@ -213,3 +213,4 @@ end
 
 utils.save_json(pkg_idx, idx_path + system.path.separator + "index.json")
 utils.save_json(pkg_os_idx, idx_os_path + system.path.separator + "index.json")
+utils.save_json({"universal", env.platform() + "/" + env.arch()}, "cspkg-repo" + system.path.separator + "index.json")
