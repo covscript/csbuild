@@ -11,7 +11,7 @@ git_repo="https://github.com/"
 function clone_git ()
 {
     if [ ! -d "${1#*/}" ]; then
-        git clone $git_repo/$1 --depth=1 --recurse-submodules
+        git clone $git_repo/$1 --recurse-submodules
     fi
 }
 function fetch_git ()

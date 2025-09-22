@@ -66,7 +66,7 @@ cd ..
 goto:eof
 :git_clone
 if not exist %1% (
-    git clone %GIT_REPO%/%1% --depth=1 --recurse-submodules
+    git clone %GIT_REPO%/%1% --recurse-submodules
 )
 goto:eof
 :git_fetch

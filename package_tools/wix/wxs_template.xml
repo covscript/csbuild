@@ -19,7 +19,7 @@
         <UIRef Id="WixUI_FeatureTree" />
         <WixVariable Id="WixUILicenseRtf" Value="SourceDir\License.rtf" />
 
-        <Directory Id="TARGETDIR" Name="SourceDir">
+        <Directory Id="TARGETDIR" Name="RootDir">
             <Directory Id="ProgramFilesFolder">
                 <Directory Id="INSTALLDIR" Name="CovScript" />
             </Directory>
@@ -181,19 +181,31 @@
                 </Directory>
             </Directory>
             <Directory Id="dir5D7C4FA608B02D34BB5BDAD566C26A85" Name="lib">
+                #if COVSCRIPT_WIX_COMPATIBLE
                 <Component Id="cmpCF46CCBAEDFD37CF4216FF048C01F47B" Guid="{AF5173A4-A76C-46BD-A620-FFBB81653480}">
                     <File Id="filBB12DE35F76F3638ACCAC6DB77DA0396" KeyPath="yes" Source="SourceDir\lib\libcovscript.a" />
                 </Component>
                 <Component Id="cmp232A04A19A21D05F47E1DBBCF9145502" Guid="{21162D71-BBD2-4265-8C5D-B99DD72E0D0D}">
                     <File Id="filF52A01763314853B2641D3E04DD8647F" KeyPath="yes" Source="SourceDir\lib\libcovscript_debug.a" />
                 </Component>
+                #else
+                <Component Id="cmp1FF71EFE828A4B7A961379134C46D0F8" Guid="{AE6DF1A3-3679-42C4-B71F-423F80AF57D1}">
+                    <File Id="fil45B4B9133EA24D6599695F4349DFEC3D" KeyPath="yes" Source="SourceDir\lib\libcovscript.a" />
+                </Component>
+                <Component Id="cmp7CF103F20F59428A907E483170AEAC50" Guid="{9F789612-6CB4-4136-A944-21CB3FE5C3A2}">
+                    <File Id="filD173F76451014EA297F6081ADBACC310" KeyPath="yes" Source="SourceDir\lib\libcovscript_sdk.a" />
+                </Component>
+                <Component Id="cmp84B8C16E2C764577AFD87553947EB121" Guid="{76B891EC-6D61-4822-95BE-415692B89953}">
+                    <File Id="fil7A3A32A9AE354BE1AAA4D3C477B9A4A7" KeyPath="yes" Source="SourceDir\lib\libcovscript_debug_sdk.a" />
+                </Component>
+                #endif
             </Directory>
         </DirectoryRef>
         <DirectoryRef Id="ApplicationProgramsFolder">
             <Component Id="ApplicationShortcut" Guid="{1BDEED99-E5C9-41B5-AC6B-CB01BD2E14C9}">
                 <Environment Id="CS_DEV_PATH" Name="CS_DEV_PATH" Value="[INSTALLDIR]" Permanent="no" Part="last" Action="set" System="yes" />
-                <Environment Id="PATH" Name="PATH" Value="[INSTALLDIR]bin" Permanent="no" Part="last" Action="set" System="yes" />
-                <Shortcut Id="ApplicationStartMenuShortcut" Name="Covariant Script REPL" Description="Covariant Script Runtime" Arguments="-w -i &quot;[INSTALLDIR]imports&quot;" Target="[INSTALLDIR]bin\cs.exe" WorkingDirectory="INSTALLDIR" />
+                <Environment Id="PATH_ENV" Name="PATH" Value="[INSTALLDIR]bin" Permanent="no" Part="last" Action="set" System="yes" />
+                <Shortcut Id="ApplicationStartMenuShortcut" Name="Covariant Script REPL" Description="Covariant Script Runtime" Arguments="-w -i &quot;[INSTALLDIR]imports&quot;" Target="[INSTALLDIR]bin\cs.exe" WorkingDirectory="[INSTALLDIR]" />
                 <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
                 <RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]" Name="installed" Type="integer" Value="1" KeyPath="yes" />
             </Component>
