@@ -5,6 +5,7 @@ xcopy /Y license.rtf ..\..\build
 for /F %%i in ('..\..\build\bin\cs -i ..\..\build\imports .\get_csver.csc') do set CSVER=%%i
 for /F %%i in ('..\..\build\bin\cs -i ..\..\build\imports .\candle_args.csc') do set CANDLE_ARGS=%%i
 echo CovScript Runtime Version: %CSVER%
+echo Candle Arguments: %CANDLE_ARGS%
 ..\..\build\bin\cs -i ..\..\build\imports .\gen_wxs.csc .\wxs_template.xml
 mkdir wix_build
 cd wix_build

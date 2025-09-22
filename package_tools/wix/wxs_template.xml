@@ -181,7 +181,7 @@
                 </Directory>
             </Directory>
             <Directory Id="dir5D7C4FA608B02D34BB5BDAD566C26A85" Name="lib">
-                #if COVSCRIPT_WIX_COMPATIBLE
+                #ifndef COVSCRIPT_WIX_COMPATIBLE
                 <Component Id="cmpCF46CCBAEDFD37CF4216FF048C01F47B" Guid="{AF5173A4-A76C-46BD-A620-FFBB81653480}">
                     <File Id="filBB12DE35F76F3638ACCAC6DB77DA0396" KeyPath="yes" Source="SourceDir\lib\libcovscript.a" />
                 </Component>
