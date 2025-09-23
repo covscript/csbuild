@@ -27,7 +27,7 @@ jobs:
           bash misc/base_install_linux.sh
           bash auto-build.sh release
           bash package_tools/deb/make.sh
-          cp *.deb covscript-$(arch).deb
+          cp *.deb covscript-ubuntu-$(arch).deb
       
       - name: Build on macOS
         if: matrix.os == 'macos-14'
@@ -35,7 +35,7 @@ jobs:
           bash misc/base_install_macOS.sh
           bash auto-build.sh release
           bash package_tools/dmg/make.sh
-          cp *.dmg covscript-arm64.dmg
+          cp *.dmg covscript-macos-arm64.dmg
       
       - name: Download MinGW-w64
         if: matrix.os == 'windows-2022'
@@ -56,12 +56,12 @@ jobs:
         if: matrix.os == 'windows-2022'
         run: |
           .github/workflows/build_release.bat
-          cp *.msi covscript-x64.msi
+          cp *.msi covscript-windows-x86_64.msi
           
       - name: Run tests on Ubuntu
         if: matrix.os == 'ubuntu-22.04' || matrix.os == 'ubuntu-22.04-arm'
         run: |
-          sudo dpkg -i covscript-$(arch).deb
+          sudo dpkg -i covscript-ubuntu-$(arch).deb
           cs -v
           cs_dbg -v
           cs build-cache/covscript/.github/workflows/benchmark.csc
@@ -69,8 +69,8 @@ jobs:
       - name: Package CSPKG Repo and Build files on Ubuntu
         if: matrix.os == 'ubuntu-22.04' || matrix.os == 'ubuntu-22.04-arm'
         run: |
-          7z a -mmt4 -mx9 cspkg-linux-$(arch).7z cspkg-repo
-          7z a -mmt4 -mx9 covscript-linux-$(arch).7z build
+          7z a -mmt4 -mx9 cspkg-ubuntu-$(arch).7z cspkg-repo
+          7z a -mmt4 -mx9 covscript-ubuntu-$(arch).7z build
           
       - name: Package CSPKG Repo and Build files on macOS
         if: matrix.os == 'macos-14'
@@ -81,8 +81,8 @@ jobs:
       - name: Package CSPKG Repo and Build files on Windows
         if: matrix.os == 'windows-2022'
         run: |
-          7z a -mmt4 -mx9 cspkg-winucrt-x86_64.7z cspkg-repo
-          7z a -mmt4 -mx9 covscript-winucrt-x86_64.7z build
+          7z a -mmt4 -mx9 cspkg-windows-x86_64.7z cspkg-repo
+          7z a -mmt4 -mx9 covscript-windows-x86_64.7z build
 
       - name: Automatic Release MSI
         if: matrix.os == 'windows-2022'
