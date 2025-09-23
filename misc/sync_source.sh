@@ -72,7 +72,7 @@ download_files() {
     mkdir -p "$CSBUILD_DIR/$mode"
 
     for file in "$CSBUILD_DIR"/cspkg-*${FILE_APPENDIX}.7z; do
-        7z x -aoa "$file" -o"$CSBUILD_DIR/$mode" &
+        [[ -n "$FILE_APPENDIX" || "$file" != *-nightly.7z ]] && 7z x -aoa "$file" -o"$CSBUILD_DIR/$mode" &
     done
     wait
 
