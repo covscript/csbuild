@@ -181,14 +181,14 @@
                 </Directory>
             </Directory>
             <Directory Id="dir5D7C4FA608B02D34BB5BDAD566C26A85" Name="lib">
-                #ifndef COVSCRIPT_WIX_COMPATIBLE
+                <?ifdef COVSCRIPT_WIX_COMPATIBLE?> 
                 <Component Id="cmpCF46CCBAEDFD37CF4216FF048C01F47B" Guid="{AF5173A4-A76C-46BD-A620-FFBB81653480}">
                     <File Id="filBB12DE35F76F3638ACCAC6DB77DA0396" KeyPath="yes" Source="SourceDir\lib\libcovscript.a" />
                 </Component>
                 <Component Id="cmp232A04A19A21D05F47E1DBBCF9145502" Guid="{21162D71-BBD2-4265-8C5D-B99DD72E0D0D}">
                     <File Id="filF52A01763314853B2641D3E04DD8647F" KeyPath="yes" Source="SourceDir\lib\libcovscript_debug.a" />
                 </Component>
-                #else
+                <?else?>
                 <Component Id="cmp1FF71EFE828A4B7A961379134C46D0F8" Guid="{AE6DF1A3-3679-42C4-B71F-423F80AF57D1}">
                     <File Id="fil45B4B9133EA24D6599695F4349DFEC3D" KeyPath="yes" Source="SourceDir\lib\libcovscript.a" />
                 </Component>
@@ -198,7 +198,7 @@
                 <Component Id="cmp84B8C16E2C764577AFD87553947EB121" Guid="{76B891EC-6D61-4822-95BE-415692B89953}">
                     <File Id="fil7A3A32A9AE354BE1AAA4D3C477B9A4A7" KeyPath="yes" Source="SourceDir\lib\libcovscript_debug_sdk.a" />
                 </Component>
-                #endif
+                <?endif?>
             </Directory>
         </DirectoryRef>
         <DirectoryRef Id="ApplicationProgramsFolder">
@@ -257,8 +257,14 @@
             <ComponentRef Id="cmp8B39F3921C9285F7A7AE0C6646F6EBCB" />
             <ComponentRef Id="cmp0DE7278B71E891B753B2DBA0DE7F9BD2" />
             <ComponentRef Id="cmp698D91BA216B2EC37AEB1FF789B2AAF8" />
+            <?ifdef COVSCRIPT_WIX_COMPATIBLE?> 
             <ComponentRef Id="cmpCF46CCBAEDFD37CF4216FF048C01F47B" />
             <ComponentRef Id="cmp232A04A19A21D05F47E1DBBCF9145502" />
+            <?else?>
+            <ComponentRef Id="cmp1FF71EFE828A4B7A961379134C46D0F8" />
+            <ComponentRef Id="cmp7CF103F20F59428A907E483170AEAC50" />
+            <ComponentRef Id="cmp84B8C16E2C764577AFD87553947EB121" />
+            <?endif?>
         </ComponentGroup>
     </Fragment>
 </Wix>
