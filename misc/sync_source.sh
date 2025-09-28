@@ -52,14 +52,14 @@ download_files() {
     fi
 
     local CSPKG_URLS=(
-        "https://github.com/covscript/csbuild/releases/download/windows-${SOURCE_CONFIG}/cspkg-winucrt-x86_64${FILE_APPENDIX}.7z"
-        "https://github.com/covscript/csbuild/releases/download/ubuntu-${SOURCE_CONFIG}/cspkg-linux-x86_64${FILE_APPENDIX}.7z"
-        "https://github.com/covscript/csbuild/releases/download/ubuntu-arm-${SOURCE_CONFIG}/cspkg-linux-aarch64${FILE_APPENDIX}.7z"
+        "https://github.com/covscript/csbuild/releases/download/windows-${SOURCE_CONFIG}/cspkg-windows-x86_64${FILE_APPENDIX}.7z"
+        "https://github.com/covscript/csbuild/releases/download/ubuntu-${SOURCE_CONFIG}/cspkg-ubuntu-x86_64${FILE_APPENDIX}.7z"
+        "https://github.com/covscript/csbuild/releases/download/ubuntu-arm-${SOURCE_CONFIG}/cspkg-ubuntu-aarch64${FILE_APPENDIX}.7z"
         "https://github.com/covscript/csbuild/releases/download/macos-${SOURCE_CONFIG}/cspkg-macos-arm64${FILE_APPENDIX}.7z"
-        "https://github.com/covscript/csbuild/releases/download/windows-${SOURCE_CONFIG}/covscript-x64${FILE_APPENDIX}.msi"
-        "https://github.com/covscript/csbuild/releases/download/ubuntu-${SOURCE_CONFIG}/covscript-x86_64${FILE_APPENDIX}.deb"
-        "https://github.com/covscript/csbuild/releases/download/ubuntu-arm-${SOURCE_CONFIG}/covscript-aarch64${FILE_APPENDIX}.deb"
-        "https://github.com/covscript/csbuild/releases/download/macos-${SOURCE_CONFIG}/covscript-arm64${FILE_APPENDIX}.dmg"
+        "https://github.com/covscript/csbuild/releases/download/windows-${SOURCE_CONFIG}/covscript-windows-x86_64${FILE_APPENDIX}.msi"
+        "https://github.com/covscript/csbuild/releases/download/ubuntu-${SOURCE_CONFIG}/covscript-ubuntu-x86_64${FILE_APPENDIX}.deb"
+        "https://github.com/covscript/csbuild/releases/download/ubuntu-arm-${SOURCE_CONFIG}/covscript-ubuntu-aarch64${FILE_APPENDIX}.deb"
+        "https://github.com/covscript/csbuild/releases/download/macos-${SOURCE_CONFIG}/covscript-macos-arm64${FILE_APPENDIX}.dmg"
     )
 
     for url in "${CSPKG_URLS[@]}"; do
