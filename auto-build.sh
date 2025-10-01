@@ -36,14 +36,13 @@ cd build-cache
 
 # Setup basic environment
 
-cp -rf cspkg/build .. &
-cp -rf covscript/build .. &
-cp -rf covscript/csdev/* ../build/ &
-cp -rf covscript-curl/build .. &
-cp -rf covscript-regex/build .. &
-cp -rf covscript-codec/build .. &
-cp -rf covscript-process/build .. &
-wait
+cp -rf cspkg/build ..
+cp -rf covscript/build ..
+cp -rf covscript/csdev/* ../build/
+cp -rf covscript-curl/build ..
+cp -rf covscript-regex/build ..
+cp -rf covscript-codec/build ..
+cp -rf covscript-process/build ..
 
 fetch_git mikecovlee/parsergen &
 fetch_git covscript/csdbc &
