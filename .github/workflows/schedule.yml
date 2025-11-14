@@ -14,6 +14,7 @@ jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ ubuntu-22.04, ubuntu-22.04-arm, macos-14, windows-2022 ]
 
@@ -64,7 +65,7 @@ jobs:
           sudo dpkg -i covscript-ubuntu-$(arch)-nightly.deb
           cs -v
           cs_dbg -v
-          cs build-cache/covscript/.github/workflows/benchmark.csc
+          cs build-cache/covscript/tests/benchmark.csc
 
       - name: Package CSPKG Repo and Build files on Ubuntu
         if: matrix.os == 'ubuntu-22.04' || matrix.os == 'ubuntu-22.04-arm'
