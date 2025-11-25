@@ -69,7 +69,7 @@ function build_compile(module_name, source_path, cxx_opts)
     var file_reg = regex.build("^.*?(\\w+)\\.(c|cc|cpp|cxx)$")
     var file_name = file_reg.match(source_path)
     system.out.println("[" + module_name + "] Building module \'" + file_name.str(1) + ".cse\'...")
-    system.run("g++ -std=c++14 --shared -fPIC -O3 -I\"" + csdev_path + system.path.separator + "include\" \"" + source_path + "\" -L\"" + csdev_path + system.path.separator + "lib\" -lcovscript -o " + base_path + file_name.str(1) + ".cse " + cxx_opts)
+    system.run("g++ -std=c++17 --shared -fPIC -O2 -I\"" + csdev_path + system.path.separator + "include\" \"" + source_path + "\" -L\"" + csdev_path + system.path.separator + "lib\" -lcovscript -o " + base_path + file_name.str(1) + ".cse " + cxx_opts)
 end
 
 var path = base_path + "csbuild"
