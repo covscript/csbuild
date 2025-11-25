@@ -32,173 +32,140 @@
     <Fragment>
         <DirectoryRef Id="INSTALLDIR">
             <Directory Id="dir03D70DE45D2AC78BF34AB918B2D1DBEA" Name="bin">
-                <Component Id="cmpDC88EB415BE80B6C5004DD59CA5177D4" Guid="{287BDC7D-D16B-459A-A06F-C771F79460A4}">
+                <Component Id="cmpDC88EB415BE80B6C5004DD59CA5177D4" Guid="{212F3D98-962D-407D-9543-F0565E80D121}">
                     <File Id="fil6F2B2165818E97D673E89D6FEA3821F8" KeyPath="yes" Source="SourceDir\bin\cs.exe" />
                 </Component>
-                <Component Id="cmp802ECBB3D5A542900D4AB0E49FE7F126" Guid="{93A788E8-A886-41DB-9243-9BC31FB4C39B}">
+                <Component Id="cmp802ECBB3D5A542900D4AB0E49FE7F126" Guid="{DA3B49DC-60CE-40F4-8E05-AC53A5F56D44}">
                     <File Id="fil232B4B0BF6B587BE176FE67E8269365B" KeyPath="yes" Source="SourceDir\bin\cspkg" />
                 </Component>
-                <Component Id="cmpCD52B7C70176CFE8B2BB6AFE60F125D4" Guid="{6E7F1C53-94FE-49F2-8088-258ABCE368B4}">
+                <Component Id="cmpCD52B7C70176CFE8B2BB6AFE60F125D4" Guid="{5A88C4D7-9C34-4B77-82CE-DEE63809700C}">
                     <File Id="fil9290242ED191254918CE5511AA2A1456" KeyPath="yes" Source="SourceDir\bin\cspkg.bat" />
                 </Component>
-                <Component Id="cmpC357076F88D4067CCC23470FBD0A15E8" Guid="{5D47BD1E-4737-47D0-8179-524B5E1C3723}">
+                <Component Id="cmpC357076F88D4067CCC23470FBD0A15E8" Guid="{B7551381-91F9-4197-82B2-9E90194A81F8}">
                     <File Id="filC73006886FD2DA74BDE151F624A156D7" KeyPath="yes" Source="SourceDir\bin\cs_dbg.exe" />
                 </Component>
-                <Component Id="cmp522C4C291708D2FDECA4D5DC6DB82E8B" Guid="{7C9B1D8D-36C5-4AB0-8512-2A3BE80547BD}">
+                <Component Id="cmp522C4C291708D2FDECA4D5DC6DB82E8B" Guid="{46C51114-998D-416B-8522-4D594174BF12}">
                     <File Id="filC303E4A0BE13DF36DBD53B15D36F5F0C" KeyPath="yes" Source="SourceDir\bin\ecs" />
                 </Component>
-                <Component Id="cmpAC18366A67812F9E273B93AD1CF088E7" Guid="{7F537AF6-6F09-4620-B177-A6F7DEA3FDFE}">
+                <Component Id="cmpAC18366A67812F9E273B93AD1CF088E7" Guid="{ACBD9876-4355-4F7A-BE45-338294E4B3FB}">
                     <File Id="fil20DF7F5E15747994B5072C2F4EF9DBB5" KeyPath="yes" Source="SourceDir\bin\ecs.bat" />
                 </Component>
             </Directory>
             <Directory Id="dir025855D6DAD50F5AAA378208F469CF18" Name="imports">
-                <Component Id="cmp181E75EF6B9D2B86D16FA6287D426B62" Guid="{6C0782C0-B0B6-4A8C-9059-86D601242329}">
+                <Component Id="cmp181E75EF6B9D2B86D16FA6287D426B62" Guid="{C34D5C6E-D0EE-4AA9-8CCE-DDA5FAD3F4C4}">
                     <File Id="filF0FFCAA3033F4C2ACD84C9D85F054F0B" KeyPath="yes" Source="SourceDir\imports\codec.cse" />
                 </Component>
-                <Component Id="cmp01918FE7CCA619B444F6C7F97257ABC8" Guid="{5F1A8151-1DA1-4D51-8D94-5C795A716390}">
+                <Component Id="cmp01918FE7CCA619B444F6C7F97257ABC8" Guid="{DFC35988-45C2-42BE-9FD6-FFA25BC7303E}">
                     <File Id="fil9C585E275B4FD18EAB9C23068CCAD522" KeyPath="yes" Source="SourceDir\imports\curl.cse" />
                 </Component>
-                <Component Id="cmp6E7DCDE339D2A94D71E9CE9EFDECB469" Guid="{AE2AF501-43D4-4C0F-BCDA-911D64BE3068}">
+                <Component Id="cmp6E7DCDE339D2A94D71E9CE9EFDECB469" Guid="{1BAEB8CB-3A61-4B63-9A60-132CD1F8B04F}">
                     <File Id="fil6585C50B68B1609FD8A68FF2873A91B0" KeyPath="yes" Source="SourceDir\imports\process.cse" />
                 </Component>
-                <Component Id="cmpF0F3FE4DCAD76AF3A553D3C96672A83B" Guid="{CD797A2A-3495-4103-B885-013CF7B02EA0}">
+                <Component Id="cmpF0F3FE4DCAD76AF3A553D3C96672A83B" Guid="{3FB8D851-FAD1-4885-81CD-6736447B5A76}">
                     <File Id="filC9618A22832B33C3A14DAC5B00687931" KeyPath="yes" Source="SourceDir\imports\regex.cse" />
                 </Component>
-                <Component Id="cmpA59326D7085616E04C24F7295D011EE0" Guid="{D4C8BABF-EEB8-4017-8A41-5D5FB1E48F1F}">
+                <Component Id="cmpA59326D7085616E04C24F7295D011EE0" Guid="{8DE441E6-24B3-4236-BF3A-835BFF3B1F80}">
                     <File Id="fil258A0D3B838ED19EB04E6FE2FDB06042" KeyPath="yes" Source="SourceDir\imports\unicode.cse" />
                 </Component>
             </Directory>
             <Directory Id="dir34269D035514C3D2F63BB0AAD4DAC456" Name="include">
                 <Directory Id="dirE371CC046625EDF86ED09E5ACE6F9B6D" Name="covscript">
-                    <Component Id="cmp1E4D0A0507E26CE652CA5407606DF0D7" Guid="{B77143D8-E24D-4417-AAA8-4257E7075546}">
+                    <Component Id="cmp1E4D0A0507E26CE652CA5407606DF0D7" Guid="{12621C37-FD48-42E1-A6ED-3CA157F09BA8}">
                         <File Id="filAE538846A405CE0D11ABE111CCEC8DF1" KeyPath="yes" Source="SourceDir\include\covscript\cni.hpp" />
                     </Component>
-                    <Component Id="cmpD990ABE9DE5D36B165C59C0451207488" Guid="{C48C38A2-0966-4728-830D-20BB402B465C}">
+                    <Component Id="cmpD990ABE9DE5D36B165C59C0451207488" Guid="{002FDE0C-F058-4D72-8903-1937C9E45C06}">
                         <File Id="filED2F6EE6CC700DF8663B2D1DC856C591" KeyPath="yes" Source="SourceDir\include\covscript\covscript.hpp" />
                     </Component>
-                    <Component Id="cmpC074E4ECF2E50E25E75937C88F7F8D55" Guid="{D9EC793F-AC3A-4448-B47C-69BB1105D6F3}">
+                    <Component Id="cmpC074E4ECF2E50E25E75937C88F7F8D55" Guid="{FBEC53D1-F59D-4B13-9E90-0B877697082B}">
                         <File Id="fil01B1739A9CDFF5A140EB45A69E7BEC06" KeyPath="yes" Source="SourceDir\include\covscript\dll.hpp" />
                     </Component>
                     <Directory Id="dirFF89A6DDA686BB4D00A0396DEC2C03CF" Name="core">
-                        <Component Id="cmp759356F7E7007D10ED2DB01086FF0C1B" Guid="{D84CFE4A-A02A-4289-BA3A-C8282A1DDB65}">
+                        <Component Id="cmp759356F7E7007D10ED2DB01086FF0C1B" Guid="{3CA14F69-1CFF-4C4F-B8FA-8AF340551E4D}">
                             <File Id="fil75ABF3C45520DBAAF6781B0EEDF45D5D" KeyPath="yes" Source="SourceDir\include\covscript\core\cni.hpp" />
                         </Component>
-                        <Component Id="cmpF27B253E2F23A7C74BB9542B7771445C" Guid="{AF437923-1219-40D6-AF67-F210C9E906E4}">
+                        <Component Id="cmpF27B253E2F23A7C74BB9542B7771445C" Guid="{91A70986-C37E-48CE-A904-CD4ADA0C37B8}">
                             <File Id="fil67EA99DF9694A4C1EF96A59DF41384DD" KeyPath="yes" Source="SourceDir\include\covscript\core\components.hpp" />
                         </Component>
-                        <Component Id="cmp70004D5982F224C8775FD4916AC326FC" Guid="{80D3C7C1-3233-40F5-9620-C632A74C5CFF}">
+                        <Component Id="cmp70004D5982F224C8775FD4916AC326FC" Guid="{3E634327-05EE-481B-94BC-83A472B243BA}">
                             <File Id="filE5CAA5283EAC4B20027378C4E04CF233" KeyPath="yes" Source="SourceDir\include\covscript\core\core.hpp" />
                         </Component>
-                        <Component Id="cmp6C759F1B4A5D351A6EFAA51642DD3FFD" Guid="{3D45B055-A43F-4A4E-9250-90EFB67C9C68}">
+                        <Component Id="cmp6C759F1B4A5D351A6EFAA51642DD3FFD" Guid="{71BE6127-B146-48EE-9759-A85F26CE79DB}">
                             <File Id="fil0ACA021BC3F353CE37F11516C5BA3378" KeyPath="yes" Source="SourceDir\include\covscript\core\definition.hpp" />
                         </Component>
-                        <Component Id="cmpC5AA090049E9475529571F687F193474" Guid="{E586256A-7A82-4014-A748-335278103D60}">
+                        <Component Id="cmpC5AA090049E9475529571F687F193474" Guid="{8CB108DB-2171-4F01-B426-E388C4FBE5E6}">
                             <File Id="filAEA7379C115934A994BCCD0536929158" KeyPath="yes" Source="SourceDir\include\covscript\core\variable.hpp" />
                         </Component>
-                        <Component Id="cmpBF646A1D23C8EE43E47A422524DEC797" Guid="{73AD5662-96D2-4C0A-8145-ADA11825F853}">
+                        <Component Id="cmpBF646A1D23C8EE43E47A422524DEC797" Guid="{3FA559D8-F44C-4C88-B0CF-C234DFD25AEF}">
                             <File Id="fil9B61658D0F11F8420EFB0FDAC537165D" KeyPath="yes" Source="SourceDir\include\covscript\core\version.hpp" />
                         </Component>
                     </Directory>
                     <Directory Id="dir41EA34F472A7D738E31732B5CA5040DB" Name="impl">
-                        <Component Id="cmp4E261787A7E57472E9A620E876E6B67B" Guid="{A378D58C-EAC3-4DF5-A809-061249470707}">
+                        <Component Id="cmp4E261787A7E57472E9A620E876E6B67B" Guid="{6EAD91F5-BC22-4F68-BA9F-C6423458A8F3}">
                             <File Id="filF0D094DD0CD050C963711F1A2A86CEFB" KeyPath="yes" Source="SourceDir\include\covscript\impl\codegen.hpp" />
                         </Component>
-                        <Component Id="cmp5E0CD9E0192FA3535C603388EF20E302" Guid="{1BBEAB2A-81A1-4D71-BDF5-228F3403EECF}">
+                        <Component Id="cmp5E0CD9E0192FA3535C603388EF20E302" Guid="{F1D8A6DB-5C1C-481E-8B73-C9DA336612B0}">
                             <File Id="fil32032F92FF13DFA22093E35313E3F113" KeyPath="yes" Source="SourceDir\include\covscript\impl\compiler.hpp" />
                         </Component>
-                        <Component Id="cmp0DA0F4138ADEB714000A283BA4C24584" Guid="{82BAF5F5-AFA0-459E-ABB7-BD3E290D3C7F}">
+                        <Component Id="cmp0DA0F4138ADEB714000A283BA4C24584" Guid="{F90DCAFE-4C81-4083-89CF-728620838B24}">
                             <File Id="fil54D47B02ADE0162B3B471122F3EBB6AB" KeyPath="yes" Source="SourceDir\include\covscript\impl\impl.hpp" />
                         </Component>
-                        <Component Id="cmp6DCCDDAFB95D95C536ED75E9D70E69CF" Guid="{3FBA80F2-E1F9-406D-961C-9594DE1425A6}">
+                        <Component Id="cmp6DCCDDAFB95D95C536ED75E9D70E69CF" Guid="{2F5C0D53-A3D2-460A-910E-0AA7AEB56DE2}">
                             <File Id="fil4E8D04DC8D7868D5242B10F505AEB2D6" KeyPath="yes" Source="SourceDir\include\covscript\impl\runtime.hpp" />
                         </Component>
-                        <Component Id="cmp44A72174B785183A8AFDD17E7D9DA7F5" Guid="{0B6F4E68-9D7F-42B9-BC77-60960B0553E2}">
+                        <Component Id="cmp44A72174B785183A8AFDD17E7D9DA7F5" Guid="{C0538BBD-A942-42CA-8EBB-27D56B96D841}">
                             <File Id="fil379945D3229FE6E77A58E25E9AED089E" KeyPath="yes" Source="SourceDir\include\covscript\impl\statement.hpp" />
                         </Component>
-                        <Component Id="cmp8C5080D0DF8E0F98452450D77BF84095" Guid="{F7A3A9E1-4ECD-4084-B5CE-9CFC2683B513}">
+                        <Component Id="cmp8C5080D0DF8E0F98452450D77BF84095" Guid="{7CB00018-32CA-4337-A49C-D2E80555CE57}">
                             <File Id="fil4808BC85A1C5506A67A3BDF7160CCA95" KeyPath="yes" Source="SourceDir\include\covscript\impl\symbols.hpp" />
                         </Component>
-                        <Component Id="cmp5E82D432CAB1D2A830145BEC18791920" Guid="{AEC4E01E-5E3A-4736-80D4-4122963A4179}">
+                        <Component Id="cmp451EB3A119443E77376D87B227DD0689" Guid="{2F01A140-A46F-44CC-BD41-B8425A7585DD}">
+                            <File Id="filD6C9F15E28D7AC8955C96646EB322965" KeyPath="yes" Source="SourceDir\include\covscript\impl\system.hpp" />
+                        </Component>
+                        <Component Id="cmp5E82D432CAB1D2A830145BEC18791920" Guid="{8B5A52B4-28BC-4209-8963-B88C2AAC22A1}">
                             <File Id="fil90EA7656AB16CC46E373450673B80887" KeyPath="yes" Source="SourceDir\include\covscript\impl\type_ext.hpp" />
                         </Component>
                     </Directory>
-                    <Directory Id="dir92DFBA7B54720512EF38D9E86A90DC0E" Name="import">
-                        <Directory Id="dir8B656B694707911F292CC607D4E53AEB" Name="libdll">
-                            <Component Id="cmpED07ED6556F8408FD1BD038BFDB3DF99" Guid="{D861F4BC-38CD-4D76-BC0A-E56CC7FB43D8}">
-                                <File Id="filAAED8747845388396CDF2D7DFD1D5A11" KeyPath="yes" Source="SourceDir\include\covscript\import\libdll\dll.hpp" />
-                            </Component>
-                        </Directory>
-                        <Directory Id="dir3B91940737AB21BF7D0FFD6D71B94C3D" Name="mozart">
-                            <Component Id="cmp41D7FA22DAF314470EC7A25C259A30F2" Guid="{5C5A78F5-99D7-4945-9FDA-2EBE3D91C70C}">
-                                <File Id="fil81784D89A208641E3779D6AECB192A5D" KeyPath="yes" Source="SourceDir\include\covscript\import\mozart\base.hpp" />
-                            </Component>
-                            <Component Id="cmpD0FA1DD138A1B4CA1D6B5E9C2CF907F5" Guid="{F84E46A0-033C-4A3F-8372-D9D167704266}">
-                                <File Id="filCFACE3B33BA6668CF14DB7D636BD6AE0" KeyPath="yes" Source="SourceDir\include\covscript\import\mozart\bind.hpp" />
-                            </Component>
-                            <Component Id="cmpD7930D2BE90DBCEEA841B3F95F11E238" Guid="{6568E093-184B-40CE-95EA-029C6FAE60FB}">
-                                <File Id="filB89066DEA88A2F31255A28893920A938" KeyPath="yes" Source="SourceDir\include\covscript\import\mozart\function.hpp" />
-                            </Component>
-                            <Component Id="cmp7B5FEB11989CC9E7E95ED1B47B8778A4" Guid="{E785659F-E589-49CD-923F-8D7B7B02FC20}">
-                                <File Id="fil4240D8027095A88E7B26A9436A187403" KeyPath="yes" Source="SourceDir\include\covscript\import\mozart\traits.hpp" />
-                            </Component>
-                            <Component Id="cmpEB4A43DA47E8E8E09E243508943927D8" Guid="{036480DD-134C-47A9-8B4B-8249A7C562A9}">
-                                <File Id="fil9B81D483F627DBAD8E0DE24D96548603" KeyPath="yes" Source="SourceDir\include\covscript\import\mozart\tuple.hpp" />
-                            </Component>
-                            <Component Id="cmpDA1E9AE4FB90F95D2601511B98C31DB2" Guid="{62092C67-6F89-4F12-A589-D00E5F45D288}">
-                                <File Id="fil88D41F43539660E8C4E23BBF3A037367" KeyPath="yes" Source="SourceDir\include\covscript\import\mozart\typelist.hpp" />
-                            </Component>
-                        </Directory>
-                        <Directory Id="dir17B8AEC16E00384E3D3B754E9163E68C" Name="parallel_hashmap">
-                            <Component Id="cmp10D0BAA7778AC5D6B86087488AFF2DA7" Guid="{F128EAB5-9595-4DEF-ACBC-513E59059BC2}">
-                                <File Id="filE8D0286F0ECA50C97E9ECDA3FB94FA39" KeyPath="yes" Source="SourceDir\include\covscript\import\parallel_hashmap\btree.h" />
-                            </Component>
-                            <Component Id="cmpED4D9E72EFB81C06123DD4CF1B6697D3" Guid="{8488EF57-76DC-4268-8D17-766076306E53}">
-                                <File Id="fil924CCD29DFBE8A72CC6D904ECAD6A32C" KeyPath="yes" Source="SourceDir\include\covscript\import\parallel_hashmap\meminfo.h" />
-                            </Component>
-                            <Component Id="cmp0ADFDCA922D23F11E862C44A63AC8495" Guid="{B9859347-068F-4E18-9F6E-4E9D7D56A4BD}">
-                                <File Id="filA711E660A954385440F46262FBF9F35E" KeyPath="yes" Source="SourceDir\include\covscript\import\parallel_hashmap\phmap.h" />
-                            </Component>
-                            <Component Id="cmp7128DE94634C2861CE5B1D13FECFF768" Guid="{C15B7BB3-EFD8-45DE-888D-A91264286C7A}">
-                                <File Id="fil3CF14909BEFC3BD6B3680C7A1640F973" KeyPath="yes" Source="SourceDir\include\covscript\import\parallel_hashmap\phmap_base.h" />
-                            </Component>
-                            <Component Id="cmpE101D2066F6A6DEAFCC0B4DC41201DD9" Guid="{5E4AA4E1-E7D8-4525-8856-4B72C5288D05}">
-                                <File Id="filB82B5C205CE274D9E4F78F2E250A1DF6" KeyPath="yes" Source="SourceDir\include\covscript\import\parallel_hashmap\phmap_bits.h" />
-                            </Component>
-                            <Component Id="cmp10A1531ABEE1547B58DEBE26CFC9CE05" Guid="{8E03AAFA-379F-4088-AD10-70D122F0A4C2}">
-                                <File Id="fil9BAEFC88D2DFE157EB826C38C10035FD" KeyPath="yes" Source="SourceDir\include\covscript\import\parallel_hashmap\phmap_config.h" />
-                            </Component>
-                            <Component Id="cmp8B39F3921C9285F7A7AE0C6646F6EBCB" Guid="{A6AF7565-B210-4A1D-8E76-C83350EEB5DC}">
-                                <File Id="filA3346C1E53D7BF1EB385B641926442ED" KeyPath="yes" Source="SourceDir\include\covscript\import\parallel_hashmap\phmap_dump.h" />
-                            </Component>
-                            <Component Id="cmp0DE7278B71E891B753B2DBA0DE7F9BD2" Guid="{CDF0D752-F1D3-43D0-AB62-774EEC4EDE27}">
-                                <File Id="fil032C5A9EEE0613192A62D3F6753396F1" KeyPath="yes" Source="SourceDir\include\covscript\import\parallel_hashmap\phmap_fwd_decl.h" />
-                            </Component>
-                            <Component Id="cmp698D91BA216B2EC37AEB1FF789B2AAF8" Guid="{46F05007-B5CB-497C-9280-0F9F51A55293}">
-                                <File Id="fil569DF07E3A3ACD871E91345225EFF29A" KeyPath="yes" Source="SourceDir\include\covscript\import\parallel_hashmap\phmap_utils.h" />
-                            </Component>
-                        </Directory>
-                    </Directory>
+                </Directory>
+                <Directory Id="dir8EE2C58D77D6DA6B2BA04A04A9BA7A93" Name="parallel_hashmap">
+                    <Component Id="cmp8402AC770FEB73F0FC1B1B82BF6ED2C5" Guid="{DA1AB7FB-865B-47C8-9136-4B28FF216B96}">
+                        <File Id="fil4B52D9A1B982287F9EE26FA5505A6E97" KeyPath="yes" Source="SourceDir\include\parallel_hashmap\btree.h" />
+                    </Component>
+                    <Component Id="cmpCF88201259787334447339D745B2FEB5" Guid="{175C627D-1AB7-4952-86D7-F4A642AB8F21}">
+                        <File Id="filE8DCDECAD7256CBE5588D9566D3C9580" KeyPath="yes" Source="SourceDir\include\parallel_hashmap\meminfo.h" />
+                    </Component>
+                    <Component Id="cmp2D3CF922311B7EED1A34819473153A3B" Guid="{FB8A037F-AF48-4F4B-AB5A-7CDA7D861E71}">
+                        <File Id="fil293DAE0F6D538F9A80EEBFC1FEEAEC45" KeyPath="yes" Source="SourceDir\include\parallel_hashmap\phmap.h" />
+                    </Component>
+                    <Component Id="cmp227D154C424C8E23FB07FAC0AC0940AE" Guid="{98ADF512-7715-4762-A62F-DD475392CE4E}">
+                        <File Id="fil45C2F18D9E724417A87A85ABFC76400A" KeyPath="yes" Source="SourceDir\include\parallel_hashmap\phmap_base.h" />
+                    </Component>
+                    <Component Id="cmp6F4C4E1DC67CA7040F5C7603FFFFAF73" Guid="{840F306D-AAB6-4FD2-B12F-8C246A3C0503}">
+                        <File Id="filB1F5E82892B5BC7EC6A7A222FB37FAB0" KeyPath="yes" Source="SourceDir\include\parallel_hashmap\phmap_bits.h" />
+                    </Component>
+                    <Component Id="cmp823DBBB09189DA9BB6AEAD5777C6292E" Guid="{65B31EB4-133C-476A-8A2A-C4A992220941}">
+                        <File Id="fil64468A0DD83AED8050E8C25D6692474F" KeyPath="yes" Source="SourceDir\include\parallel_hashmap\phmap_config.h" />
+                    </Component>
+                    <Component Id="cmp28715F795D500E60283A2A3D68FBBBD5" Guid="{A2ABCEA0-67E4-4761-B53D-25D628E66B5B}">
+                        <File Id="filAFE154C3BCCE2CB0843C2F0FEC719A4F" KeyPath="yes" Source="SourceDir\include\parallel_hashmap\phmap_dump.h" />
+                    </Component>
+                    <Component Id="cmpAE4622A5F31DAF51BFAF7326CCD52F00" Guid="{158FBCD1-0592-42E1-8E1C-3AD5B8A1C899}">
+                        <File Id="fil333C4B28742E8E15591F7FFB99834D91" KeyPath="yes" Source="SourceDir\include\parallel_hashmap\phmap_fwd_decl.h" />
+                    </Component>
+                    <Component Id="cmpE3589FBD2A72CBAEDFF342AD479282C5" Guid="{F94E71F5-A2DD-4140-BE88-B30004169E3A}">
+                        <File Id="fil7780102964ACC08A890BFAF72D74D099" KeyPath="yes" Source="SourceDir\include\parallel_hashmap\phmap_utils.h" />
+                    </Component>
                 </Directory>
             </Directory>
             <Directory Id="dir5D7C4FA608B02D34BB5BDAD566C26A85" Name="lib">
-                <?ifdef COVSCRIPT_WIX_COMPATIBLE?> 
-                <Component Id="cmpCF46CCBAEDFD37CF4216FF048C01F47B" Guid="{AF5173A4-A76C-46BD-A620-FFBB81653480}">
+                <Component Id="cmpCF46CCBAEDFD37CF4216FF048C01F47B" Guid="{9007DA64-A0CA-4D4F-AAF7-65CD3491567E}">
                     <File Id="filBB12DE35F76F3638ACCAC6DB77DA0396" KeyPath="yes" Source="SourceDir\lib\libcovscript.a" />
                 </Component>
-                <Component Id="cmp232A04A19A21D05F47E1DBBCF9145502" Guid="{21162D71-BBD2-4265-8C5D-B99DD72E0D0D}">
-                    <File Id="filF52A01763314853B2641D3E04DD8647F" KeyPath="yes" Source="SourceDir\lib\libcovscript_debug.a" />
+                <Component Id="cmp28FDDF5CA3B2F5104BBE3782F73D2097" Guid="{D811A28A-F031-4D18-B9F4-3464FB45524D}">
+                    <File Id="filE1B9DCBB57C16CF4EE231C05BD55CECA" KeyPath="yes" Source="SourceDir\lib\libcovscript_debug_sdk.a" />
                 </Component>
-                <?else?>
-                <Component Id="cmp1FF71EFE828A4B7A961379134C46D0F8" Guid="{AE6DF1A3-3679-42C4-B71F-423F80AF57D1}">
-                    <File Id="fil45B4B9133EA24D6599695F4349DFEC3D" KeyPath="yes" Source="SourceDir\lib\libcovscript.a" />
+                <Component Id="cmpE8169A7C2EFFDEB760D488BEDFC033A1" Guid="{EE5A596F-32B6-4DE6-A483-42A1E1659324}">
+                    <File Id="fil1CF999814F2A7899153A9F6D1A24E294" KeyPath="yes" Source="SourceDir\lib\libcovscript_sdk.a" />
                 </Component>
-                <Component Id="cmp7CF103F20F59428A907E483170AEAC50" Guid="{9F789612-6CB4-4136-A944-21CB3FE5C3A2}">
-                    <File Id="filD173F76451014EA297F6081ADBACC310" KeyPath="yes" Source="SourceDir\lib\libcovscript_sdk.a" />
-                </Component>
-                <Component Id="cmp84B8C16E2C764577AFD87553947EB121" Guid="{76B891EC-6D61-4822-95BE-415692B89953}">
-                    <File Id="fil7A3A32A9AE354BE1AAA4D3C477B9A4A7" KeyPath="yes" Source="SourceDir\lib\libcovscript_debug_sdk.a" />
-                </Component>
-                <?endif?>
             </Directory>
         </DirectoryRef>
         <DirectoryRef Id="ApplicationProgramsFolder">
@@ -240,31 +207,20 @@
             <ComponentRef Id="cmp6DCCDDAFB95D95C536ED75E9D70E69CF" />
             <ComponentRef Id="cmp44A72174B785183A8AFDD17E7D9DA7F5" />
             <ComponentRef Id="cmp8C5080D0DF8E0F98452450D77BF84095" />
+            <ComponentRef Id="cmp451EB3A119443E77376D87B227DD0689" />
             <ComponentRef Id="cmp5E82D432CAB1D2A830145BEC18791920" />
-            <ComponentRef Id="cmpED07ED6556F8408FD1BD038BFDB3DF99" />
-            <ComponentRef Id="cmp41D7FA22DAF314470EC7A25C259A30F2" />
-            <ComponentRef Id="cmpD0FA1DD138A1B4CA1D6B5E9C2CF907F5" />
-            <ComponentRef Id="cmpD7930D2BE90DBCEEA841B3F95F11E238" />
-            <ComponentRef Id="cmp7B5FEB11989CC9E7E95ED1B47B8778A4" />
-            <ComponentRef Id="cmpEB4A43DA47E8E8E09E243508943927D8" />
-            <ComponentRef Id="cmpDA1E9AE4FB90F95D2601511B98C31DB2" />
-            <ComponentRef Id="cmp10D0BAA7778AC5D6B86087488AFF2DA7" />
-            <ComponentRef Id="cmpED4D9E72EFB81C06123DD4CF1B6697D3" />
-            <ComponentRef Id="cmp0ADFDCA922D23F11E862C44A63AC8495" />
-            <ComponentRef Id="cmp7128DE94634C2861CE5B1D13FECFF768" />
-            <ComponentRef Id="cmpE101D2066F6A6DEAFCC0B4DC41201DD9" />
-            <ComponentRef Id="cmp10A1531ABEE1547B58DEBE26CFC9CE05" />
-            <ComponentRef Id="cmp8B39F3921C9285F7A7AE0C6646F6EBCB" />
-            <ComponentRef Id="cmp0DE7278B71E891B753B2DBA0DE7F9BD2" />
-            <ComponentRef Id="cmp698D91BA216B2EC37AEB1FF789B2AAF8" />
-            <?ifdef COVSCRIPT_WIX_COMPATIBLE?> 
+            <ComponentRef Id="cmp8402AC770FEB73F0FC1B1B82BF6ED2C5" />
+            <ComponentRef Id="cmpCF88201259787334447339D745B2FEB5" />
+            <ComponentRef Id="cmp2D3CF922311B7EED1A34819473153A3B" />
+            <ComponentRef Id="cmp227D154C424C8E23FB07FAC0AC0940AE" />
+            <ComponentRef Id="cmp6F4C4E1DC67CA7040F5C7603FFFFAF73" />
+            <ComponentRef Id="cmp823DBBB09189DA9BB6AEAD5777C6292E" />
+            <ComponentRef Id="cmp28715F795D500E60283A2A3D68FBBBD5" />
+            <ComponentRef Id="cmpAE4622A5F31DAF51BFAF7326CCD52F00" />
+            <ComponentRef Id="cmpE3589FBD2A72CBAEDFF342AD479282C5" />
             <ComponentRef Id="cmpCF46CCBAEDFD37CF4216FF048C01F47B" />
-            <ComponentRef Id="cmp232A04A19A21D05F47E1DBBCF9145502" />
-            <?else?>
-            <ComponentRef Id="cmp1FF71EFE828A4B7A961379134C46D0F8" />
-            <ComponentRef Id="cmp7CF103F20F59428A907E483170AEAC50" />
-            <ComponentRef Id="cmp84B8C16E2C764577AFD87553947EB121" />
-            <?endif?>
+            <ComponentRef Id="cmp28FDDF5CA3B2F5104BBE3782F73D2097" />
+            <ComponentRef Id="cmpE8169A7C2EFFDEB760D488BEDFC033A1" />
         </ComponentGroup>
     </Fragment>
 </Wix>
