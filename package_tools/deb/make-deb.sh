@@ -5,9 +5,11 @@ if [ "$#" != "3" ]; then
 fi
 mkdir -p ./$2/DEBIAN
 mkdir -p ./$2/$1/share/covscript
-cp -r ./build-cache/covscript/csdev/* ./$2/$1/
 cp -r ./build/bin ./$2/$1/
+cp -r ./build/lib ./$2/$1/share/covscript
+cp -r ./build/include ./$2/$1/share/covscript
 cp -r ./build/imports ./$2/$1/share/covscript
+cp -r ./build/csbuild.cmake ./$2/$1/share/covscript
 chmod -R 777 ./$2
 SIZE=$(du -s ./build | grep -o -E "[0-9]+")
 echo "Package: covscript">>./$2/DEBIAN/control
@@ -16,7 +18,7 @@ echo "Section: utils">>./$2/DEBIAN/control
 echo "Priority: optional">>./$2/DEBIAN/control
 echo "Architecture: $2">>./$2/DEBIAN/control
 echo "Installed-Size: $SIZE">>./$2/DEBIAN/control
-echo "Maintainer: Michael Lee <lee@covariant.cn>">>./$2/DEBIAN/control
+echo "Maintainer: Michael Lee <mikecovlee@163.com>">>./$2/DEBIAN/control
 echo "Description: Covariant Script Programming Language">>./$2/DEBIAN/control
 echo >>./$2/DEBIAN/control
 chmod -R 755 ./$2/DEBIAN

@@ -167,6 +167,9 @@
                     <File Id="fil1CF999814F2A7899153A9F6D1A24E294" KeyPath="yes" Source="SourceDir\lib\libcovscript_sdk.a" />
                 </Component>
             </Directory>
+            <Component Id="cmp84B8C16E2C764577AFD87553947EB121" Guid="{76B891EC-6D61-4822-95BE-415692B89953}">
+                <File Id="fil7A3A32A9AE354BE1AAA4D3C477B9A4A7" KeyPath="yes" Source="SourceDir\csbuild.cmake" />
+            </Component>
         </DirectoryRef>
         <DirectoryRef Id="ApplicationProgramsFolder">
             <Component Id="ApplicationShortcut" Guid="{1BDEED99-E5C9-41B5-AC6B-CB01BD2E14C9}">
@@ -221,6 +224,7 @@
             <ComponentRef Id="cmpCF46CCBAEDFD37CF4216FF048C01F47B" />
             <ComponentRef Id="cmp28FDDF5CA3B2F5104BBE3782F73D2097" />
             <ComponentRef Id="cmpE8169A7C2EFFDEB760D488BEDFC033A1" />
+            <ComponentRef Id="cmp84B8C16E2C764577AFD87553947EB121" />
         </ComponentGroup>
     </Fragment>
 </Wix>
