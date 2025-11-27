@@ -86,7 +86,7 @@ jobs:
           7z a -mmt4 -mx9 covscript-windows-x86_64-nightly.7z build
 
       - name: Automatic Release MSI
-        if: matrix.os == 'windows-2022'
+        if: matrix.os == 'windows-2022' && success()
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -98,7 +98,7 @@ jobs:
             *.7z
       
       - name: Automatic Release DEB
-        if: matrix.os == 'ubuntu-22.04'
+        if: matrix.os == 'ubuntu-22.04' && success()
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -110,7 +110,7 @@ jobs:
             *.7z
       
       - name: Automatic Release DEB
-        if: matrix.os == 'ubuntu-22.04-arm'
+        if: matrix.os == 'ubuntu-22.04-arm' && success()
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -122,7 +122,7 @@ jobs:
             *.7z
       
       - name: Automatic Release DMG
-        if: matrix.os == 'macos-14'
+        if: matrix.os == 'macos-14' && success()
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
