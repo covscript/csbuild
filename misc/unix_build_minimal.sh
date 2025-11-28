@@ -17,11 +17,15 @@ function clone_git ()
 function fetch_git ()
 {
     if [ ! -d "${1#*/}" ]; then
-        git clone $git_repo/$1 --depth=1 --recurse-submodules
+        git clone $git_repo/$1 --depth=1
+        cd ${1#*/}
+        git submodule update --init --recursive
+        cd ..
     else
         cd ${1#*/}
         git fetch
-        git pull --recurse-submodules
+        git pull
+        git submodule update --init --recursive
         cd ..
     fi
 }

@@ -84,9 +84,13 @@ goto:eof
 if exist %1% (
     cd %1%
     git fetch
-    git pull --recurse-submodules
+    git pull
+    git submodule update --init --recursive
     cd ..
 ) else (
-    git clone %GIT_REPO%/%1% --depth=1 --recurse-submodules
+    git clone %GIT_REPO%/%1% --depth=1
+    cd %1%
+    git submodule update --init --recursive
+    cd ..
 )
 goto:eof
