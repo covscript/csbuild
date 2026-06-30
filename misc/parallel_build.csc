@@ -1,0 +1,61 @@
+import codec.json as json
+import process
+import regex
+
+namespace utils
+    function open_json(path)
+        var ifs = iostream.ifstream(path)
+        return json.to_var(json.from_stream(ifs))
+    end
+end
+
+function call_parallel(arg_list)
+    var plist = new list
+    foreach it in arg_list
+        var b = new process.builder
+        b.dir(it[0])
+        b.cmd(it[1])
+        b.arg(it[2])
+        b.inherit_output(true)
+        plist.push_back(b.start())
+    end
+    loop
+        for it = plist.begin, it != plist.end, null
+            if it.data.wait_poll(10, 5) != null
+                it = plist.erase(it)
+            else
+                it.next()
+            end
+        end
+    until plist.empty()
+end
+
+var json_reg = regex.build("^(.*)\\.json$")
+
+function is_json_file(name)
+    return !json_reg.match(name).empty()
+end
+
+if context.cmd_args.size != 2 || !is_json_file(context.cmd_args[1])
+    system.out.println("csbuild: wrong command line arguments. usage: \'csbuild target.json\'")
+    system.exit(0)
+end
+
+var target = utils.open_json(context.cmd_args[1])
+var vlist = new array
+
+foreach it in target.repos
+    var module = it.split({'/'})[1]
+    if system.path.exist("build-cache" + system.path.separator + module)
+        vlist.push_back({"build-cache" + system.path.separator + module, ".\\build\\bin\\cs.exe", {"..\\..\\misc\\cmd_call.csc", "git"}})
+    else
+        vlist.push_back({"build-cache", "git", {"clone", target.git_repo + it, "--depth=1", "--recurse-submodules"}})
+    end
+end
+
+system.out.println("csbuild: fetching git repository...")
+call_parallel(vlist)
+vlist.clear()
+foreach it in target.build do vlist.push_back({".", ".\\build\\bin\\cs.exe", {"-i", ".\\build\\imports", ".\\misc\\auto_build.csc", ".\\build-cache" + system.path.separator + it}})
+system.out.println("csbuild: building packages...")
+call_parallel(vlist)
