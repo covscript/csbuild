@@ -52,13 +52,8 @@ if exist .\misc\cert\ (
     cd ..\..
 )
 
-@REM Patch for gmssl
-cd build-cache
-call:git_fetch covscript-gmssl
-call:call_bat covscript-gmssl
-cd ..
 
-.\build\bin\cs -i .\build\imports .\misc\win32_build.csc .\misc\win32_config.json
+.\build\bin\cs -i .\build\imports .\misc\parallel_build.csc .\misc\parallel_config.json
 .\build\bin\cs -i .\build\imports .\misc\cspkg_collect.csc %CSPKG_CONFIG%
 if "%1%" NEQ "release" (
     .\build\bin\cs -i .\build\imports .\misc\replace_source.csc .\build\bin\cspkg
@@ -88,9 +83,6 @@ if exist %1% (
     git submodule update --init --recursive
     cd ..
 ) else (
-    git clone %GIT_REPO%/%1% --depth=1
-    cd %1%
-    git submodule update --init --recursive
-    cd ..
+    git clone %GIT_REPO%/%1% --depth=1 --recurse-submodules
 )
 goto:eof

@@ -20,14 +20,16 @@ cd build-cache
 cp -rf cspkg/build ..
 cp -rf covscript/build ..
 cp -rf covscript/csdev/* ../build/
-cp -rf covscript-curl/build ..
 cp -rf covscript-regex/build ..
 cp -rf covscript-codec/build ..
 cp -rf covscript-process/build ..
 
 cd ..
+
+./build/bin/cs -i ./build/imports ./misc/parallel_build.csc ./misc/parallel_config_minimal.json
 if [[ "$#" != 1 || "$1" != "release" ]]; then
     ./build/bin/cs -i ./build/imports ./misc/replace_source.csc ./build/bin/cspkg
 fi
 cp -rf build-cache/ecs/build .
+cp -rf build-cache/covscript-curl/build .
 chmod +x ./build/bin/ecs

@@ -1,4 +1,5 @@
 {
+    "max_parallel": 4,
     "git_repo": "https://github.com/",
     "repos": [
         "mikecovlee/parsergen",
@@ -11,6 +12,7 @@
         "covscript/covscript-sqlite",
         "covscript/covscript-network",
         "covscript/covscript-imgui",
+        "covscript/covscript-gmssl",
         "covscript/covscript-curl",
         "covscript/covscript-zip"
     ],
@@ -23,6 +25,7 @@
         "covscript-sqlite",
         "covscript-network",
         "covscript-imgui",
+        "covscript-gmssl",
         "covscript-curl",
         "covscript-zip"
     ]

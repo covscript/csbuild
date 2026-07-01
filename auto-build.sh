@@ -1,24 +1,4 @@
 #!/bin/bash
-function start ()
-{
-    ./build/bin/cs -i ./build/imports ./misc/auto_build.csc ./build-cache/$1
-}
-git_repo="https://github.com/"
-function fetch_git ()
-{
-    if [ ! -d "${1#*/}" ]; then
-        git clone $git_repo/$1 --depth=1
-        cd ${1#*/}
-        git submodule update --init --recursive
-        cd ..
-    else
-        cd ${1#*/}
-        git fetch
-        git pull
-        git submodule update --init --recursive
-        cd ..
-    fi
-}
 
 CURRENT_FOLDER=$(dirname $(readlink -f "$0"))
 export CS_DEV_PATH=${CURRENT_FOLDER}/build-cache/covscript/csdev
@@ -43,42 +23,17 @@ cd build-cache
 cp -rf cspkg/build ..
 cp -rf covscript/build ..
 cp -rf covscript/csdev/* ../build/
-cp -rf covscript-curl/build ..
 cp -rf covscript-regex/build ..
 cp -rf covscript-codec/build ..
 cp -rf covscript-process/build ..
 
-fetch_git mikecovlee/parsergen &
-fetch_git covscript/csdbc &
-fetch_git covscript/stdutils &
-fetch_git covscript/covanalysis &
-fetch_git covscript/covscript-darwin &
-fetch_git covscript/covscript-sqlite &
-fetch_git covscript/covscript-network &
-fetch_git covscript/covscript-imgui &
-fetch_git covscript/covscript-zip &
-fetch_git covscript/covscript-database &
-fetch_git covscript/covscript-gmssl &
-wait
-
 cd ..
 
-# Concurrent works
-
-start stdutils &
-start covanalysis &
-start covscript-darwin &
-start covscript-sqlite &
-start covscript-network &
-start covscript-imgui &
-start covscript-zip &
-start covscript-database &
-start covscript-gmssl &
-wait
-
+./build/bin/cs -i ./build/imports ./misc/parallel_build.csc ./misc/parallel_config.json
 ./build/bin/cs -i ./build/imports ./misc/cspkg_collect.csc $CSPKG_CONFIG
 if [[ "$#" != 1 || "$1" != "release" ]]; then
     ./build/bin/cs -i ./build/imports ./misc/replace_source.csc ./build/bin/cspkg
 fi
 cp -rf build-cache/ecs/build .
+cp -rf build-cache/covscript-curl/build .
 chmod +x ./build/bin/ecs

@@ -76,7 +76,7 @@ download_files() {
     done
     wait
 
-    rm $CSBUILD_DIR/$mode/cspkg-repo/index.json
+    rm -f $CSBUILD_DIR/$mode/cspkg-repo/index.json
 
     rsync -avzP "$CSBUILD_DIR/$mode/cspkg-repo/" "$CSPKG_DIR"
 

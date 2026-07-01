@@ -44,11 +44,15 @@ xcopy /E /Y covscript-regex\build ..\build\
 xcopy /E /Y covscript-codec\build ..\build\
 xcopy /E /Y covscript-process\build ..\build\
 
-cd ..\misc\bin
-call sign.bat ..\cert\covscript ..\..\build\bin\*.exe
-cd ..\..
+cd ..
 
-.\build\bin\cs -i .\build\imports .\misc\win32_build.csc .\misc\win32_config_minimal.json
+if exist .\misc\cert\ (
+    cd .\misc\bin
+    call sign.bat ..\cert\covscript ..\..\build\bin\*.exe
+    cd ..\..
+)
+
+.\build\bin\cs -i .\build\imports .\misc\parallel_build.csc .\misc\parallel_config_minimal.json
 if "%1%" NEQ "release" (
     .\build\bin\cs -i .\build\imports .\misc\replace_source.csc .\build\bin\cspkg
 )
@@ -73,7 +77,8 @@ goto:eof
 if exist %1% (
     cd %1%
     git fetch
-    git pull --recurse-submodules
+    git pull
+    git submodule update --init --recursive
     cd ..
 ) else (
     git clone %GIT_REPO%/%1% --depth=1 --recurse-submodules
