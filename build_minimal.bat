@@ -10,7 +10,7 @@ git checkout master
 git fetch
 git pull --recurse-submodules
 git submodule update --init
-if "%1%" EQU "release" (
+if "%1" EQU "release" (
     echo Building for release...
     set CSPKG_CONFIG=".\misc\cspkg_config.json"
     for /f "delims=" %%x in (.\csbuild\release.txt) do git checkout %%x
@@ -53,7 +53,7 @@ if exist .\misc\cert\ (
 )
 
 .\build\bin\cs -i .\build\imports .\misc\parallel_build.csc .\misc\parallel_config_minimal.json
-if "%1%" NEQ "release" (
+if "%1" NEQ "release" (
     .\build\bin\cs -i .\build\imports .\misc\replace_source.csc .\build\bin\cspkg
 )
 
@@ -64,23 +64,23 @@ cd ..
 
 goto:eof
 :call_bat
-cd %1%
+cd %1
 call csbuild\make.bat
 cd ..
 goto:eof
 :git_clone
-if not exist %1% (
-    git clone %GIT_REPO%/%1% --recurse-submodules
+if not exist %1 (
+    git clone %GIT_REPO%/%1 --recurse-submodules
 )
 goto:eof
 :git_fetch
-if exist %1% (
-    cd %1%
+if exist %1 (
+    cd %1
     git fetch
     git pull
     git submodule update --init --recursive
     cd ..
 ) else (
-    git clone %GIT_REPO%/%1% --depth=1 --recurse-submodules
+    git clone %GIT_REPO%/%1 --depth=1 --recurse-submodules
 )
 goto:eof

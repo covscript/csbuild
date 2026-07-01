@@ -16,7 +16,6 @@
         "covscript-sqlite",
         "covscript-network",
         "covscript-imgui",
-        "covscript-process",
         "covscript-curl",
         "covscript-zip"
     ]

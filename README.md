@@ -1,6 +1,6 @@
 # Covariant Script Build System
 [![schedule_release](https://github.com/covscript/csbuild/actions/workflows/schedule_release.yml/badge.svg)](https://github.com/covscript/csbuild/actions/workflows/schedule_release.yml) [![schedule](https://github.com/covscript/csbuild/actions/workflows/schedule.yml/badge.svg)](https://github.com/covscript/csbuild/actions/workflows/schedule.yml)  
-CSBuild is a system used for parallel building, automatic releasing and continues integration of official maintained packages.
+CSBuild is a system used for parallel building, automatic releasing and continuous integration of officially maintained packages.
 
 ## Latest Release
 
@@ -61,10 +61,10 @@ brew install glfw libffi unixodbc
 + `Version` is the version of your package, which will be sorted in lexicographical order.
 + `Target` is the path to your package file(base to the repository directory).
 + `Source` is the path to your source file(base to the repository directory).
-  + Note that if you need more complicated method to configure your project like `cmake`, this field is unessential.
-  + Currently this method for building is **experimental** that can't bundle in CSBuild directly. Please use it for debugging only before this method is merged into mainline support.
+  + Note that if you need a more complicated method to configure your project like `cmake`, this field is optional.
+  + Currently this method for building is **experimental** and can't be bundled in CSBuild directly. Please use it for debugging only before this method is merged into mainline support.
 + `Dependencies` is an array of package names you depend on.
-  + An standard extension **should not** have any dependencies. 
+  + A standard extension **should not** have any dependencies. 
 
 #### Example:
 ```json
@@ -80,7 +80,7 @@ brew install glfw libffi unixodbc
 }
 ```
 ### Step 2: Put your json file into the `csbuild` folder of your repository
-An legal `csbuild` folder should contains following files:
+A legal `csbuild` folder should contain the following files:
 + JSON files: Package Description File, can be multiple.
 + *Build Scripts*: Extensions Only
   + make.bat: Build script on Windows
@@ -88,77 +88,82 @@ An legal `csbuild` folder should contains following files:
 ### Step 3: Write your build script (for Extensions)
 Build scripts are variable between different projects, but at least you should follow these basic rules:
 + No extra effect on system.
-+ Can be executed paralleled.
-+ Will not occupy unreasonable time.
++ Can be executed in parallel.
++ Will not occupy an unreasonable amount of time.
 
 Based on basic rules, a good build script should follow these rules additionally:
 + Use building tools, such as CMake
-+ Output the files into standard path structural:
++ Output files into the standard path structure:
     + Binaries -> build/bin
     + Packages -> build/imports
-+ Providing same experience in different platforms
++ Provide the same experience across different platforms
 #### Example of CMakeLists.txt for CovScript Extension
 ```
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
 
-project(covscript-regex)
+project(covscript-mypackage)
+include_directories(include)
 
-if(DEFINED ENV{CS_DEV_PATH})
+if (DEFINED ENV{CS_DEV_PATH})
+    message("-- CovScript SDK detected at $ENV{CS_DEV_PATH}")
+    include("$ENV{CS_DEV_PATH}/csbuild.cmake")
     include_directories($ENV{CS_DEV_PATH}/include)
     link_directories($ENV{CS_DEV_PATH}/lib)
-endif()
-
-if(DEFINED ENV{CS_DEV_OUTPUT})
-    set(LIBRARY_OUTPUT_PATH $ENV{CS_DEV_OUTPUT})
-    set(EXECUTABLE_OUTPUT_PATH $ENV{CS_DEV_OUTPUT})
-endif()
-
-# Compiler Options
-set(CMAKE_CXX_STANDARD 14)
-
-if (MSVC)
-    set(CMAKE_CXX_FLAGS "/O2 /EHsc /utf-8 /w")
-    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-elseif (CMAKE_COMPILER_IS_GNUCXX)
-    if (WIN32)
-        set(CMAKE_C_FLAGS "--static -fPIC -s -O3")
-        set(CMAKE_CXX_FLAGS "--static -fPIC -s -O3")
-    else ()
-        set(CMAKE_C_FLAGS "-fPIC -s -O3")
-        set(CMAKE_CXX_FLAGS "-fPIC -s -O3")
-    endif ()
 else ()
-    set(CMAKE_C_FLAGS "-fPIC -O3")
-    set(CMAKE_CXX_FLAGS "-fPIC -O3")
+    message(FATAL_ERROR "-- CovScript SDK not detected. Please set environment variable CS_DEV_PATH")
 endif ()
 
-add_library(regex SHARED regex.cpp)
+add_library(mypackage SHARED mypackage.cpp)
 
-target_link_libraries(regex covscript)
+target_link_libraries(mypackage covscript)
 
-set_target_properties(regex PROPERTIES OUTPUT_NAME regex)
-set_target_properties(regex PROPERTIES PREFIX "")
-set_target_properties(regex PROPERTIES SUFFIX ".cse")
+set_target_properties(mypackage PROPERTIES OUTPUT_NAME mypackage)
+set_target_properties(mypackage PROPERTIES PREFIX "")
+set_target_properties(mypackage PROPERTIES SUFFIX ".cse")
 ```
 We usually locate the development files via `CS_DEV_PATH` environment variable. If you are using Windows or Linux, the `CS_DEV_PATH` should be placed correctly with official CovScript Runtime Installer.
 ### Step 4: Configure CSBuild
-CSBuild have 3 phases: Fetch -> Build -> Install
-#### 1. Add your package to each phase of CSBuild
-+ Fetch
-    + Windows -> misc/win32_config.json -> append a record in `repos` field:
-        + `<User>/<Repository Name>`
-    + Unix -> misc/unix_build.sh -> append a record after `fetch_git` commands:
-        + `fetch_git <User>/<Repository Name> &`
-+ Build
-    + Windows -> misc/win32_config.json -> append a record in `build` field:
-        + `<Repository Name>`
-    + Unix -> misc/unix_build.sh -> append a record after `start` commands:
-        + `start <Repository Name> "./csbuild/make.sh" &`
-+ Install
-    + All -> misc/cspkg_config.json -> append a record in `install` field:
-        + `<Repository Name>`
-#### 2. Test CSBuild script
-Run `auto-build.bat` in Windows or `auto-build.sh` in Unix, wait for final output.
+CSBuild has 3 phases: Fetch -> Build -> Install. The full build (`auto-build`) includes all three; the minimal build (`build_minimal`) skips Install.
+
+#### 1. Add your package to Fetch and Build (all builds)
+Edit the JSON config used by `misc/parallel_build.csc`:
++ **Full build**: `misc/parallel_config.json`
++ **Minimal build**: `misc/parallel_config_minimal.json`
+
+Append your package to the `repos` and `build` arrays:
+```json
+{
+    "max_parallel": 4,
+    "git_repo": "https://github.com/",
+    "repos": [
+        ...,
+        "<User>/<Repository Name>"
+    ],
+    "build": [
+        ...,
+        "<Repository Name>"
+    ]
+}
+```
++ `repos` — repositories to clone into `build-cache/`
++ `build` — packages to compile via `misc/auto_build.csc`
+
+Note: core packages (`cspkg`, `covscript`, `covscript-regex`, `covscript-codec`, `covscript-process`) are handled directly by the build scripts and should not be added here.
+
+#### 2. Add your package to Install (full build only)
+Edit both `misc/cspkg_config.json` (release) and `misc/cspkg_nightly_config.json` (nightly). Append your package to the `install` array:
+```json
+{
+    "remote_base": "...",
+    "install": [
+        ...,
+        "<Repository Name>"
+    ]
+}
+```
+
+#### 3. Test CSBuild script
+Run `auto-build.bat` on Windows or `auto-build.sh` on Unix, wait for final output.
 
 If CSBuild was configured correctly, you can see these output without error report.
 ```

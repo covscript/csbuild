@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v4
 
       - name: Build on Ubuntu
         if: matrix.os == 'ubuntu-22.04' || matrix.os == 'ubuntu-22.04-arm'
@@ -33,19 +33,17 @@ jobs:
       - name: Build on macOS
         if: matrix.os == 'macos-14'
         run: |
-          bash misc/base_install_macOS.sh
+          bash misc/base_install_macos.sh
           bash auto-build.sh
           bash package_tools/dmg/make.sh
           cp *.dmg covscript-macos-arm64-nightly.dmg
       
       - name: Download MinGW-w64
         if: matrix.os == 'windows-2022'
-        uses: i3h/download-release-asset@v1
-        with:
-          owner: covscript-archives
-          repo: mingw-w64
-          tag: 15.1.0.4
-          file: gcc-15.1.0-mingw-w64ucrt-13.0.0-r4-covscript-org.zip
+        run: |
+          gh release download 15.1.0.4 -R covscript-archives/mingw-w64 -p "gcc-15.1.0-mingw-w64ucrt-13.0.0-r4-covscript-org.zip"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Install Toolset in Windows
         if: matrix.os == 'windows-2022'
@@ -87,11 +85,11 @@ jobs:
 
       - name: Automatic Release MSI
         if: matrix.os == 'windows-2022' && success()
-        uses: marvinpinto/action-automatic-releases@latest
+        uses: softprops/action-gh-release@v2
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "windows-schedule"
-          title: "Windows Schedule Nightly Build"
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          tag_name: "windows-schedule"
+          name: "Windows Schedule Nightly Build"
           prerelease: true
           files: |
             *.msi
@@ -99,11 +97,11 @@ jobs:
       
       - name: Automatic Release DEB
         if: matrix.os == 'ubuntu-22.04' && success()
-        uses: marvinpinto/action-automatic-releases@latest
+        uses: softprops/action-gh-release@v2
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "ubuntu-schedule"
-          title: "Ubuntu Schedule Nightly Build"
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          tag_name: "ubuntu-schedule"
+          name: "Ubuntu Schedule Nightly Build"
           prerelease: true
           files: |
             *.deb
@@ -111,11 +109,11 @@ jobs:
       
       - name: Automatic Release DEB
         if: matrix.os == 'ubuntu-22.04-arm' && success()
-        uses: marvinpinto/action-automatic-releases@latest
+        uses: softprops/action-gh-release@v2
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "ubuntu-arm-schedule"
-          title: "Ubuntu for ARM Schedule Nightly Build"
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          tag_name: "ubuntu-arm-schedule"
+          name: "Ubuntu for ARM Schedule Nightly Build"
           prerelease: true
           files: |
             *.deb
@@ -123,11 +121,11 @@ jobs:
       
       - name: Automatic Release DMG
         if: matrix.os == 'macos-14' && success()
-        uses: marvinpinto/action-automatic-releases@latest
+        uses: softprops/action-gh-release@v2
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "macos-schedule"
-          title: "macOS Schedule Nightly Build"
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          tag_name: "macos-schedule"
+          name: "macOS Schedule Nightly Build"
           prerelease: true
           files: |
             *.dmg
