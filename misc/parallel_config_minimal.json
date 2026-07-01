@@ -1,4 +1,5 @@
 {
+    "max_parallel": 4,
     "git_repo": "https://github.com/",
     "repos": [
         "covscript/ecs",

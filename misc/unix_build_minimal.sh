@@ -36,25 +36,18 @@ git fetch
 git pull --recurse-submodules
 git submodule update --init
 if [[ "$#" == 1 && "$1" = "release" ]]; then
-    CSPKG_CONFIG="./misc/cspkg_config.json"
     git checkout $(cat ./csbuild/release.txt)
-else
-    CSPKG_CONFIG="./misc/cspkg_nightly_config.json"
 fi
 cd ..
-fetch_git covscript/ecs &
 fetch_git covscript/cspkg &
 fetch_git covscript/covscript-regex &
 fetch_git covscript/covscript-codec &
-fetch_git covscript/covscript-curl &
 fetch_git covscript/covscript-process &
 wait
 start cspkg "./csbuild/make.sh"
 start covscript "./csbuild/make.sh"
 # Concurrent works
-start ecs "./csbuild/make.sh" &
 start covscript-regex "./csbuild/make.sh" &
 start covscript-codec "./csbuild/make.sh" &
-start covscript-curl "./csbuild/make.sh" &
 start covscript-process "./csbuild/make.sh" &
 wait
