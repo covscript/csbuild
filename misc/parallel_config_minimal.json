@@ -3,10 +3,12 @@
     "git_repo": "https://github.com/",
     "repos": [
         "covscript/ecs",
+        "covscript/cspkg",
         "covscript/covscript-curl"
     ],
     "build": [
         "ecs",
+        "cspkg",
         "covscript-curl"
     ]
 }

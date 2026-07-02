@@ -3,7 +3,13 @@
 set -e
 set -o pipefail
 
-CURRENT_FOLDER=$(dirname "$(readlink -f "$0")")
+SCRIPT_PATH="${BASH_SOURCE[0]}"
+while [ -L "$SCRIPT_PATH" ]; do
+    SCRIPT_DIR="$(cd -P "$(dirname "$SCRIPT_PATH")" && pwd)"
+    SCRIPT_PATH="$(readlink "$SCRIPT_PATH")"
+    [[ "$SCRIPT_PATH" != /* ]] && SCRIPT_PATH="$SCRIPT_DIR/$SCRIPT_PATH"
+done
+CURRENT_FOLDER="$(cd -P "$(dirname "$SCRIPT_PATH")" && pwd)"
 cd "$CURRENT_FOLDER/.."
 
 CLEANUP=false
@@ -37,7 +43,7 @@ CSBUILD_DIR="csbuild-repo"
 mkdir -p "$CSBUILD_DIR"
 
 download_files() {
-    local mode=$1
+    local mode="$1"
 
     if [ "$mode" = "release" ]; then
         SOURCE_CONFIG="schedule-release"
@@ -76,7 +82,7 @@ download_files() {
     done
     wait
 
-    rm -f $CSBUILD_DIR/$mode/cspkg-repo/index.json
+    rm -f "$CSBUILD_DIR/$mode/cspkg-repo/index.json"
 
     rsync -avzP "$CSBUILD_DIR/$mode/cspkg-repo/" "$CSPKG_DIR"
 

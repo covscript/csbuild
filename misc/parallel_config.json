@@ -4,6 +4,7 @@
     "repos": [
         "mikecovlee/parsergen",
         "covscript/ecs",
+        "covscript/cspkg",
         "covscript/csdbc",
         "covscript/stdutils",
         "covscript/covanalysis",
@@ -18,6 +19,7 @@
     ],
     "build": [
         "ecs",
+        "cspkg",
         "stdutils",
         "covanalysis",
         "covscript-database",

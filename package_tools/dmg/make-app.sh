@@ -3,7 +3,7 @@
 set -e
 
 if [[ "$#" != 2 ]]; then
-    echo "Usage: $(basename $0) <build-artifact-dir> <logo-png>"
+	echo "Usage: $(basename "$0") <build-artifact-dir> <logo-png>"
     echo "If success, CovScript.app is created."
     exit 1
 fi
@@ -22,8 +22,8 @@ echo ":: Using cs executable $csBin"
 
 csFullVersion="$($csBin --version | grep '^Version:')"
 csFullVersion="${csFullVersion:9}"
-csVersion="$(echo $csFullVersion | cut -d' ' -f1)"
-csBuildVersion="$(echo $csFullVersion | cut -d' ' -f5)"
+csVersion="$(echo "$csFullVersion" | cut -d' ' -f1)"
+csBuildVersion="$(echo "$csFullVersion" | cut -d' ' -f5)"
 csABIVersion="$($csBin --version | grep 'ABI Version:' | cut -d' ' -f5)"
 
 csDisplayVersion="${csVersion}.${csBuildVersion}"
@@ -127,7 +127,7 @@ cat > "$contentDir/Info.plist" <<EOF
 
 EOF
 
-echo ":: Creating warpper scripts"
+echo ":: Creating wrapper scripts"
 cat > "$contentDir/MacOS/wrapper" << EOF
 #!/usr/bin/osascript
 

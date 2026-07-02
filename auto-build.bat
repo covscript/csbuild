@@ -20,12 +20,10 @@ if "%1" EQU "release" (
 )
 cd ..
 
-call:git_fetch cspkg
 call:git_fetch covscript-regex
 call:git_fetch covscript-codec
 call:git_fetch covscript-process
 
-call:call_bat cspkg
 call:call_bat covscript
 set CS_DEV_PATH=%cd%\covscript\csdev
 call:call_bat covscript-regex
@@ -37,7 +35,6 @@ rd /S /Q .\build
 mkdir build
 cd build-cache
 
-xcopy /E /Y cspkg\build ..\build\
 xcopy /E /Y covscript\build ..\build\
 xcopy /E /Y covscript\csdev ..\build\
 xcopy /E /Y covscript-regex\build ..\build\
@@ -55,14 +52,15 @@ if exist .\misc\cert\ (
 
 .\build\bin\cs -i .\build\imports .\misc\parallel_build.csc .\misc\parallel_config.json
 .\build\bin\cs -i .\build\imports .\misc\cspkg_collect.csc %CSPKG_CONFIG%
+cd build-cache
+xcopy /E /Y covscript-curl\build ..\build\
+xcopy /E /Y cspkg\build ..\build\
+xcopy /E /Y ecs\build\ ..\build\
+cd ..
+
 if "%1" NEQ "release" (
     .\build\bin\cs -i .\build\imports .\misc\replace_source.csc .\build\bin\cspkg
 )
-
-cd build-cache
-xcopy /E /Y covscript-curl\build ..\build\
-xcopy /E /Y ecs\build\ ..\build\
-cd ..
 
 goto:eof
 :call_bat

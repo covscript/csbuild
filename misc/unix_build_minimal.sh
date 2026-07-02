@@ -1,8 +1,8 @@
 #!/bin/bash
 function start ()
 {
-    cd $1
-    bash $2
+    cd "$1"
+    bash "$2"
     cd ..
 }
 mkdir -p build-cache
@@ -11,18 +11,18 @@ git_repo="https://github.com/"
 function clone_git ()
 {
     if [ ! -d "${1#*/}" ]; then
-        git clone $git_repo/$1 --recurse-submodules
+        git clone "$git_repo/$1" --recurse-submodules
     fi
 }
 function fetch_git ()
 {
     if [ ! -d "${1#*/}" ]; then
-        git clone $git_repo/$1 --depth=1
-        cd ${1#*/}
+        git clone "$git_repo/$1" --depth=1
+        cd "${1#*/}"
         git submodule update --init --recursive
         cd ..
     else
-        cd ${1#*/}
+        cd "${1#*/}"
         git fetch
         git pull
         git submodule update --init --recursive
@@ -36,15 +36,13 @@ git fetch
 git pull --recurse-submodules
 git submodule update --init
 if [[ "$#" == 1 && "$1" = "release" ]]; then
-    git checkout $(cat ./csbuild/release.txt)
+    git checkout "$(cat ./csbuild/release.txt)"
 fi
 cd ..
-fetch_git covscript/cspkg &
 fetch_git covscript/covscript-regex &
 fetch_git covscript/covscript-codec &
 fetch_git covscript/covscript-process &
 wait
-start cspkg "./csbuild/make.sh"
 start covscript "./csbuild/make.sh"
 # Concurrent works
 start covscript-regex "./csbuild/make.sh" &
