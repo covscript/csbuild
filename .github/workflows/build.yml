@@ -59,12 +59,18 @@ jobs:
         with:
           msystem: UCRT64
           update: true
-          location: C:\msys64
+          location: C:\msys64-covscript
 
       - name: Install MSYS2 packages
         if: matrix.os == 'windows-2022'
         shell: msys2 {0}
-        run: bash misc/base_install_msys2.sh
+        run: |
+          export PATH="/ucrt64/bin:$PATH"
+          echo "MSYSTEM=$MSYSTEM"
+          echo "MSYS root (Windows path): $(cygpath -w /)"
+          echo "pacman: $(command -v pacman)"
+          echo "7z: $(command -v 7z)"
+          bash misc/base_install_msys2.sh
 
       - name: Build on Windows
         if: matrix.os == 'windows-2022'
@@ -157,16 +163,22 @@ jobs:
         with:
           msystem: UCRT64
           update: true
-          location: C:\msys64
+          location: C:\msys64-covscript
 
       - name: Install build dependencies
         shell: msys2 {0}
-        run: bash misc/base_install_msys2.sh
+        run: |
+          export PATH="/ucrt64/bin:$PATH"
+          echo "MSYSTEM=$MSYSTEM"
+          echo "MSYS root (Windows path): $(cygpath -w /)"
+          echo "pacman: $(command -v pacman)"
+          echo "7z: $(command -v 7z)"
+          bash misc/base_install_msys2.sh
 
       - name: Package MSYS2 environment
         if: github.event_name != 'pull_request'
         run: |
-          7z a -mmt4 -mx9 covscript-msys2-ucrt64-x86_64.7z C:\msys64\ucrt64
+          7z a -mmt4 -mx9 covscript-msys2-ucrt64-x86_64.7z C:\msys64-covscript\ucrt64
 
       - name: Release MSYS2 environment
         if: github.event_name != 'pull_request'
