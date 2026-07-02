@@ -53,18 +53,18 @@ jobs:
           bash package_tools/dmg/make.sh
           cp *.dmg covscript-macos-arm64${{ steps.vars.outputs.file_suffix }}.dmg
 
-      - name: Download MinGW-w64
+      - name: Setup MSYS2
         if: matrix.os == 'windows-2022'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release download 15.1.0.4 -R covscript-archives/mingw-w64 -p "gcc-15.1.0-mingw-w64ucrt-13.0.0-r4-covscript-org.zip"
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          location: C:\msys64
 
-      - name: Install Toolset in Windows
+      - name: Install MSYS2 packages
         if: matrix.os == 'windows-2022'
-        run: |
-          mkdir C:\mingw64-covscript
-          7z x gcc-15.1.0-mingw-w64ucrt-13.0.0-r4-covscript-org.zip -oC:\mingw64-covscript
+        shell: msys2 {0}
+        run: bash misc/base_install_msys2.sh
 
       - name: Build on Windows
         if: matrix.os == 'windows-2022'
@@ -144,4 +144,36 @@ jobs:
           prerelease: ${{ matrix.mode == 'nightly' }}
           files: |
             *.dmg
+            *.7z
+
+  build-msys2:
+    runs-on: windows-2022
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          location: C:\msys64
+
+      - name: Install build dependencies
+        shell: msys2 {0}
+        run: bash misc/base_install_msys2.sh
+
+      - name: Package MSYS2 environment
+        if: github.event_name != 'pull_request'
+        run: |
+          7z a -mmt4 -mx9 covscript-msys2-ucrt64-x86_64.7z C:\msys64\ucrt64
+
+      - name: Release MSYS2 environment
+        if: github.event_name != 'pull_request'
+        uses: softprops/action-gh-release@v3
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          tag_name: "msys2-devenv"
+          name: "MSYS2 UCRT64 Dev Environment for CovScript"
+          files: |
             *.7z
