@@ -64,7 +64,57 @@ jobs:
       - name: Install WiX
         if: matrix.os == 'windows-2022'
         shell: pwsh
-        run: choco install wixtoolset --version=3.11.2 -y
+        run: |
+          $candle = Get-Command candle.exe -ErrorAction SilentlyContinue
+          $light = Get-Command light.exe -ErrorAction SilentlyContinue
+          if ($null -eq $candle -or $null -eq $light) {
+            choco install wixtoolset -y
+          }
+
+      - name: Locate WiX
+        if: matrix.os == 'windows-2022'
+        id: wix
+        shell: pwsh
+        run: |
+          function Resolve-CommandPath($commandName) {
+            $command = Get-Command $commandName -ErrorAction SilentlyContinue | Select-Object -First 1
+            if ($null -eq $command) {
+              return $null
+            }
+            if ($command.Path -and (Test-Path $command.Path)) {
+              return $command.Path
+            }
+            if ($command.Definition -and (Test-Path $command.Definition)) {
+              return $command.Definition
+            }
+            return $null
+          }
+
+          $candle = Resolve-CommandPath 'candle.exe'
+          $light = Resolve-CommandPath 'light.exe'
+
+          if ($null -eq $candle -or $null -eq $light) {
+            $candleFile = Get-ChildItem -Path 'C:\Program Files (x86)', 'C:\Program Files', 'C:\ProgramData\chocolatey\bin', 'C:\ProgramData\chocolatey\lib' -Filter candle.exe -File -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+            $lightFile = Get-ChildItem -Path 'C:\Program Files (x86)', 'C:\Program Files', 'C:\ProgramData\chocolatey\bin', 'C:\ProgramData\chocolatey\lib' -Filter light.exe -File -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+            if ($null -ne $candleFile) {
+              $candle = $candleFile.FullName
+            }
+            if ($null -ne $lightFile) {
+              $light = $lightFile.FullName
+            }
+          }
+
+          if ($null -eq $candle -or $null -eq $light) {
+            throw 'Unable to locate WiX tools candle.exe and light.exe.'
+          }
+
+          $wixBin = Split-Path $candle -Parent
+          if (-not (Test-Path (Join-Path $wixBin 'light.exe'))) {
+            throw "Located candle.exe in '$wixBin', but light.exe is missing from that directory."
+          }
+
+          "WIX_BIN_WIN=$wixBin" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Host "Using WiX bin directory: $wixBin"
 
       - name: Build on Windows
         if: matrix.os == 'windows-2022'
@@ -72,7 +122,8 @@ jobs:
         run: |
           bash misc/base_install_msys2.sh
           bash auto-build.sh ${{ matrix.mode == 'release' && 'release' || '' }}
-          PATH="/c/Program Files (x86)/WiX Toolset v3.11/bin:$PATH" bash package_tools/wix/make.sh
+          WIX_BIN_MSYS="$(cygpath "$WIX_BIN_WIN")"
+          PATH="$WIX_BIN_MSYS:$PATH" bash package_tools/wix/make.sh
           cp *.msi covscript-windows-x86_64${{ steps.vars.outputs.file_suffix }}.msi
 
       - name: Package CSPKG Repo and Build files (Ubuntu)
