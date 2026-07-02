@@ -61,6 +61,11 @@ jobs:
           msystem: UCRT64
           update: true
 
+      - name: Install WiX
+        if: matrix.os == 'windows-2022'
+        shell: pwsh
+        run: choco install wixtoolset --version=3.11.2 -y
+
       - name: Build on Windows
         if: matrix.os == 'windows-2022'
         shell: msys2 {0}
