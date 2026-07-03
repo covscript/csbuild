@@ -55,7 +55,6 @@ jobs:
 
       - name: Setup MSYS2
         if: matrix.os == 'windows-2022'
-        id: msys2
         uses: msys2/setup-msys2@v2
         with:
           msystem: UCRT64
