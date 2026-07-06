@@ -12,10 +12,10 @@ pacman -S --needed --noconfirm \
 	base-devel \
 	mingw-w64-ucrt-x86_64-toolchain \
 	mingw-w64-ucrt-x86_64-cmake \
-	mingw-w64-ucrt-x86_64-ninja \
 	mingw-w64-ucrt-x86_64-pkgconf \
 	mingw-w64-ucrt-x86_64-7zip \
 	mingw-w64-ucrt-x86_64-libffi \
 	mingw-w64-ucrt-x86_64-unixodbc \
 	mingw-w64-ucrt-x86_64-glfw \
-	mingw-w64-ucrt-x86_64-curl
+	mingw-w64-ucrt-x86_64-curl \
+	mingw-w64-ucrt-x86_64-SDL2
